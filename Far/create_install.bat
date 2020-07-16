@@ -1,9 +1,9 @@
 @echo off
 cd /d "%~dp0"
-set latest_version=https://api.github.com/repos/notepad-plus-plus/notepad-plus-plus/releases/latest
+set latest_version=https://api.github.com/repos/FarGroup/FarManager/releases/latest
 echo Get latest version: %latest_version% ...
 >raw_download_str.tmp (
-	..\curl -s %latest_version% | findstr /r /c:"browser_download_url.*\.x64\.exe\""
+	..\curl -s %latest_version% | findstr /r /c:"browser_download_url.*Far\.x64\..*\.msi\""
 )
 IF %ERRORLEVEL% NEQ 0 ( 
 	echo Cannot get latest version 
@@ -23,4 +23,4 @@ FOR %%i IN ("%downloadurl%") DO (
 	set latest_filename=%%~ni%%~xi
 )
 echo Generating %latest_filename% autoinstall.bat
-echo %%~dp0%latest_filename% /S > autoinstall.bat
+echo %%~dp0%latest_filename% /passive > autoinstall.bat

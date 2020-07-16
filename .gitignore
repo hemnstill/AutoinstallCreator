@@ -1,3 +1,4 @@
 autoinstall.bat
 *.exe
+*.msi
 *.tmp
