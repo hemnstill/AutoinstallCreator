@@ -1,8 +1,9 @@
 @echo off
+pushd "%~dp0"
 set latest_filename=X-MouseButtonControlSetup.exe
 set downloadurl=https://www.highrez.co.uk/scripts/download.asp?package=XMouse
 echo Downloading: %latest_filename% %downloadurl% ...
-"%~dp0..\curl" --fail --location %downloadurl% --output "%~dp0%latest_filename%"
+..\curl --fail --location %downloadurl% --output %latest_filename%
 IF %ERRORLEVEL% NEQ 0 ( 
 	exit
 ) 

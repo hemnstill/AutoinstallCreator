@@ -1,5 +1,5 @@
 @echo off
-cd /d "%~dp0"
+pushd "%~dp0"
 set latest_filename=SlackSetup.msi
 set downloadurl=https://slack.com/ssb/download-win64-msi-legacy
 echo Downloading: %latest_filename% %downloadurl% ...
@@ -10,4 +10,4 @@ IF %ERRORLEVEL% NEQ 0 (
 echo Done.
 
 echo Generating %latest_filename% autoinstall.bat
-echo %%~dp0%latest_filename% /S > autoinstall.bat
+echo "%%~dp0%latest_filename%" /S > autoinstall.bat

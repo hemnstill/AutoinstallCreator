@@ -1,5 +1,5 @@
 @echo off
-cd /d "%~dp0"
+pushd "%~dp0"
 set latest_version=https://api.github.com/repos/FarGroup/FarManager/releases/latest
 echo Get latest version: %latest_version% ...
 >raw_download_str.tmp (
@@ -23,4 +23,4 @@ FOR %%i IN ("%downloadurl%") DO (
 	set latest_filename=%%~ni%%~xi
 )
 echo Generating %latest_filename% autoinstall.bat
-echo %%~dp0%latest_filename% /passive > autoinstall.bat
+echo "%%~dp0%latest_filename%" /passive > autoinstall.bat
