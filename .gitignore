@@ -2,3 +2,4 @@ autoinstall.bat
 *.exe
 *.msi
 *.tmp
+*.zip
