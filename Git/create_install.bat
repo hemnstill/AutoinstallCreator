@@ -20,7 +20,7 @@ IF %ERRORLEVEL% NEQ 0 (
 ) 
 echo Done.
 FOR %%i IN ("%downloadurl%") DO ( 
-    set git_latest_filename=%%~ni%%~xi 
+    set git_latest_filename=%%~ni%%~xi
 )
 
 
@@ -44,7 +44,7 @@ IF %ERRORLEVEL% NEQ 0 (
 ) 
 echo Done.
 FOR %%i IN ("%downloadurl%") DO ( 
-    set gcmw_latest_filename=%%~ni%%~xi 
+    set gcmw_latest_filename=%%~ni%%~xi
 )
 
 echo Generating autoinstall.bat
