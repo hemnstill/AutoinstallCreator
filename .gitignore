@@ -3,3 +3,6 @@ autoinstall.bat
 *.msi
 *.tmp
 *.zip
+*.bz2
+*.tar
+_curl/curl
