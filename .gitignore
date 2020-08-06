@@ -1,8 +1,10 @@
 autoinstall.bat
+autoinstall.sh
 *.exe
 *.msi
 *.tmp
 *.zip
 *.bz2
 *.tar
+*.deb
 _curl/curl

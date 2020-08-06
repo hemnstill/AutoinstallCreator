@@ -1,5 +1,6 @@
 #!/bin/bash
-function curl() { if [[ $(uname) == CYGWIN* ]];then ../curl.exe $@; else ../curl --cacert ../curl-ca-bundle.crt $@; fi }
+cd "$(dirname "${BASH_SOURCE[0]}")"
+function curl() { if [[ $(uname) == CYGWIN* ]];then ../curl.exe --fail $@; else ../curl --fail --cacert ../curl-ca-bundle.crt $@; fi }
 
 sourceforge_url=https://sourceforge.net/
 relative_path=projects/p7zip/files/p7zip
