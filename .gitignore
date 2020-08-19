@@ -1,10 +1,14 @@
 autoinstall.bat
 autoinstall.sh
 *.exe
+*.dll
+*.so
 *.msi
 *.tmp
 *.zip
 *.bz2
 *.tar
 *.deb
+*.7z
 _curl/curl
+_7z/7z
