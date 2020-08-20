@@ -10,5 +10,6 @@ autoinstall.sh
 *.tar
 *.deb
 *.7z
+*.php
 _curl/curl
 _7z/7z

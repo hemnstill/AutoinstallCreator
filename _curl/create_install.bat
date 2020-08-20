@@ -2,7 +2,7 @@
 pushd "%~dp0"
 set curl=..\curl --fail
 set grep=..\grep
-set p7z=..\7za
+set p7z=..\7z
 
 set latest_version=https://curl.haxx.se/windows/
 >raw_download_str.tmp (
