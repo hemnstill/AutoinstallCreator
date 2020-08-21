@@ -8,12 +8,12 @@ set latest_filename_dep=coreutils-dep-zip.php
 
 set downloadurl_bin=http://gnuwin32.sourceforge.net/downlinks/%latest_filename_bin%
 set downloadurl_dep=http://gnuwin32.sourceforge.net/downlinks/%latest_filename_dep%
-%curl% -L %downloadurl_bin% --remote-name
+%curl% --location %downloadurl_bin% --remote-name
 IF %ERRORLEVEL% NEQ 0 ( 
   echo Cannot get latest version 
   exit
 ) 
-%curl% -L %downloadurl_dep% --remote-name
+%curl% --location %downloadurl_dep% --remote-name
 IF %ERRORLEVEL% NEQ 0 ( 
   echo Cannot get latest version 
   exit

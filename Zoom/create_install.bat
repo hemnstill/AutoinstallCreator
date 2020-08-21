@@ -1,11 +1,11 @@
 @echo off
 pushd "%~dp0"
+set curl=..\curl --fail
+
 set downloadurl=https://zoom.us/client/latest/ZoomInstaller.exe
 echo Downloading: %latest_filename% %downloadurl% ...
-..\curl --fail --location %downloadurl% --remote-name
-IF %ERRORLEVEL% NEQ 0 ( 
-	exit
-) 
+%curl% --location %downloadurl% --remote-name
+IF %ERRORLEVEL% NEQ 0 ( exit ) 
 echo Done.
 
 FOR %%i IN ("%downloadurl%") DO (

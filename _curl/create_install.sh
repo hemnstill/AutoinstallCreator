@@ -4,9 +4,9 @@ function curl() { if [[ $(uname) == CYGWIN* ]];then ../curl.exe --fail $@; else 
 
 latest_version=https://api.github.com/repos/dtschan/curl-static/releases/latest
 echo Get latest version: $latest_version ...
-curl -L "$latest_version" > raw_download_str.tmp
+curl --location "$latest_version" > raw_download_str.tmp
 downloadurl=$(grep -Po "(?<=\"browser_download_url\": \").*curl(?=\")" raw_download_str.tmp)
-curl -L "$downloadurl" --remote-name
+curl --location "$downloadurl" --remote-name
 
 {
   echo '#!/bin/bash'

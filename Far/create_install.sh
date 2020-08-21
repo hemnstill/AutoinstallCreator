@@ -7,10 +7,10 @@ if [[ $codename == '' ]]; then echo 'Cannot get codename'; exit; else echo $code
 
 launchpad_api_url='https://api.launchpad.net/1.0'
 published_sources_url="$launchpad_api_url/~far2l-team/+archive/ubuntu/ppa?ws.op=getPublishedSources&distro_series=$launchpad_api_url/ubuntu/$codename&pocket=Release"
-curl --fail -L "$published_sources_url" > raw_download_str.tmp
+curl --fail --location "$published_sources_url" > raw_download_str.tmp
 sourcepub_url=$(grep -Po "(?<=\"self_link\": \")[^,]*(?=\")" raw_download_str.tmp | head -1)
-download_url=$(curl -L $sourcepub_url'?ws.op=binaryFileUrls' | grep -Po "(?<=\")[^,]+amd64.deb(?=\")" | head -1 )
-curl --fail -L $download_url --remote-name
+download_url=$(curl --location $sourcepub_url'?ws.op=binaryFileUrls' | grep -Po "(?<=\")[^,]+amd64.deb(?=\")" | head -1 )
+curl --fail --location $download_url --remote-name
 {
   echo '#!/bin/bash'
   echo 'cd "$(dirname "${BASH_SOURCE[0]}")"'

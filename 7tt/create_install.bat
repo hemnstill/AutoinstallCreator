@@ -1,11 +1,11 @@
 @echo off
 pushd "%~dp0"
+set curl=..\curl --fail
+
 set downloadurl=https://rammichael.com/downloads/7tt_setup.exe
 echo Downloading: %downloadurl% ...
-..\curl --fail --remote-name --location %downloadurl%
-IF %ERRORLEVEL% NEQ 0 ( 
-	exit
-) 
+%curl% --remote-name --location %downloadurl%
+IF %ERRORLEVEL% NEQ 0 ( exit ) 
 echo Done.
 
 FOR %%i IN ("%downloadurl%") DO (

@@ -1,12 +1,13 @@
 @echo off
 pushd "%~dp0"
+set curl=..\curl --fail
+
 set downloadurl=https://www.rapidee.com/download/RapidEE_setup.exe
 echo Downloading: %downloadurl% ...
-..\curl --fail --location %downloadurl% -O
-IF %ERRORLEVEL% NEQ 0 ( 
-	exit
-) 
+%curl% --location %downloadurl% --remote-name
+IF %ERRORLEVEL% NEQ 0 ( exit ) 
 echo Done.
+
 FOR %%i IN ("%downloadurl%") DO (
 	set latest_filename=%%~ni%%~xi
 )

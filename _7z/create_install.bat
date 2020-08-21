@@ -1,11 +1,13 @@
 @echo off
 pushd "%~dp0"
+set curl=..\curl --fail
+set grep=..\grep
 set p7z=..\7z.exe
 set cp=..\cp.exe
 
 set latest_version=https://www.7-zip.org/download.html
 >raw_download_str.tmp (
-  ..\curl -s %latest_version% | ..\grep --only-matching "[^ ]*x64.exe"
+  %curl% %latest_version% | %grep% --only-matching "[^ ]*x64.exe"
 )
 IF %ERRORLEVEL% NEQ 0 ( 
   echo Cannot get latest version 
@@ -15,10 +17,8 @@ IF %ERRORLEVEL% NEQ 0 (
 set /p downloadurl=< raw_download_str.tmp
 set downloadurl=https://www.7-zip.org/%downloadurl:~6%
 echo Downloading: %downloadurl% ...
-..\curl --fail --remote-name --location %downloadurl%
-IF %ERRORLEVEL% NEQ 0 ( 
-	exit
-) 
+%curl% --remote-name --location %downloadurl%
+IF %ERRORLEVEL% NEQ 0 ( exit ) 
 echo Done.
 
 FOR %%i IN ("%downloadurl%") DO (

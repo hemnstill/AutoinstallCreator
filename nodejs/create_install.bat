@@ -1,13 +1,14 @@
 @echo off
 pushd "%~dp0"
+set curl=..\curl --fail
 
 set latest_version=https://nodejs.org/dist/index.json
 echo Get latest lts versions: %latest_version% ...
 >raw_download_str.tmp (  
   if "%~1"=="" (
-    ..\curl -s %latest_version% | findstr /v /c:"\"lts\":false" | findstr /c:"\"win-x64-msi\""
+    %curl% %latest_version% | findstr /v /c:"\"lts\":false" | findstr /c:"\"win-x64-msi\""
   ) else (
-    ..\curl -s %latest_version% | findstr /v /c:"\"lts\":false" | findstr /c:"\"win-x64-msi\"" | findstr /c:"\"version\":\"v%~1\""
+    %curl% %latest_version% | findstr /v /c:"\"lts\":false" | findstr /c:"\"win-x64-msi\"" | findstr /c:"\"version\":\"v%~1\""
   )
 )
 
@@ -24,11 +25,10 @@ if "%node_version%" == "" (
 
 set downloadurl=https://nodejs.org/dist/%node_version%/node-%node_version%-x64.msi
 echo Downloading: %downloadurl% ...
-..\curl --fail --location %downloadurl% -O
-IF %ERRORLEVEL% NEQ 0 ( 
-	exit
-) 
+%curl% --location %downloadurl% --remote-name
+IF %ERRORLEVEL% NEQ 0 ( exit ) 
 echo Done.
+
 FOR %%i IN ("%downloadurl%") DO (
 	set latest_filename=%%~ni%%~xi
 )

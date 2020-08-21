@@ -6,7 +6,7 @@ set p7z=..\7z
 
 set latest_version=https://curl.haxx.se/windows/
 >raw_download_str.tmp (
-  %curl% -s %latest_version% | %grep% --only-matching "dl[^ ]*win64-mingw.zip"
+  %curl% %latest_version% | %grep% --only-matching "dl[^ ]*win64-mingw.zip"
 )
 IF %ERRORLEVEL% NEQ 0 ( 
   echo Cannot get latest version 
@@ -17,9 +17,7 @@ set /p downloadurl=< raw_download_str.tmp
 set downloadurl=%latest_version%%downloadurl%
 echo Downloading: %downloadurl% ...
 %curl% --remote-name --location %downloadurl%
-IF %ERRORLEVEL% NEQ 0 ( 
-  exit
-) 
+IF %ERRORLEVEL% NEQ 0 ( exit ) 
 echo Done.
 
 FOR %%i IN ("%downloadurl%") DO (

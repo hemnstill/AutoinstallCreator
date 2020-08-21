@@ -6,7 +6,7 @@ latest_versions_url=https://mirrors.edge.kernel.org/debian/pool/main/p/p7zip/
 tar_name=data.tar
 echo getting version list from $latest_versions_url ...
 download_url=$(curl -s $latest_versions_url | grep -Po "(?<=\")[^,]+amd64.deb(?=\")" | head -1)
-curl -L $latest_versions_url$download_url --remote-name
+curl --location $latest_versions_url$download_url --remote-name
 echo Done.
 
 {
