@@ -6,7 +6,7 @@ set latest_filename=telegramsetup.exe
 set downloadurl=https://telegram.org/dl/desktop/win
 echo Downloading: %downloadurl% ...
 %curl% --location %downloadurl% --output %latest_filename%
-IF %ERRORLEVEL% NEQ 0 ( exit ) 
+IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% ) 
 echo Done.
 
 echo Generating %latest_filename% autoinstall.bat

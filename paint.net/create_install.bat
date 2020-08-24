@@ -10,7 +10,7 @@ set base_url=https://www.dotpdn.com/downloads
 )
 IF %ERRORLEVEL% NEQ 0 ( 
   echo Cannot get latest version 
-  exit
+  exit /b %ERRORLEVEL%
 ) 
 
 set /p downloadurl=< raw_download_str.tmp
@@ -18,7 +18,7 @@ call set downloadurl=%%downloadurl:"=%%
 set downloadurl=%base_url%/%downloadurl%
 echo Downloading: %downloadurl% ...
 %curl% --remote-name --location %downloadurl%
-IF %ERRORLEVEL% NEQ 0 ( exit ) 
+IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% ) 
 echo Done.
 
 FOR %%i IN ("%downloadurl%") DO (

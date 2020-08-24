@@ -9,7 +9,7 @@ echo Get latest version: %latest_version% ...
 )
 IF %ERRORLEVEL% NEQ 0 ( 
 	echo Cannot get latest version 
-	exit
+	exit /b %ERRORLEVEL%
 ) 
 
 set /p telegraf_version= < raw_download_str.tmp
@@ -20,5 +20,5 @@ call set telegraf_version=%%telegraf_version:,=%%
 set downloadurl=https://dl.influxdata.com/telegraf/releases/telegraf-%telegraf_version%_windows_amd64.zip
 echo Downloading: %downloadurl% ...
 %curl% --location %downloadurl% --remote-name
-IF %ERRORLEVEL% NEQ 0 ( exit ) 
+IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% ) 
 echo Done.

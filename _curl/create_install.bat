@@ -10,14 +10,14 @@ set latest_version=https://curl.haxx.se/windows/
 )
 IF %ERRORLEVEL% NEQ 0 ( 
   echo Cannot get latest version 
-  exit
+  exit /b %ERRORLEVEL%
 ) 
 
 set /p downloadurl=< raw_download_str.tmp
 set downloadurl=%latest_version%%downloadurl%
 echo Downloading: %downloadurl% ...
 %curl% --remote-name --location %downloadurl%
-IF %ERRORLEVEL% NEQ 0 ( exit ) 
+IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% ) 
 echo Done.
 
 FOR %%i IN ("%downloadurl%") DO (

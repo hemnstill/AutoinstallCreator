@@ -20,13 +20,13 @@ for /f "tokens=2 delims=:," %%A in ("%download_str%") do (
 
 if "%node_version%" == "" (
   echo version "%~1" not found
-  exit
+  exit /b %ERRORLEVEL%
 )
 
 set downloadurl=https://nodejs.org/dist/%node_version%/node-%node_version%-x64.msi
 echo Downloading: %downloadurl% ...
 %curl% --location %downloadurl% --remote-name
-IF %ERRORLEVEL% NEQ 0 ( exit ) 
+IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% ) 
 echo Done.
 
 FOR %%i IN ("%downloadurl%") DO (

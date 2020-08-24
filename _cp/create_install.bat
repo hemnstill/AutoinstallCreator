@@ -11,12 +11,12 @@ set downloadurl_dep=http://gnuwin32.sourceforge.net/downlinks/%latest_filename_d
 %curl% --location %downloadurl_bin% --remote-name
 IF %ERRORLEVEL% NEQ 0 ( 
   echo Cannot get latest version 
-  exit
+  exit /b %ERRORLEVEL%
 ) 
 %curl% --location %downloadurl_dep% --remote-name
 IF %ERRORLEVEL% NEQ 0 ( 
   echo Cannot get latest version 
-  exit
+  exit /b %ERRORLEVEL%
 ) 
 echo Done.
 
