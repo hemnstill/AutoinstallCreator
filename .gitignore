@@ -13,3 +13,4 @@ autoinstall.sh
 *.php
 _curl/curl
 _7z/7z
+.tests/git_status.txt

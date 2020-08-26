@@ -4,18 +4,28 @@ set errors_count=0
 set "why_not= "
 set startswith=%1
 set action=%2
+set "need_check="
 
 if "%startswith%" == "!" ( 
   set why_not=not
   set startswith=%2
   set action=%3
 )
-if "%startswith%" == "" ( echo "startswith" does not set. Try '%~nx0 _' or '%~nx0 ! _')
+if "%startswith%" == "" ( echo "startswith" does not set. Try '%~nx0 _' or '%~nx0 ! _' )
 
-if not "%action%" == "create" if not "%action%" == "install" if not "%action%" == "show" if not "%action%" == "" (
+if not "%action%" == "create" ^
+if not "%action%" == "install" ^
+if not "%action%" == "checkinstall" ^
+if not "%action%" == "show" ^
+if not "%action%" == "" (
 	echo wrong "action": %action%
 	set errorlevel=1
 	exit /b %errorlevel%
+)
+
+if "%action%" == "checkinstall" (
+	set action=install
+	set "need_check=y"
 )
 
 for /D %%I in ("%~dp0..\*") do (
@@ -34,8 +44,21 @@ for /D %%I in ("%~dp0..\*") do (
 		) else ( endlocal )		
 	) else ( endlocal )
 )
+
+if defined need_check call :git_check
+
 goto :log_errors
 
+:git_check
+  pushd "%~dp0"
+  git status --porcelain | FIND "" /V > git_status.txt
+  set /p first_char_diff=< git_status.txt
+  if not "%first_char_diff%" == "" (
+    type git_status.txt
+    set /A "errors_count+=1" 
+  )
+  exit /b
+    
 :passed_test
   echo ^<^< Passed.
   exit /b
