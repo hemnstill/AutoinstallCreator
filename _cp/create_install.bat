@@ -22,7 +22,9 @@ echo Done.
 
 echo Generating %latest_filename_bin% autoinstall.bat
 >autoinstall.bat (
-  echo "%%~dp0%p7z%" e "%latest_filename_bin%" "-o%%~dp0.." cp.exe -aoa -r
-  echo "%%~dp0%p7z%" e "%latest_filename_dep%" "-o%%~dp0.." *.dll -aoa -r
+  echo pushd "%%~dp0"
+  echo "%p7z%" e "%latest_filename_bin%" "-o.." cp.exe -aoa -r
+  echo "%p7z%" e "%latest_filename_dep%" "-o.." *.dll -aoa -r
+  echo exit /b %%errorlevel%%
 )
 echo Done.

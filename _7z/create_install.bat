@@ -26,6 +26,8 @@ FOR %%i IN ("%downloadurl%") DO (
 )
 echo Generating %latest_filename% autoinstall.bat
 >autoinstall.bat (
-  echo "%%~dp0%p7z%" e "%latest_filename%" "-o%%~dp0" 7z.exe 7z.dll -aoa -r
-  echo "%%~dp0%cp%" -v 7z.* ../
+  echo pushd "%%~dp0"
+  echo "%p7z%" e "%latest_filename%" "-o." 7z.exe 7z.dll -aoa -r
+  echo "%cp%" -v 7z.* ../
+  echo exit /b %%errorlevel%%
 )

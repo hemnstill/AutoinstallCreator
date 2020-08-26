@@ -1,19 +1,37 @@
 @echo off
 pushd "%~dp0.."
 set errors_count=0
+set "why_not= "
+set startswith=%1
+set action=%2
+
+if "%startswith%" == "!" ( 
+  set why_not=not
+  set startswith=%2
+  set action=%3
+)
+if "%startswith%" == "" ( echo "startswith" does not set. Try '%~nx0 _' or '%~nx0 ! _')
+
+if not "%action%" == "create" if not "%action%" == "install" if not "%action%" == "show" if not "%action%" == "" (
+	echo wrong "action": %action%
+	set errorlevel=1
+	exit /b %errorlevel%
+)
 
 for /D %%I in ("%~dp0..\*") do (
 	set dirname=%%~nxI	
 	setlocal EnableDelayedExpansion
-	if not "!dirname:~0,1!" == "." (
-		set entry_point="%%~fI\create_install.bat"
-		if exist !entry_point! (			
-			for /f "delims=" %%E in (!entry_point!) do (
-				endlocal 	
-				echo ^>^> Test %%E
-				call %%E && call :passed_test || call :failed_test
+	set matched_dirname=%startswith%!dirname:%startswith%=!
+	if not "!dirname:~0,1!" == "." if %why_not% "!matched_dirname!" == "!dirname!" (
+		if exist "%%~fI\create_install.bat" (			
+			endlocal 	
+			echo ^>^> Test %%~fI
+			if "%action%" == "create" ( 
+			   call "%%~fI\create_install.bat" && call :passed_test || call :failed_test
+			) else if "%action%" == "install" (
+			   call "%%~fI\autoinstall.bat" && call :passed_test || call :failed_test
 			)
-		) else ( endlocal )
+		) else ( endlocal )		
 	) else ( endlocal )
 )
 goto :log_errors
