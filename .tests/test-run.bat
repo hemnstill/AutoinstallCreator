@@ -24,7 +24,6 @@ if not "%action%" == "" (
 )
 
 if "%action%" == "checkinstall" (
-	set action=install
 	set "need_check=y"
 )
 
@@ -40,6 +39,8 @@ for /D %%I in ("%~dp0..\*") do (
 			   call "%%~fI\create_install.bat" && call :passed_test || call :failed_test
 			) else if "%action%" == "install" (
 			   call "%%~fI\autoinstall.bat" && call :passed_test || call :failed_test
+			) else if "%action%" == "checkinstall" (
+				call "%%~fI\create_install.bat" && call "%%~fI\autoinstall.bat" && call :passed_test || call :failed_test
 			)
 		) else ( endlocal )		
 	) else ( endlocal )
