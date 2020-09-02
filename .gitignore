@@ -13,4 +13,6 @@ autoinstall.sh
 *.php
 _curl/curl
 _7z/7z
+uTorrent/*.lng
+uTorrent/uTorrent/
 .tests/git_status.txt
