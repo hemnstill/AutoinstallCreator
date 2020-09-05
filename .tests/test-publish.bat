@@ -18,7 +18,7 @@ if "%branch%"=="" (
   exit /b %errorlevel%
 )
 
->rclone.conf (
+>rclone.conf.tmp (
   echo [yandex-disk]
   echo type = yandex
   echo token = {"access_token":"%access_token%", "refresh_token":"%refresh_token%"}
@@ -26,12 +26,12 @@ if "%branch%"=="" (
 
 echo publish to latest_%branch% ...
 %rclone% --verbose --stats-one-line delete yandex-disk:builds/latest_%branch%/ --rmdirs --config rclone.conf
-%rclone% --verbose --stats-one-line --exclude .*/ --exclude rclone.conf --exclude create_install.* --exclude *.tmp copy ../ yandex-disk:builds/latest_%branch%/ --config rclone.conf
+%rclone% --verbose --stats-one-line --exclude .*/ --exclude *.tmp --exclude create_install.* copy ../ yandex-disk:builds/latest_%branch%/ --config rclone.conf.tmp
 
 if not "%version%"=="" ( 
   echo publish to %version%_%branch% ...
   %rclone% --verbose --stats-one-line purge yandex-disk:builds/%version%_%branch%/ --config rclone.conf
-  %rclone% --verbose --stats-one-line copy yandex-disk:builds/latest_%branch%/ yandex-disk:builds/%version%_%branch%/ --config rclone.conf
+  %rclone% --verbose --stats-one-line copy yandex-disk:builds/latest_%branch%/ yandex-disk:builds/%version%_%branch%/ --config rclone.conf.tmp
 )
 
 exit /b %errorlevel%
