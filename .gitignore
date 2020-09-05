@@ -15,5 +15,5 @@ autoinstall.sh
 _curl/curl
 _7z/7z
 uTorrent/*.lng
-uTorrent/uTorrent/
+.downloads/
 .tests/git_status.txt
