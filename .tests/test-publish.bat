@@ -9,6 +9,14 @@ if not exist %rclone% (
 
 set access_token=%~1
 set refresh_token=%~2
+set branch=%~3
+set version=%~4
+
+if "%branch%"=="" (
+  echo branch does not set
+  set errorlevel=1
+  exit /b %errorlevel%
+)
 
 >rclone.conf (
   echo [yandex-disk]
@@ -16,7 +24,14 @@ set refresh_token=%~2
   echo token = {"access_token":"%access_token%", "refresh_token":"%refresh_token%"}
 )
 
-%rclone% --verbose --stats-one-line delete yandex-disk:current/ --rmdirs --config rclone.conf
-%rclone% --verbose --stats-one-line --exclude .*/ --exclude rclone.conf copy ../ yandex-disk:current/ --config rclone.conf
+echo publish to latest_%branch% ...
+%rclone% --verbose --stats-one-line delete yandex-disk:builds/latest_%branch%/ --rmdirs --config rclone.conf
+%rclone% --verbose --stats-one-line --exclude .*/ --exclude rclone.conf --exclude create_install.* --exclude *.tmp copy ../ yandex-disk:builds/latest_%branch%/ --config rclone.conf
+
+if not "%version%"=="" ( 
+  echo publish to %version%_%branch% ...
+  %rclone% --verbose --stats-one-line purge yandex-disk:builds/%version%_%branch%/ --config rclone.conf
+  %rclone% --verbose --stats-one-line copy yandex-disk:builds/latest_%branch%/ yandex-disk:builds/%version%_%branch%/ --config rclone.conf
+)
 
 exit /b %errorlevel%
