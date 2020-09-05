@@ -1,5 +1,7 @@
 # AutoinstallCreator
+[![Public download link](https://img.shields.io/badge/-latest_master-blue)](https://yadi.sk/d/djo8ediyDdDXig)
 [![Build status](https://ci.appveyor.com/api/projects/status/3ox1tqup81x07e0q/branch/master?svg=true)](https://ci.appveyor.com/project/hemnstill/autoinstallcreator/branch/master)
+
 
 Download latest version and create autoinstall script for silent install. 
 
