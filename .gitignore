@@ -11,6 +11,7 @@ autoinstall.sh
 *.deb
 *.7z
 *.php
+*.conf
 _curl/curl
 _7z/7z
 uTorrent/*.lng
