@@ -5,13 +5,20 @@ set "why_not= "
 set startswith=%1
 set action=%2
 set "need_check="
+set external_args=%3
 
 if "%startswith%" == "!" ( 
   set why_not=not
   set startswith=%2
   set action=%3
+  set external_args=%4
 )
-if "%startswith%" == "" ( echo "startswith" does not set. Try '%~nx0 _' or '%~nx0 ! _' )
+if "%startswith%" == "" ( 
+  echo "startswith" does not set. Try: '%~nx0 _' or '%~nx0 ! _' 
+  echo Include syntax: '%~nx0 ^<startswith^> ^<command^>'
+  echo Exclude syntax: '%~nx0 ! ^<startswith^> ^<command^>'
+  echo Available commands: create, install, checkinstall, show
+)
 
 if not "%action%" == "create" ^
 if not "%action%" == "install" ^
@@ -36,11 +43,11 @@ for /D %%I in ("%~dp0..\*") do (
 			endlocal 	
 			echo ^>^> Test %%~fI
 			if "%action%" == "create" ( 
-			   call "%%~fI\create_install.bat" && call :passed_test || call :failed_test
+			   call "%%~fI\create_install.bat" %external_args% && call :passed_test || call :failed_test
 			) else if "%action%" == "install" (
 			   call "%%~fI\autoinstall.bat" && call :passed_test || call :failed_test
 			) else if "%action%" == "checkinstall" (
-				call "%%~fI\create_install.bat" && call "%%~fI\autoinstall.bat" && call :passed_test || call :failed_test
+				call "%%~fI\create_install.bat" %external_args% && call "%%~fI\autoinstall.bat" && call :passed_test || call :failed_test
 			)
 		) else ( endlocal )		
 	) else ( endlocal )
