@@ -37,12 +37,12 @@ IF %ERRORLEVEL% NEQ 0 (
 set /p download_url=< raw_download_str.tmp
 call set download_url=%%download_url:"=%%
 echo Download uTorrent from %download_url%
-%aria2c% --allow-overwrite=true --seed-time=0 --dir=.downloads %download_url%
+%aria2c% --allow-overwrite=true --seed-time=0 --dir=.tmp %download_url%
 
 echo Generating %latest_filename% autoinstall.bat
 
 >file_paths_list.tmp (
-  dir /s/b .downloads\uTorrent.exe
+  dir /s/b .tmp\uTorrent.exe
 )
 set /p first_file_path=< file_paths_list.tmp
 FOR %%I IN (%first_file_path%) DO (
