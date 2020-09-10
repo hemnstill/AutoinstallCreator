@@ -12,6 +12,7 @@ autoinstall.sh
 *.7z
 *.php
 *.conf
+.idea/
 _curl/curl
 _7z/7z
 uTorrent/*.lng

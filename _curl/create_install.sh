@@ -12,9 +12,9 @@ curl --location "$downloadurl" --remote-name
   echo '#!/bin/bash'
   echo 'cd "$(dirname "${BASH_SOURCE[0]}")"'
   echo 'function cp() { if [[ $(uname) == CYGWIN* ]];then ../cp.exe $@; else /usr/bin/cp $@; fi }'
-  echo "latest_name=$(basename -- "$downloadurl")"
-  echo 'cp -f ./$latest_name ../$latest_name'
-} > autoinstall.sh 
+  echo 'cp -f ./curl ../curl'
+  echo 'chmod +x ../curl'
+} > autoinstall.sh
 chmod +x ./autoinstall.sh
 
 echo Done.
