@@ -4,6 +4,8 @@ function curl() { if [[ $(uname) == MINGW64* ]];then ../curl.exe --fail $@; else
 
 download_url='https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
 curl --location $download_url --remote-name
+errorlevel=$?; if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
+
 {
   echo '#!/bin/bash'
   echo 'cd "$(dirname "${BASH_SOURCE[0]}")"'
