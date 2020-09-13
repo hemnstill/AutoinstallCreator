@@ -13,8 +13,8 @@ autoinstall.sh
 *.php
 *.conf
 .idea/
+.empty
 _curl/curl
 _7z/7z
 uTorrent/*.lng
-.downloads/
 .tests/git_status.txt
