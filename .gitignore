@@ -1,3 +1,9 @@
+# Ignore all
+*
+# Unignore all with extensions
+!*.*
+# Unignore all dirs
+!*/
 autoinstall.bat
 autoinstall.sh
 *.exe
@@ -12,9 +18,8 @@ autoinstall.sh
 *.7z
 *.php
 *.conf
+*.tar.xz
 .idea/
 .empty
-_curl/curl
-_7z/7z
 uTorrent/*.lng
 .tests/git_status.txt
