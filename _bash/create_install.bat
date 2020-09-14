@@ -20,6 +20,7 @@ set base_url=https://github.com/git-for-windows/git-sdk-64/raw/main/usr/bin
 %curl% --location %base_url%/chmod.exe --output usr\bin\chmod.exe
 %curl% --location %base_url%/head.exe --output usr\bin\head.exe
 %curl% --location %base_url%/basename.exe --output usr\bin\basename.exe
+%curl% --location %base_url%/sort.exe --output usr\bin\sort.exe
 
 %curl% --location %base_url%/bash.exe --output usr\bin\bash.exe
 %curl% --location %base_url%/../../mingw64/share/git/compat-bash.exe --output bin\bash.exe

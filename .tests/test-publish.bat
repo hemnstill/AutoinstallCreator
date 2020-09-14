@@ -6,16 +6,32 @@ if not exist %rclone% (
 	IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% )
 	pushd "%~dp0"
 )
+set sort=..\_bash\usr\bin\sort.exe
+if not exist %sort% (
+	call test-run.bat _bash create
+	IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% )
+	pushd "%~dp0"
+)
+
+set grep=..\grep
 
 set access_token=%~1
 set refresh_token=%~2
 set branch=%~3
-set version=%~4
-
 if "%branch%"=="" (
   echo branch does not set
   set errorlevel=1
   exit /b %errorlevel%
+)
+
+set version=%~4
+if "%version%"=="" (
+  set version=1.0.0
+)
+
+set root_dir=%~5
+if "%root_dir%"=="" (
+  set root_dir=builds
 )
 
 set rclone_config_name=rclone.conf.tmp
@@ -25,14 +41,28 @@ set rclone_config_name=rclone.conf.tmp
   echo token = {"access_token":"%access_token%", "refresh_token":"%refresh_token%"}
 )
 
-echo publish to latest_%branch% ...
-%rclone% --verbose --stats-one-line delete yandex-disk:builds/latest_%branch%/ --rmdirs --config %rclone_config_name%
-%rclone% --verbose --stats-one-line --exclude .*/ --exclude *.tmp --exclude create_install.* copy ../ yandex-disk:builds/latest_%branch%/ --config %rclone_config_name%
+echo publish to %version%_%branch% ...
+%rclone% --verbose --stats-one-line purge yandex-disk:%root_dir%/%version%_%branch%/ --config %rclone_config_name%
+%rclone% --verbose --stats-one-line --exclude .*/ --exclude *.tmp --exclude create_install.* copy ../ yandex-disk:%root_dir%/%version%_%branch%/ --config %rclone_config_name%
+IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% ) 
 
-if not "%version%"=="" ( 
-  echo publish to %version%_%branch% ...
-  %rclone% --verbose --stats-one-line purge yandex-disk:builds/%version%_%branch%/ --config %rclone_config_name%
-  %rclone% --verbose --stats-one-line copy yandex-disk:builds/latest_%branch%/ yandex-disk:builds/%version%_%branch%/ --config %rclone_config_name%
+echo copy %version%_%branch% to latest_%branch% ...
+%rclone% --verbose --stats-one-line delete --rmdirs yandex-disk:%root_dir%/latest_%branch%/ --config %rclone_config_name%
+%rclone% --verbose --stats-one-line copy yandex-disk:%root_dir%/%version%_%branch%/ yandex-disk:%root_dir%/latest_%branch%/ --config %rclone_config_name%
+IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% ) 
+
+echo cleanup
+%rclone% cleanup yandex-disk: --config %rclone_config_name%
+
+set obsolete_dirs=obsolete_dirs.tmp
+>%obsolete_dirs% (
+	%rclone% --verbose lsf yandex-disk:%root_dir% --config %rclone_config_name% | %grep% "1\.0\." | %sort% --version-sort --reverse | more +10
+)
+for /f "tokens=*" %%a in (%obsolete_dirs%) do (
+  if not "%%a"=="" (
+	echo purge obsolete version: %%a
+	%rclone% --verbose --stats-one-line purge yandex-disk:%root_dir%/%%a --config %rclone_config_name%
+  )
 )
 
 exit /b %errorlevel%
