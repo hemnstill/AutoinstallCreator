@@ -51,12 +51,9 @@ echo copy %version%_%branch% to latest_%branch% ...
 %rclone% --verbose --stats-one-line copy yandex-disk:%root_dir%/%version%_%branch%/ yandex-disk:%root_dir%/latest_%branch%/ --config %rclone_config_name%
 IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% ) 
 
-echo cleanup
-%rclone% cleanup yandex-disk: --config %rclone_config_name%
-
 set obsolete_dirs=obsolete_dirs.tmp
 >%obsolete_dirs% (
-	%rclone% --verbose lsf yandex-disk:%root_dir% --config %rclone_config_name% | %grep% "1\.0\." | %sort% --version-sort --reverse | more +10
+	%rclone% --verbose lsf yandex-disk:%root_dir%/ --config %rclone_config_name% | %grep% "1\.0\." | %sort% --version-sort --reverse | more +6
 )
 for /f "tokens=*" %%a in (%obsolete_dirs%) do (
   if not "%%a"=="" (
@@ -64,5 +61,8 @@ for /f "tokens=*" %%a in (%obsolete_dirs%) do (
 	%rclone% --verbose --stats-one-line purge yandex-disk:%root_dir%/%%a --config %rclone_config_name%
   )
 )
+
+echo cleanup
+%rclone% cleanup yandex-disk: --config %rclone_config_name%
 
 exit /b %errorlevel%
