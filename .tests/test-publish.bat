@@ -44,7 +44,7 @@ set rclone_config_name=rclone.conf.tmp
 
 echo publish to %version%_%branch% ...
 %rclone% --verbose --stats-one-line purge %storage_provider%:%root_dir%/%version%_%branch%/ --config %rclone_config_name%
-%rclone% --verbose --stats-one-line --exclude .*/ --exclude *.tmp --exclude create_install.* copy ../ %storage_provider%:%root_dir%/%version%_%branch%/ --config %rclone_config_name%
+%rclone% --verbose --stats-one-line --exclude-from .rclone-exclude  copy ../ %storage_provider%:%root_dir%/%version%_%branch%/ --config %rclone_config_name%
 IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% ) 
 
 echo copy %version%_%branch% to latest_%branch% ...
