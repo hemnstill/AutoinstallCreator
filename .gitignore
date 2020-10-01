@@ -19,6 +19,7 @@ autoinstall.sh
 *.php
 *.conf
 *.tar.xz
+*.tar.gz
 .idea/
 .empty
 uTorrent/*.lng
