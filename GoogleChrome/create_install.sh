@@ -9,7 +9,7 @@ errorlevel=$?; if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 {
   echo '#!/bin/bash'
   echo 'cd "$(dirname "${BASH_SOURCE[0]}")"'
-  echo dpkg -i $(basename -- "$download_url")
+  echo apt install ./$(basename -- "$download_url")
 } > autoinstall.sh
 chmod +x ./autoinstall.sh
 
