@@ -1,5 +1,6 @@
 @echo off
 pushd "%~dp0"
+set LC_ALL=en_US.UTF-8
 set rclone=..\rclone\rclone.exe
 if not exist %rclone% (
 	call test-run.bat rclone checkinstall
@@ -14,32 +15,43 @@ if not exist %sort% (
 )
 
 set grep=..\grep
+set curl=..\curl --fail
 
-set access_token=%~1
-set refresh_token=%~2
-set branch=%~3
+set client_id=%~1
+set client_secret=%~2
+set refresh_token=%~3
+set branch=%~4
 if "%branch%"=="" (
   echo branch does not set
   set errorlevel=1
   exit /b %errorlevel%
 )
 
-set version=%~4
+set version=%~5
 if "%version%"=="" (
   set version=1.0.0
 )
 
-set root_dir=%~5
+set root_dir=%~6
 if "%root_dir%"=="" (
   set root_dir=builds
 )
 
 set storage_provider=google-drive
 set rclone_config_name=rclone.conf.tmp
->%rclone_config_name% (
+echo get access_token ...
+>%rclone_config_name% ( %curl% --silent --request POST ^
+--data "client_id=%client_id%&client_secret=%client_secret%&refresh_token=%refresh_token%&grant_type=refresh_token" ^
+https://accounts.google.com/o/oauth2/token | %grep% -Po "(?<=""access_token"":\s"")[^,]+(?="")
+)
+IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% ) 
+
+echo generate %rclone_config_name% ...
+set /p access_token=< %rclone_config_name%
+>%rclone_config_name% (  
   echo [%storage_provider%]
   echo type = drive
-  echo token = {"access_token":"%access_token%", "refresh_token":"%refresh_token%"}
+  echo token = {"access_token":"%access_token%"}
 )
 
 echo publish to %version%_%branch% ...
