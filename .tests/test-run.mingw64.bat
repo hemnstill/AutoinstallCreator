@@ -1,10 +1,18 @@
 @echo off
-pushd "%~dp0"
-set bash=..\_bash\bin\bash.exe
+set test_run_bat="%~dp0..\.tests\test-run.bat"
+set test_run_sh="%~dp0..\.tests\test-run.sh"
+
+set bash="%~dp0..\_bash\bin\bash.exe"
 if not exist %bash% (
-	call ..\.tests\test-run.bat _bash create
+	call %test_run_bat% _bash create
 	IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% )
-	pushd "%~dp0"
 )
 
-%bash% test-run.sh %*
+set grep="%~dp0..\_grep\grep.exe"
+if not exist %grep% (
+	call %test_run_bat% _grep create
+	call %test_run_bat% _grep install
+	IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% )
+)
+
+%bash% %test_run_sh% %*
