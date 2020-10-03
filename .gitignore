@@ -20,6 +20,7 @@ autoinstall.sh
 *.conf
 *.tar.xz
 *.tar.gz
+*.tar.zst
 .idea/
 .empty
 uTorrent/*.lng
