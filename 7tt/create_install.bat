@@ -2,13 +2,13 @@
 pushd "%~dp0"
 set curl=..\curl --fail
 
-set downloadurl=https://rammichael.com/downloads/7tt_setup.exe
-echo Downloading: %downloadurl% ...
-%curl% --remote-name --location %downloadurl%
-IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% ) 
+set download_url=https://rammichael.com/downloads/7tt_setup.exe
+echo Downloading: %download_url% ...
+%curl% --remote-name --location %download_url%
+if %errorlevel% neq 0 ( exit /b %errorlevel% ) 
 echo Done.
 
-FOR %%i IN ("%downloadurl%") DO (
+for %%i in ("%download_url%") do (
 	set latest_filename=%%~ni%%~xi
 )
 echo Generating %latest_filename% autoinstall.bat

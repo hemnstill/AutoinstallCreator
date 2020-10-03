@@ -7,20 +7,20 @@ echo Get latest version: %latest_version% ...
 >raw_download_str.tmp (
 	%curl% %latest_version% | findstr /r /c:"browser_download_url.*64-bit.exe\""
 )
-IF %ERRORLEVEL% NEQ 0 ( 
+if %errorlevel% neq 0 ( 
 	echo Cannot get latest version 
-	exit /b %ERRORLEVEL%
+	exit /b %errorlevel%
 ) 
 
-set /p downloadurl= < raw_download_str.tmp
-call set downloadurl=%%downloadurl:"browser_download_url":=%%
-call set downloadurl=%%downloadurl:"=%%
-echo Downloading: %downloadurl% ...
-%curl% --remote-name --location %downloadurl%
-IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% ) 
+set /p download_url= < raw_download_str.tmp
+call set download_url=%%download_url:"browser_download_url":=%%
+call set download_url=%%download_url:"=%%
+echo Downloading: %download_url% ...
+%curl% --remote-name --location %download_url%
+if %errorlevel% neq 0 ( exit /b %errorlevel% ) 
 echo Done.
 
-FOR %%i IN ("%downloadurl%") DO ( 
+for %%i in ("%download_url%") do ( 
     set git_latest_filename=%%~ni%%~xi
 )
 
@@ -29,20 +29,20 @@ echo Get latest version: %latest_version% ...
 >raw_download_str.tmp (
 	%curl% %latest_version% | findstr /r /c:"browser_download_url.*.exe\""
 )
-IF %ERRORLEVEL% NEQ 0 ( 
+if %errorlevel% neq 0 ( 
 	echo Cannot get latest version 
-	exit /b %ERRORLEVEL%
+	exit /b %errorlevel%
 ) 
 
-set /p downloadurl= < raw_download_str.tmp
-call set downloadurl=%%downloadurl:"browser_download_url":=%%
-call set downloadurl=%%downloadurl:"=%%
-echo Downloading: %downloadurl% ...
-%curl% --remote-name --location %downloadurl%
-IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% ) 
+set /p download_url= < raw_download_str.tmp
+call set download_url=%%download_url:"browser_download_url":=%%
+call set download_url=%%download_url:"=%%
+echo Downloading: %download_url% ...
+%curl% --remote-name --location %download_url%
+if %errorlevel% neq 0 ( exit /b %errorlevel% ) 
 echo Done.
 
-FOR %%i IN ("%downloadurl%") DO ( 
+for %%i in ("%download_url%") do ( 
     set gcmw_latest_filename=%%~ni%%~xi
 )
 

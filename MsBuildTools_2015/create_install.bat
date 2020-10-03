@@ -3,10 +3,10 @@ pushd "%~dp0"
 set curl=..\curl --fail
 
 set latest_filename=BuildTools_Full.exe
-set downloadurl=https://go.microsoft.com/fwlink/?LinkId=615458
-echo Downloading: %latest_filename% %downloadurl% ...
-%curl% --fail --location %downloadurl% --output %latest_filename%
-IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% ) 
+set download_url=https://go.microsoft.com/fwlink/?LinkId=615458
+echo Downloading: %latest_filename% %download_url% ...
+%curl% --fail --location %download_url% --output %latest_filename%
+if %errorlevel% neq 0 ( exit /b %errorlevel% ) 
 echo Done.
 
 echo Generating %latest_filename% autoinstall.bat

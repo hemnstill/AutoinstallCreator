@@ -27,9 +27,9 @@ if "%~1"=="" (
 >raw_download_str.tmp (
   %curl% -s %lookup_base_url%%os_typeid% ^
   | %grep% -P --only-matching "(?s)<Name>Windows 10 64-bit</Name>.*?</Value>" | %grep% -P --only-matching "(?<=<Value>).+(?=</Value>)" ^
-  | FIND "" /V
+  | find "" /V
 )
-IF %ERRORLEVEL% NEQ 0 ( 
+if %errorlevel% neq 0 ( 
   echo Cannot find os_id
   exit /b %errorlevel% 
 ) 
@@ -39,9 +39,9 @@ echo "%os_name%" os_id: "%os_id%"
 >raw_download_str.tmp (
   %curl% -s %lookup_base_url%%product_series_typeid% ^
   | %grep% -P --only-matching "(?s)<Name>%product_series%</Name>.*?</Value>" | %grep% -P --only-matching "(?<=<Value>).+(?=</Value>)" ^
-  | FIND "" /V
+  | find "" /V
 )
-IF %ERRORLEVEL% NEQ 0 ( 
+if %errorlevel% neq 0 ( 
   echo Cannot find ps_id
   exit /b %errorlevel% 
 ) 
@@ -59,11 +59,11 @@ echo Get direct link from: "%result_url%"
 >result_url.tmp (
   %curl% --location %result_url% | %grep% --only-matching "[^&]*whql.exe" | %grep% -P --only-matching "(?<=url=).*"
 )
-set /p downloadurl=< result_url.tmp
-echo Download driver: "%download_base_url%%downloadurl%"
-%curl% --location %download_base_url%%downloadurl% --remote-name
+set /p download_url=< result_url.tmp
+echo Download driver: "%download_base_url%%download_url%"
+%curl% --location %download_base_url%%download_url% --remote-name
 
-FOR %%i IN ("%downloadurl%") DO (
+for %%i in ("%download_url%") do (
 	set latest_filename=%%~ni%%~xi
 )
 

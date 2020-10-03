@@ -8,7 +8,7 @@ if not exist mingw64\bin\ mkdir mingw64\bin\
 type NUL > mingw64\bin\.empty
 if not exist bin\ mkdir bin\
 if not exist usr\bin\ mkdir usr\bin\
-IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% ) 
+if %errorlevel% neq 0 ( exit /b %errorlevel% ) 
 
 set base_url=https://github.com/git-for-windows/git-sdk-64/raw/main/usr/bin
 %curl% --location %base_url%/msys-2.0.dll --output usr\bin\msys-2.0.dll
@@ -25,4 +25,4 @@ set base_url=https://github.com/git-for-windows/git-sdk-64/raw/main/usr/bin
 %curl% --location %base_url%/bash.exe --output usr\bin\bash.exe
 %curl% --location %base_url%/../../mingw64/share/git/compat-bash.exe --output bin\bash.exe
 
-exit /b %ERRORLEVEL%
+exit /b %errorlevel%

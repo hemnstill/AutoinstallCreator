@@ -6,8 +6,8 @@ function grep() { if [[ $(uname) == MINGW64* ]];then ../grep.exe $@; else /bin/g
 
 latest_version=https://api.github.com/repos/dtschan/curl-static/releases/latest
 echo Get latest version: $latest_version ...
-downloadurl=$(curl --silent --location "$latest_version" | grep -Po '(?<="browser_download_url":\s").*curl(?=")')
-curl --location "$downloadurl" --remote-name
+download_url=$(curl --silent --location "$latest_version" | grep -Po '(?<="browser_download_url":\s").*curl(?=")')
+curl --location "$download_url" --remote-name
 errorlevel=$?; if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 
 {

@@ -20,16 +20,16 @@ for /f "tokens=2 delims=:," %%A in ("%download_str%") do (
 
 if "%node_version%" == "" (
   echo version "%~1" not found
-  exit /b %ERRORLEVEL%
+  exit /b %errorlevel%
 )
 
-set downloadurl=https://nodejs.org/dist/%node_version%/node-%node_version%-x64.msi
-echo Downloading: %downloadurl% ...
-%curl% --location %downloadurl% --remote-name
-IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% ) 
+set download_url=https://nodejs.org/dist/%node_version%/node-%node_version%-x64.msi
+echo Downloading: %download_url% ...
+%curl% --location %download_url% --remote-name
+if %errorlevel% neq 0 ( exit /b %errorlevel% ) 
 echo Done.
 
-FOR %%i IN ("%downloadurl%") DO (
+for %%i in ("%download_url%") do (
 	set latest_filename=%%~ni%%~xi
 )
 

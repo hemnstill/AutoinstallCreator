@@ -3,10 +3,10 @@ pushd "%~dp0"
 set curl=..\curl --fail
 
 set latest_filename=X-MouseButtonControlSetup.exe
-set downloadurl=https://www.highrez.co.uk/scripts/download.asp?package=XMouse
-echo Downloading: %latest_filename% %downloadurl% ...
-%curl% --location %downloadurl% --output %latest_filename%
-IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% ) 
+set download_url=https://www.highrez.co.uk/scripts/download.asp?package=XMouse
+echo Downloading: %latest_filename% %download_url% ...
+%curl% --location %download_url% --output %latest_filename%
+if %errorlevel% neq 0 ( exit /b %errorlevel% ) 
 echo Done.
 
 echo Generating %latest_filename% autoinstall.bat

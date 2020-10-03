@@ -3,7 +3,7 @@ pushd "%~dp0"
 set aria2c=..\aria2\aria2c.exe
 if not exist %aria2c% (
 	call ..\.tests\test-run.bat aria2 checkinstall
-	IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% )
+	if %errorlevel% neq 0 ( exit /b %errorlevel% )
 	pushd "%~dp0"
 )
 set curl=..\curl --fail
@@ -16,9 +16,9 @@ echo Get proxy from %latest_version%
   %curl% --location %latest_version% | %grep% "return ""PROXY" | %grep% --only-matching "[^ ]*;"
 )
 
-IF %ERRORLEVEL% NEQ 0 ( 
+if %errorlevel% neq 0 ( 
   echo Cannot get proxy
-  exit /b %ERRORLEVEL%
+  exit /b %errorlevel%
 )
 
 set /p proxy_from_vpn= < raw_download_str.tmp
@@ -29,9 +29,9 @@ echo Download topic %download_url% using proxy: %proxy_from_vpn%
   %curl% %download_url% --proxy %proxy_from_vpn% | %grep% --only-matching """magnet:?xt[^ ]*"""
 ) 
 
-IF %ERRORLEVEL% NEQ 0 ( 
+if %errorlevel% neq 0 ( 
   echo Cannot get proxy
-  exit /b %ERRORLEVEL%
+  exit /b %errorlevel%
 )
 
 set /p download_url=< raw_download_str.tmp
@@ -45,10 +45,10 @@ echo Generating %latest_filename% autoinstall.bat
   dir /s/b .tmp\uTorrent.exe
 )
 set /p first_file_path=< file_paths_list.tmp
-FOR %%I IN (%first_file_path%) DO (
+for %%I in (%first_file_path%) do (
 	%cp% -v %%~dpI%%~nI.* .
 )
-IF %ERRORLEVEL% NEQ 0 ( exit /b %errorlevel% )
+if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 >autoinstall.bat (
     echo pushd "%%~dp0"

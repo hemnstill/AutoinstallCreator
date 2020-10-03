@@ -59,7 +59,7 @@ goto :log_errors
 
 :git_check
   pushd "%~dp0"
-  git status --porcelain | FIND "" /V > git_status.txt
+  git status --porcelain | find "" /V > git_status.txt
   set /p first_char_diff=< git_status.txt
   if not "%first_char_diff%" == "" (
     type git_status.txt
@@ -73,7 +73,7 @@ goto :log_errors
 
 :failed_test
   echo ^<^< Failed.
-  SET /A "errors_count+=1"
+  set /A "errors_count+=1"
   exit /b
   
 :log_errors

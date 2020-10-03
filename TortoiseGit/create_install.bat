@@ -7,19 +7,19 @@ set latest_version=https://tortoisegit.org/download/
 >raw_download_str.tmp (
   %curl% %latest_version% | %grep% --only-matching "download[^ ]*64bit.msi"
 )
-IF %ERRORLEVEL% NEQ 0 ( 
+if %errorlevel% neq 0 ( 
   echo Cannot get latest version 
-  exit /b %ERRORLEVEL%
+  exit /b %errorlevel%
 ) 
 
-set /p downloadurl=< raw_download_str.tmp
-set downloadurl=https://%downloadurl%
-echo Downloading: %downloadurl% ...
-%curl% --remote-name --location %downloadurl%
-IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% ) 
+set /p download_url=< raw_download_str.tmp
+set download_url=https://%download_url%
+echo Downloading: %download_url% ...
+%curl% --remote-name --location %download_url%
+if %errorlevel% neq 0 ( exit /b %errorlevel% ) 
 echo Done.
 
-FOR %%i IN ("%downloadurl%") DO (
+for %%i in ("%download_url%") do (
 	set latest_filename=%%~ni%%~xi
 )
 echo Generating %latest_filename% autoinstall.bat

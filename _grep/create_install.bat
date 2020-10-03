@@ -10,9 +10,9 @@ set base_url=https://github.com/git-for-windows/git-sdk-64/raw/main/usr/bin
 %curl% --location %base_url%/msys-pcre-1.dll --remote-name
 %curl% --location %base_url%/grep.exe --remote-name
 
-IF %ERRORLEVEL% NEQ 0 ( 
+if %errorlevel% neq 0 ( 
   echo Cannot get latest version 
-  exit /b %ERRORLEVEL%
+  exit /b %errorlevel%
 ) 
 
 echo Generating %latest_filename% autoinstall.bat

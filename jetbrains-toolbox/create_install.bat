@@ -10,18 +10,18 @@ echo Get latest version: %api_url% ...
   %curl% %api_url% | %grep% -Po "(?<=""link"":"")[^,]+\.exe(?="")
 )
 
-IF %ERRORLEVEL% NEQ 0 ( 
+if %errorlevel% neq 0 ( 
   echo Cannot get latest version 
-  exit /b %ERRORLEVEL%
+  exit /b %errorlevel%
 ) 
 
 set /p download_url=< raw_download_str.tmp
 echo Downloading: %download_url% ...
 %curl% --location "%download_url%" --remote-name
-IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% )
+if %errorlevel% neq 0 ( exit /b %errorlevel% )
 echo Done.
 
-FOR %%i IN ("%download_url%") DO (
+for %%i in ("%download_url%") do (
 	set latest_filename=%%~ni%%~xi
 )
 echo Generating %latest_filename% autoinstall.bat

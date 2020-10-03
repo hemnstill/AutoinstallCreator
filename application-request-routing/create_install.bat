@@ -8,16 +8,16 @@ set latest_version=https://www.iis.net/downloads/microsoft/application-request-r
 >raw_download_str.tmp (
   %curl% %latest_version% | %grep% -Po "(?<=<a\shref="")[^\s]*(?="">x64)
 )
-IF %ERRORLEVEL% NEQ 0 ( 
+if %errorlevel% neq 0 ( 
   echo Cannot get latest version 
-  exit /b %ERRORLEVEL%
+  exit /b %errorlevel%
 ) 
 
-set /p downloadurl=< raw_download_str.tmp
+set /p download_url=< raw_download_str.tmp
 set latest_filename=requestRouter_amd64.msi
-echo Downloading: %downloadurl% ...
-%curl% --location "%downloadurl%" --output %latest_filename%
-IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% ) 
+echo Downloading: %download_url% ...
+%curl% --location "%download_url%" --output %latest_filename%
+if %errorlevel% neq 0 ( exit /b %errorlevel% ) 
 echo Done.
 
 echo Generating %latest_filename% autoinstall.bat

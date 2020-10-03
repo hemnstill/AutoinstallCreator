@@ -8,25 +8,25 @@ set base_url=https://www.dotpdn.com/downloads
 >raw_download_str.tmp (
   %curl% %base_url%/pdn.html | %grep% --only-matching """[^ ]*install.zip"""
 )
-IF %ERRORLEVEL% NEQ 0 ( 
+if %errorlevel% neq 0 ( 
   echo Cannot get latest version 
-  exit /b %ERRORLEVEL%
+  exit /b %errorlevel%
 ) 
 
-set /p downloadurl=< raw_download_str.tmp
-call set downloadurl=%%downloadurl:"=%%
-set downloadurl=%base_url%/%downloadurl%
-echo Downloading: %downloadurl% ...
-%curl% --remote-name --location %downloadurl%
-IF %ERRORLEVEL% NEQ 0 ( exit /b %ERRORLEVEL% ) 
+set /p download_url=< raw_download_str.tmp
+call set download_url=%%download_url:"=%%
+set download_url=%base_url%/%download_url%
+echo Downloading: %download_url% ...
+%curl% --remote-name --location %download_url%
+if %errorlevel% neq 0 ( exit /b %errorlevel% ) 
 echo Done.
 
-FOR %%i IN ("%downloadurl%") DO (
+for %%i in ("%download_url%") do (
 	set latest_filename=%%~ni%%~xi
 )
 %p7z% e %latest_filename% -aoa
 
-FOR %%i IN ("%downloadurl%") DO (
+for %%i in ("%download_url%") do (
 	set latest_filename=%%~ni.exe
 )
 echo Generating %latest_filename% autoinstall.bat
