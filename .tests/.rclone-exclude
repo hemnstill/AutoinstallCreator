@@ -1,5 +1,5 @@
 .*/
 *.tmp
-*.tar*
+*.tar
 *.zip
 create_install.*
