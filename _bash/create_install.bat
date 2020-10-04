@@ -9,7 +9,7 @@ if not exist mingw64\bin\ mkdir mingw64\bin\
 type NUL > mingw64\bin\.empty
 if not exist bin\ mkdir bin\
 if not exist usr\bin\ mkdir usr\bin\
-if %errorlevel% neq 0 ( exit /b %errorlevel% ) 
+if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 set base_url=https://github.com/git-for-windows/git-sdk-64/raw/main/usr/bin
 %cp% ..\msys-*.dll usr\bin\

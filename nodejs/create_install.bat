@@ -4,7 +4,7 @@ set curl=..\curl --fail
 
 set latest_version=https://nodejs.org/dist/index.json
 echo Get latest lts versions: %latest_version% ...
->raw_download_str.tmp (  
+>raw_download_str.tmp (
   if "%~1"=="" (
     %curl% %latest_version% | findstr /v /c:"\"lts\":false" | findstr /c:"\"win-x64-msi\""
   ) else (
@@ -26,7 +26,7 @@ if "%node_version%" == "" (
 set download_url=https://nodejs.org/dist/%node_version%/node-%node_version%-x64.msi
 echo Downloading: %download_url% ...
 %curl% --location %download_url% --remote-name
-if %errorlevel% neq 0 ( exit /b %errorlevel% ) 
+if %errorlevel% neq 0 ( exit /b %errorlevel% )
 echo Done.
 
 for %%i in ("%download_url%") do (

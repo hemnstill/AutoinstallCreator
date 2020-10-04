@@ -10,10 +10,10 @@ echo Get latest version: %api_url% ...
   %curl% %api_url% | %grep% -Po "(?<=""link"":"")[^,]+\.exe(?="")
 )
 
-if %errorlevel% neq 0 ( 
-  echo Cannot get latest version 
+if %errorlevel% neq 0 (
+  echo Cannot get latest version
   exit /b %errorlevel%
-) 
+)
 
 set /p download_url=< raw_download_str.tmp
 echo Downloading: %download_url% ...

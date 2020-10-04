@@ -16,7 +16,7 @@ echo Get proxy from %latest_version%
   %curl% --location %latest_version% | %grep% "return ""PROXY" | %grep% --only-matching "[^ ]*;"
 )
 
-if %errorlevel% neq 0 ( 
+if %errorlevel% neq 0 (
   echo Cannot get proxy
   exit /b %errorlevel%
 )
@@ -27,9 +27,9 @@ set download_url=https://rutracker.org/forum/viewtopic.php?t=5181383
 echo Download topic %download_url% using proxy: %proxy_from_vpn%
 >raw_download_str.tmp (
   %curl% %download_url% --proxy %proxy_from_vpn% | %grep% --only-matching """magnet:?xt[^ ]*"""
-) 
+)
 
-if %errorlevel% neq 0 ( 
+if %errorlevel% neq 0 (
   echo Cannot get proxy
   exit /b %errorlevel%
 )
@@ -54,4 +54,3 @@ if %errorlevel% neq 0 ( exit /b %errorlevel% )
     echo pushd "%%~dp0"
 	echo uTorrent.exe /S
 )
-

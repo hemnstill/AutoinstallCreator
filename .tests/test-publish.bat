@@ -44,11 +44,11 @@ echo get access_token ...
 --data "client_id=%client_id%&client_secret=%client_secret%&refresh_token=%refresh_token%&grant_type=refresh_token" ^
 https://accounts.google.com/o/oauth2/token | %grep% -Po "(?<=""access_token"":\s"")[^,]+(?="")
 )
-if %errorlevel% neq 0 ( exit /b %errorlevel% ) 
+if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 echo generate %rclone_config_name% ...
 set /p access_token=< %rclone_config_name%
->%rclone_config_name% (  
+>%rclone_config_name% (
   echo [%storage_provider%]
   echo type = drive
   echo token = {"access_token":"%access_token%"}
@@ -57,12 +57,12 @@ set /p access_token=< %rclone_config_name%
 echo publish to %version%_%branch% ...
 %rclone% --verbose --stats-one-line purge %storage_provider%:%root_dir%/%version%_%branch%/ --config %rclone_config_name%
 %rclone% --verbose --stats-one-line --exclude-from .rclone-exclude  copy ../ %storage_provider%:%root_dir%/%version%_%branch%/ --config %rclone_config_name%
-if %errorlevel% neq 0 ( exit /b %errorlevel% ) 
+if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 echo copy %version%_%branch% to latest_%branch% ...
 %rclone% --verbose --stats-one-line delete --rmdirs %storage_provider%:%root_dir%/latest_%branch%/ --config %rclone_config_name%
 %rclone% --verbose --stats-one-line copy %storage_provider%:%root_dir%/%version%_%branch%/ %storage_provider%:%root_dir%/latest_%branch%/ --config %rclone_config_name%
-if %errorlevel% neq 0 ( exit /b %errorlevel% ) 
+if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 set obsolete_dirs=obsolete_dirs.tmp
 >%obsolete_dirs% (

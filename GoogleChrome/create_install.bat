@@ -5,7 +5,7 @@ set curl=..\curl --fail
 set download_url=https://dl.google.com/chrome/install/GoogleChromeStandaloneEnterprise64.msi
 echo Downloading: %download_url% ...
 %curl% --remote-name --location %download_url%
-if %errorlevel% neq 0 ( exit /b %errorlevel% ) 
+if %errorlevel% neq 0 ( exit /b %errorlevel% )
 echo Done.
 
 for %%i in ("%download_url%") do (

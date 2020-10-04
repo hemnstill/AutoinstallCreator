@@ -5,7 +5,7 @@ set curl=..\curl --fail
 set download_url=https://schinagl.priv.at/nt/hardlinkshellext/HardLinkShellExt_X64.exe
 echo Downloading: %download_url% ...
 %curl% --location %download_url% --remote-name
-if %errorlevel% neq 0 ( exit /b %errorlevel% ) 
+if %errorlevel% neq 0 ( exit /b %errorlevel% )
 echo Done.
 
 for %%i in ("%download_url%") do (

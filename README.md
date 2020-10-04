@@ -8,7 +8,7 @@
 [![Public download link](https://img.shields.io/badge/-ubuntu-dd4814)](https://ubuntu.com/)
 [![Build status](https://ci.appveyor.com/api/projects/status/bxpp6p5d55ei504c/branch/master?svg=true)](https://ci.appveyor.com/project/hemnstill/autoinstallcreator-ubuntu/branch/master)
 
-Download latest version and create autoinstall script for silent install. 
+Download latest version and create autoinstall script for silent install.
 
 ## How to create autoinstall.bat:
 * run `<Application>/create_install.bat`. Batch script downloads latest version and creates autoinstall.bat.
@@ -21,4 +21,3 @@ run `<Application>/autoinstall.bat`
 * cp 5.3.0.1936 http://gnuwin32.sourceforge.net/packages/coreutils.htm
 * curl 7.71.1.0 https://curl.haxx.se/windows/
 * grep 3.1 https://github.com/git-for-windows/git-sdk-64/tree/main/usr/bin
-* findstr - grep alternative for windows

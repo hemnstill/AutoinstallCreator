@@ -5,7 +5,7 @@ set curl=..\curl --fail
 set download_url=https://rammichael.com/downloads/7tt_setup.exe
 echo Downloading: %download_url% ...
 %curl% --remote-name --location %download_url%
-if %errorlevel% neq 0 ( exit /b %errorlevel% ) 
+if %errorlevel% neq 0 ( exit /b %errorlevel% )
 echo Done.
 
 for %%i in ("%download_url%") do (

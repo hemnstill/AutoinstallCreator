@@ -18,7 +18,7 @@ cp="cp" && [[ $(uname) == MINGW64* ]] && cp="../cp.exe"
 "$p7zip" e data.tar "-o." 7z 7z.so -aoa -r
 "$cp" -v ./{7z,7z.so} ../
 chmod +x ../7z' "$download_url"
-} > autoinstall.sh 
+} > autoinstall.sh
 chmod +x ./autoinstall.sh
 
 echo Done.

@@ -7,16 +7,16 @@ set latest_version=https://www.iis.net/downloads/microsoft/web-deploy
 >raw_download_str.tmp (
   %curl% %latest_version% | %grep% --only-matching """[^ ]*amd64_en-US.msi"""
 )
-if %errorlevel% neq 0 ( 
-  echo Cannot get latest version 
+if %errorlevel% neq 0 (
+  echo Cannot get latest version
   exit /b %errorlevel%
-) 
+)
 
 set /p download_url=< raw_download_str.tmp
 call set download_url=%%download_url:"=%%
 echo Downloading: %download_url% ...
 %curl% --remote-name --location %download_url%
-if %errorlevel% neq 0 ( exit /b %errorlevel% ) 
+if %errorlevel% neq 0 ( exit /b %errorlevel% )
 echo Done.
 
 for %%i in ("%download_url%") do (

@@ -5,7 +5,7 @@ set LC_ALL=en_US.UTF-8
 set grep=..\grep
 
 set lang=en-us
-rem dhc mode. 
+rem dhc mode.
 set dtc_id=0
 set product_series_typeid=2
 set os_typeid=4
@@ -29,10 +29,10 @@ if "%~1"=="" (
   | %grep% -P --only-matching "(?s)<Name>Windows 10 64-bit</Name>.*?</Value>" | %grep% -P --only-matching "(?<=<Value>).+(?=</Value>)" ^
   | find "" /V
 )
-if %errorlevel% neq 0 ( 
+if %errorlevel% neq 0 (
   echo Cannot find os_id
-  exit /b %errorlevel% 
-) 
+  exit /b %errorlevel%
+)
 set /p os_id=< raw_download_str.tmp
 echo "%os_name%" os_id: "%os_id%"
 
@@ -41,10 +41,10 @@ echo "%os_name%" os_id: "%os_id%"
   | %grep% -P --only-matching "(?s)<Name>%product_series%</Name>.*?</Value>" | %grep% -P --only-matching "(?<=<Value>).+(?=</Value>)" ^
   | find "" /V
 )
-if %errorlevel% neq 0 ( 
+if %errorlevel% neq 0 (
   echo Cannot find ps_id
-  exit /b %errorlevel% 
-) 
+  exit /b %errorlevel%
+)
 set /p ps_id=< raw_download_str.tmp
 echo "%product_series%" ps_id: "%ps_id%"
 
