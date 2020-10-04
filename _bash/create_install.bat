@@ -1,6 +1,7 @@
 @echo off
 pushd "%~dp0"
 set curl=..\curl --fail
+set cp=..\cp -v
 
 if not exist tmp mkdir tmp\
 type NUL > tmp\.empty
@@ -11,9 +12,7 @@ if not exist usr\bin\ mkdir usr\bin\
 if %errorlevel% neq 0 ( exit /b %errorlevel% ) 
 
 set base_url=https://github.com/git-for-windows/git-sdk-64/raw/main/usr/bin
-%curl% --location %base_url%/msys-2.0.dll --output usr\bin\msys-2.0.dll
-%curl% --location %base_url%/msys-iconv-2.dll  --output usr\bin\msys-iconv-2.dll
-%curl% --location %base_url%/msys-intl-8.dll --output usr\bin\msys-intl-8.dll
+%cp% ..\msys-*.dll usr\bin\
 %curl% --location %base_url%/uname.exe --output usr\bin\uname.exe
 %curl% --location %base_url%/ls.exe --output usr\bin\ls.exe
 %curl% --location %base_url%/dirname.exe --output usr\bin\dirname.exe

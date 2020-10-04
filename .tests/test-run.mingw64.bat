@@ -8,11 +8,4 @@ if not exist %bash% (
 	if %errorlevel% neq 0 ( exit /b %errorlevel% )
 )
 
-set grep="%~dp0..\_grep\grep.exe"
-if not exist %grep% (
-	call %test_run_bat% _grep create
-	call %test_run_bat% _grep install
-	if %errorlevel% neq 0 ( exit /b %errorlevel% )
-)
-
 %bash% %test_run_sh% %*
