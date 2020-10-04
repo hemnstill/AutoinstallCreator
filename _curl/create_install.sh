@@ -1,21 +1,20 @@
 #!/bin/bash
 cd "$(dirname "${BASH_SOURCE[0]}")"
 export LC_ALL=en_US.UTF-8
-function curl() { if [[ $(uname) == MINGW64* ]];then ../curl.exe --fail $@; else ../curl --fail --cacert ../curl-ca-bundle.crt $@; fi }
-function grep() { if [[ $(uname) == MINGW64* ]];then ../grep.exe $@; else /bin/grep $@; fi }
+curl="../curl --fail --cacert ../curl-ca-bundle.crt" && [[ $(uname) == MINGW64* ]] && curl="../curl.exe --fail"
+grep="grep" && [[ $(uname) == MINGW64* ]] && grep="../grep.exe"
 
 latest_version=https://api.github.com/repos/dtschan/curl-static/releases/latest
 echo Get latest version: $latest_version ...
-download_url=$(curl --silent --location "$latest_version" | grep -Po '(?<="browser_download_url":\s").*curl(?=")')
-curl --location "$download_url" --remote-name
+download_url=$($curl --silent --location "$latest_version" | "$grep" -Po '(?<="browser_download_url":\s").*curl(?=")')
+$curl --location "$download_url" --remote-name
 errorlevel=$?; if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 
-{
-  echo '#!/bin/bash'
-  echo 'cd "$(dirname "${BASH_SOURCE[0]}")"'
-  echo 'function cp() { if [[ $(uname) == MINGW64* ]];then ../cp.exe $@; else /bin/cp $@; fi }'
-  echo 'cp -fv ./curl ../curl'
-  echo 'chmod +x ../curl'
+{ printf '#!/bin/bash
+cd "$(dirname "${BASH_SOURCE[0]}")"
+cp="cp" && [[ $(uname) == MINGW64* ]] && cp="../cp.exe"
+"$cp" -fv ./curl ../curl
+chmod +x ../curl'
 } > autoinstall.sh
 chmod +x ./autoinstall.sh
 
