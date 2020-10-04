@@ -8,13 +8,13 @@ zstd="zstd" && [[ $(uname) == MINGW64* ]] && {
   zstd="../_zstd/zstd.exe";
   [[ ! -f "$zstd" ]] && { "../_zstd/create_install.sh"; cd "$(dirname "${BASH_SOURCE[0]}")"; };
 }
-[[ $(command -v $zstd) == '' ]] && { echo "zstd is not available. Try 'sudo apt install zstd'"; exit 0; }
+[[ $(command -v $zstd) == '' ]] && { echo "zstd is not available. Try 'sudo apt install zstd'"; exit 1; }
 
 bsdtar="bsdtar" && [[ $(uname) == MINGW64* ]] && {
   bsdtar="../_bsdtar/bsdtar.exe";
   [[ ! -f "$bsdtar" ]] && { "../_bsdtar/create_install.sh"; cd "$(dirname "${BASH_SOURCE[0]}")"; };
 }
-[[ $(command -v $bsdtar) == '' ]] && { echo "bsdtar is not available. Try 'sudo apt install libarchive-tools'"; exit 0; }
+[[ $(command -v $bsdtar) == '' ]] && { echo "bsdtar is not available. Try 'sudo apt install libarchive-tools'"; exit 1; }
 
 python_version=$1
 if [[ -z "$python_version" ]]; then
@@ -22,6 +22,8 @@ if [[ -z "$python_version" ]]; then
   echo "python_version does not set. get latest from: $latest_version_url ..."
   python_version=$($curl --silent --location "$latest_version_url" | "$grep" -Po '(?<=href="http://docs\.python\.org/release/)[\d\.]+(?=/")' | head -1)
 fi
+[[ -z $python_version ]] && { echo 'Cannot get python_version'; exit 1; }
+
 echo "-> $python_version"
 
 api_url='https://api.github.com/repos/indygreg/python-build-standalone/releases'
