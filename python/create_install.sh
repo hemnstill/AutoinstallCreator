@@ -46,11 +46,11 @@ errorlevel=$?; if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 "$bsdtar" -cf - --include='python/install' @"$tar_file_name" \
 | cat - \
 | tar f - --wildcards \
+--delete "*.whl" \
+--delete "*.exe" \
 --delete "*/config-*" \
 --delete "*/test/*" \
 --delete "*/tests/*" \
 --delete "*/idle_test/*" \
 --delete "*/site-packages/*" \
---delete "*.whl" \
---delete "*.exe" \
 | "$p7zip" u "$gz_file_name" -uq0 -si
