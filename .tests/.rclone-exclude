@@ -1,5 +1,6 @@
 .*/
 *.tmp
+*.tmp.exe
 *.tar
 *.zip
 create_install.*
