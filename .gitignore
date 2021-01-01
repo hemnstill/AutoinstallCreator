@@ -6,6 +6,8 @@
 !*/
 autoinstall.bat
 autoinstall.sh
+__pycache__
+.tools/python/
 *.exe
 *.dll
 *.so
