@@ -19,7 +19,7 @@ set grep=..\grep
 
 
 def _get_latest_version_download_url(name: str):
-    return rf'''set latest_version=https://sourceforge.net/projects/keepass/best_release.json
+    return rf'''set latest_version=https://sourceforge.net/projects/{name}/best_release.json
 echo Get latest version: %latest_version% ...
 >raw_download_str.tmp (
     %curl% %latest_version% | %grep% -P --only-matching "(?<=""url""\:\s"")[^\s]*(?=/download"",)"
