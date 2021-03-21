@@ -4,7 +4,6 @@ import pathlib
 
 _current_script_path: str = os.path.dirname(os.path.realpath(__file__))
 
-
 _batch_header = r"""@echo off
 pushd "%~dp0"
 
@@ -19,11 +18,20 @@ set grep=..\grep
 
 
 def _download_url(url):
-    return rf"""set download_url="{url}"
+    return rf"""set download_url={url}
 echo Downloading: %download_url% ...
 %curl% --remote-name --location %download_url%
 {_check_errorlevel("Cannot download latest version")}
+
+{_latest_filename()}
 echo Done.
+"""
+
+
+def _latest_filename():
+    return r"""for %%i in ("%download_url%") do (
+  set latest_filename=%%~ni%%~xi
+)
 """
 
 
