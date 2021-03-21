@@ -10,12 +10,6 @@ zstd="zstd" && [[ $(uname) == MINGW64* ]] && {
 }
 [[ $(command -v $zstd) == '' ]] && { echo "zstd is not available. Try 'sudo apt install zstd'"; exit 1; }
 
-bsdtar="bsdtar" && [[ $(uname) == MINGW64* ]] && {
-  bsdtar="../_bsdtar/bsdtar.exe";
-  [[ ! -f "$bsdtar" ]] && { "../_bsdtar/create_install.sh"; cd "$(dirname "${BASH_SOURCE[0]}")"; };
-}
-[[ $(command -v $bsdtar) == '' ]] && { echo "bsdtar is not available. Try 'sudo apt install libarchive-tools'"; exit 1; }
-
 python_version=$1
 if [[ -z "$python_version" ]]; then
   latest_version_url='https://www.python.org/doc/versions/'
@@ -43,9 +37,9 @@ tar_file_name="${zst_file_name%.*}"
 "$zstd" -df "$zst_file_name"
 errorlevel=$?; if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 
-"$bsdtar" -cf - --include='python/install' @"$tar_file_name" \
-| cat - \
-| tar f - --wildcards \
+cat $tar_file_name | tar f - --wildcards \
+--delete "python/build" \
+--delete "python/install/include" \
 --delete "*.whl" \
 --delete "*.exe" \
 --delete "*/config-*" \
