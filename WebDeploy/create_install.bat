@@ -3,9 +3,9 @@ pushd "%~dp0"
 set curl=..\curl --fail
 set grep=..\grep
 
-set latest_version=https://www.iis.net/downloads/microsoft/web-deploy
+set download_url="https://www.iis.net/downloads/microsoft/web-deploy"
 >raw_download_str.tmp (
-  %curl% %latest_version% | %grep% --only-matching """[^ ]*amd64_en-US.msi"""
+  %curl% %download_url% | %grep% --only-matching """[^ ]*amd64_en-US.msi"""
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version

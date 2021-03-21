@@ -17,7 +17,7 @@ call set telegraf_version=%%telegraf_version:  "tag_name": "v=%%
 call set telegraf_version=%%telegraf_version:"=%%
 call set telegraf_version=%%telegraf_version:,=%%
 
-set download_url=https://dl.influxdata.com/telegraf/releases/telegraf-%telegraf_version%_windows_amd64.zip
+set download_url="https://dl.influxdata.com/telegraf/releases/telegraf-%telegraf_version%_windows_amd64.zip"
 echo Downloading: %download_url% ...
 %curl% --location %download_url% --remote-name
 if %errorlevel% neq 0 ( exit /b %errorlevel% )

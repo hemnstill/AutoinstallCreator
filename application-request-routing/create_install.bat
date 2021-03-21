@@ -6,7 +6,7 @@ set grep=..\grep
 
 set latest_version=https://www.iis.net/downloads/microsoft/application-request-routing
 >raw_download_str.tmp (
-  %curl% %latest_version% | %grep% -Po "(?<=<a\shref="")[^\s]*(?="">x64)
+  %curl% %latest_version% | %grep% -Po "(?<=<a\shref="")[^\s]*(?="">x64)"
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version

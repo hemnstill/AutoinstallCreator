@@ -18,7 +18,7 @@ set grep=..\grep
 
 
 def _download_url(url):
-    return rf"""set download_url={url}
+    return rf"""set download_url="{url}"
 echo Downloading: %download_url% ...
 %curl% --remote-name --location %download_url%
 {_check_errorlevel("Cannot download latest version")}
@@ -29,7 +29,7 @@ echo Done.
 
 
 def _latest_filename():
-    return r"""for %%i in ("%download_url%") do (
+    return r"""for %%i in (%download_url%) do (
   set latest_filename=%%~ni%%~xi
 )
 """

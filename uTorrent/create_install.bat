@@ -29,7 +29,7 @@ if %errorlevel% neq 0 (
 
 set /p proxy_from_vpn= < raw_download_str.tmp
 call set proxy_from_vpn=%%proxy_from_vpn:;=%%
-set download_url=https://rutracker.org/forum/viewtopic.php?t=5181383
+set download_url="https://rutracker.org/forum/viewtopic.php?t=5181383"
 echo Download topic %download_url% using proxy: %proxy_from_vpn%
 >raw_download_str.tmp (
   %curl% %download_url% --proxy %proxy_from_vpn% | %grep% --only-matching """magnet:?xt[^ ]*"""

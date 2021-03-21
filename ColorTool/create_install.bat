@@ -6,7 +6,7 @@ set p7z=..\7z.exe
 set LC_ALL=en_US.UTF-8
 set grep=..\grep
 
-set download_url=https://github.com/microsoft/terminal/releases/download/1904.29002/ColorTool.zip
+set download_url="https://github.com/microsoft/terminal/releases/download/1904.29002/ColorTool.zip"
 echo Downloading: %download_url% ...
 %curl% --remote-name --location %download_url%
 if %errorlevel% neq 0 (
@@ -14,7 +14,7 @@ if %errorlevel% neq 0 (
   exit /b %errorlevel%
 )
 
-for %%i in ("%download_url%") do (
+for %%i in (%download_url%) do (
   set latest_filename=%%~ni%%~xi
 )
 

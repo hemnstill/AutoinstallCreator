@@ -3,7 +3,7 @@ pushd "%~dp0"
 set curl=..\curl --fail
 
 set latest_filename=DiscordSetup.exe
-set download_url=https://discord.com/api/download?platform=win
+set download_url="https://discord.com/api/download?platform=win"
 echo Downloading: %latest_filename% %download_url% ...
 %curl% --location %download_url% --output %latest_filename%
 if %errorlevel% neq 0 ( exit /b %errorlevel% )

@@ -23,13 +23,13 @@ if "%node_version%" == "" (
   exit /b %errorlevel%
 )
 
-set download_url=https://nodejs.org/dist/%node_version%/node-%node_version%-x64.msi
+set download_url="https://nodejs.org/dist/%node_version%/node-%node_version%-x64.msi"
 echo Downloading: %download_url% ...
 %curl% --location %download_url% --remote-name
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
 echo Done.
 
-for %%i in ("%download_url%") do (
+for %%i in (%download_url%) do (
 	set latest_filename=%%~ni%%~xi
 )
 

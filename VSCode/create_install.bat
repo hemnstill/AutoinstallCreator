@@ -10,7 +10,7 @@ set grep=..\grep
 set latest_filename=VSCodeUserSetup.exe
 set download_url="https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user"
 echo Downloading: %download_url% ...
-rem %curl% --location %download_url% --output "%latest_filename%"
+%curl% --location %download_url% --output "%latest_filename%"
 if %errorlevel% neq 0 (
   echo Cannot download latest version
   exit /b %errorlevel%
