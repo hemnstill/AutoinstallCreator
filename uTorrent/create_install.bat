@@ -1,14 +1,20 @@
 @echo off
 pushd "%~dp0"
+
+set curl=..\curl --fail
+set grep=..\grep
+set busybox=..\_busybox\busybox64.exe
+if not exist %busybox% (
+	call ..\.tests\test-run.bat _busybox create
+	if %errorlevel% neq 0 ( exit /b %errorlevel% )
+	pushd "%~dp0"
+)
 set aria2c=..\aria2\aria2c.exe
 if not exist %aria2c% (
 	call ..\.tests\test-run.bat aria2 checkinstall
 	if %errorlevel% neq 0 ( exit /b %errorlevel% )
 	pushd "%~dp0"
 )
-set curl=..\curl --fail
-set grep=..\grep
-set cp=..\cp.exe
 
 set latest_version=https://antizapret.prostovpn.org/proxy.pac
 echo Get proxy from %latest_version%
@@ -46,7 +52,7 @@ echo Generating %latest_filename% autoinstall.bat
 )
 set /p first_file_path=< file_paths_list.tmp
 for %%I in (%first_file_path%) do (
-	%cp% -v %%~dpI%%~nI.* .
+	%busybox% cp -v %%~dpI%%~nI.* .
 )
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
 

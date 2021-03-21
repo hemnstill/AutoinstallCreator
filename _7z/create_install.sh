@@ -13,10 +13,8 @@ errorlevel=$?; if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 { printf '#!/bin/bash
 cd "$(dirname "${BASH_SOURCE[0]}")"
 p7zip="../7z" && [[ $(uname) == MINGW64* ]] && p7zip="../7z.exe"
-cp="cp" && [[ $(uname) == MINGW64* ]] && cp="../cp.exe"
 "$p7zip" e %s -o. -aoa -r
-"$p7zip" e data.tar "-o." 7z 7z.so -aoa -r
-"$cp" -v ./{7z,7z.so} ../
+"$p7zip" e data.tar "-o.." 7z 7z.so -aoa -r
 chmod +x ../7z' "$download_url"
 } > autoinstall.sh
 chmod +x ./autoinstall.sh

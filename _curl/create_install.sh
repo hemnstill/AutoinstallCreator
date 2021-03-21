@@ -12,8 +12,7 @@ errorlevel=$?; if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 
 { printf '#!/bin/bash
 cd "$(dirname "${BASH_SOURCE[0]}")"
-cp="cp" && [[ $(uname) == MINGW64* ]] && cp="../cp.exe"
-"$cp" -fv ./curl ../curl
+tar cf - ./curl | (cd ..; tar xvf -)
 chmod +x ../curl'
 } > autoinstall.sh
 chmod +x ./autoinstall.sh

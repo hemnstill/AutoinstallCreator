@@ -18,6 +18,5 @@ run `<Application>/autoinstall.bat`
 
 ## Tools used:
 * 7z 19.0.0.0 https://www.7-zip.org/
-* cp 5.3.0.1936 http://gnuwin32.sourceforge.net/packages/coreutils.htm
 * curl 7.71.1.0 https://curl.haxx.se/windows/
 * grep 3.1 https://github.com/git-for-windows/git-sdk-64/tree/main/usr/bin

@@ -1,7 +1,13 @@
 @echo off
 pushd "%~dp0"
 set curl=..\curl --fail
-set cp=..\cp -v
+
+set busybox=..\_busybox\busybox64.exe
+if not exist %busybox% (
+	call ..\.tests\test-run.bat _busybox create
+	if %errorlevel% neq 0 ( exit /b %errorlevel% )
+	pushd "%~dp0"
+)
 
 if not exist tmp mkdir tmp\
 type NUL > tmp\.empty
@@ -12,7 +18,7 @@ if not exist usr\bin\ mkdir usr\bin\
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 set base_url=https://github.com/git-for-windows/git-sdk-64/raw/main/usr/bin
-%cp% ..\msys-*.dll usr\bin\
+%busybox% cp -v ..\msys-*.dll usr\bin\
 %curl% --location %base_url%/uname.exe --output usr\bin\uname.exe
 %curl% --location %base_url%/ls.exe --output usr\bin\ls.exe
 %curl% --location %base_url%/dirname.exe --output usr\bin\dirname.exe
