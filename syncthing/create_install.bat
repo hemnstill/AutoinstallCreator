@@ -23,4 +23,12 @@ if %errorlevel% neq 0 (
   exit /b %errorlevel%
 )
 
+for %%i in ("%download_url%") do (
+  set latest_filename=%%~ni%%~xi
+)
+
+"%p7z%" e "%latest_filename%" "-o." *.exe -aoa -r
+if %errorlevel% neq 0 ( exit /b %errorlevel% )
+
+
 echo Done.
