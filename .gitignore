@@ -23,6 +23,7 @@ __pycache__
 *.tar.xz
 *.tar.gz
 *.tar.zst
+*.old
 .idea/
 .empty
 uTorrent/*.lng
