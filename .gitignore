@@ -7,7 +7,10 @@
 autoinstall.bat
 autoinstall.sh
 __pycache__
+
 .tools/python/
+_AutoinstallCreator/*.txt
+
 *.exe
 *.dll
 *.so
@@ -28,3 +31,5 @@ __pycache__
 .empty
 uTorrent/*.lng
 .tests/git_status.txt
+
+bsdtar/*.bat
