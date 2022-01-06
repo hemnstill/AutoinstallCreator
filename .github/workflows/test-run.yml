@@ -1,17 +1,13 @@
 name: test-run
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
-
   build:
     runs-on: windows-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
-      - name: show cd
-        shell: cmd
-        run: echo %cd%
       - name: _ create
         shell: cmd
-        run: .\tests\test-run.bat
+        run: .tests/test-run.bat _ create
