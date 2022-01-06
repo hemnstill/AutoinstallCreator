@@ -9,4 +9,4 @@ jobs:
     steps:
     - name: _ create
       shell: cmd
-      run: call .tests/test-run.bat _ create
+      run: tests\test-run.bat _ create
