@@ -12,4 +12,4 @@ jobs:
       run: echo %cd%
     - name: _ create
       shell: cmd
-      run: tests\test-run.bat _ create
+      run: .\tests\test-run.bat
