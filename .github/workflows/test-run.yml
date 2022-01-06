@@ -1,0 +1,12 @@
+name: Go
+
+on: [push, pull_request]
+
+jobs:
+
+  build:
+    runs-on: windows-latest
+    steps:
+    - name: Set up Go
+      shell: cmd
+      run: .tests/test-run.bat _ create
