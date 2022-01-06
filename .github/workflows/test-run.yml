@@ -7,10 +7,11 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: show cd
-      shell: cmd
-      run: echo %cd%
-    - name: _ create
-      shell: cmd
-      run: .\tests\test-run.bat
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: show cd
+        shell: cmd
+        run: echo %cd%
+      - name: _ create
+        shell: cmd
+        run: .\tests\test-run.bat
