@@ -2,39 +2,24 @@
 pushd "%~dp0"
 set curl=..\curl --fail
 set grep=..\grep
-set p7z=..\7z.exe
-set p7za=7za.exe
 
-set bsdtar=..\_bsdtar\bsdtar.exe
-if not exist %bsdtar% (
-	call ..\.tests\test-run.bat _bsdtar create
+set p7za=7za.exe
+if not exist %p7za% (
+	call _7za.bat
 	if %errorlevel% neq 0 ( exit /b %errorlevel% )
 	pushd "%~dp0"
 )
 
-set latest_version=https://www.7-zip.org/download.html
->raw_download_str.tmp (
-  %curl% %latest_version% | %grep% --only-matching "[^ ]*x64.exe"
-)
-if %errorlevel% neq 0 (
-  echo Cannot get latest version
-  exit /b %errorlevel%
-)
+set for_linux=%1
 
-set /p download_url=< raw_download_str.tmp
-set download_url=https://www.7-zip.org/%download_url:~6%
-echo Downloading: %download_url% ...
-%curl% --remote-name --location %download_url%
-if %errorlevel% neq 0 ( exit /b %errorlevel% )
-echo Done.
-
-for %%i in ("%download_url%") do (
-	set p7z_sfx_latest_filename=%%~ni%%~xi
+set search_pattern=x64\.exe
+if not "%for_linux%" == "" (
+  set search_pattern=linux-x64\.tar\.xz
 )
 
 set latest_version=https://www.7-zip.org/download.html
 >raw_download_str.tmp (
-  %curl% %latest_version% | %grep% --only-matching "[^ ]*extra.7z"
+  %curl% %latest_version% | %grep% --only-matching "[^ ]*%search_pattern%"
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version
@@ -52,12 +37,14 @@ for %%i in ("%download_url%") do (
 	set latest_filename=%%~ni%%~xi
 )
 
-"%bsdtar%" --strip-components=1 -xf %latest_filename% x64
-if %errorlevel% neq 0 ( exit /b %errorlevel% )
+set extract_command="%p7za%" e "%latest_filename%" "-o.." 7z.exe 7z.dll -aoa -r
+if not "%for_linux%" == "" (
+  set extract_command="..\_bsdtar\bsdtar.exe" -xf "%latest_filename%" -C .. 7zzs
+)
 
 echo Generating %latest_filename% autoinstall.bat
 >autoinstall.bat (
   echo pushd "%%~dp0"
-  echo "%p7za%" e "%p7z_sfx_latest_filename%" "-o.." 7z.exe 7z.dll -aoa -r
+  echo %extract_command%
   echo exit /b %%errorlevel%%
 )

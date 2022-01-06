@@ -33,3 +33,5 @@ uTorrent/*.lng
 .tests/git_status.txt
 
 bsdtar/*.bat
+
+tmp/
