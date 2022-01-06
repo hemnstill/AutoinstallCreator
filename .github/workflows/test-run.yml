@@ -7,6 +7,9 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
+    - name: show cd
+      shell: cmd
+      run: echo %cd%
     - name: _ create
       shell: cmd
       run: tests\test-run.bat _ create
