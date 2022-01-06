@@ -8,6 +8,10 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
-      - name: _ create
+      - name: Internal test-run
         shell: cmd
         run: .tests/test-run.bat _ create
+      - name: Internal test-run mingw64
+        shell: cmd
+        run: .tests/test-run.mingw64.bat _ create
+
