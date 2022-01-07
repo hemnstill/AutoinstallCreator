@@ -23,4 +23,4 @@ jobs:
 
       - name: vc_runtime check
         shell: cmd
-        run: .tests/test-run.bat _bsdtar checkinstall
+        run: .tests/test-run.bat _7z checkinstall
