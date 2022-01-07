@@ -1,6 +1,6 @@
 #!/bin/bash
 cd "$(dirname "${BASH_SOURCE[0]}")"
-curl="../curl --fail --cacert ../curl-ca-bundle.crt" && [[ $(uname) == MINGW64* ]] && curl="../curl.exe --fail"
+curl="../curl-amd64 --fail --cacert ../curl-ca-bundle.crt" && [[ $(uname) == MINGW64* ]] && curl="../curl.exe --fail"
 p7zip="../7zzs" && [[ $(uname) == MINGW64* ]] && p7zip="../7z.exe"
 
 tarxz_name=tsetup.tar.xz
