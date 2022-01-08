@@ -22,4 +22,4 @@ jobs:
 
       - name: Vagrant internal test-run
         run: |
-          vagrant winrm core --shell cmd --command 'C:/vagrant/.tests/test-run.bat _ create'
+          vagrant winrm core --shell cmd --command 'call C:/vagrant/.tests/test-run.bat _ create'
