@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ../.src/env_tools.bat
+@call ..\.src\env_tools.bat
 
 set download_url="https://frippery.org/files/busybox/busybox64.exe"
 echo Downloading: %download_url% ...

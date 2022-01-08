@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ../.src/env_tools.bat
+@call ..\.src\env_tools.bat
 
 set latest_version=https://tortoisegit.org/download/
 >raw_download_str.tmp (

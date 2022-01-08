@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ../.src/env_tools.bat
+@call ..\.src\env_tools.bat
 
 set download_url="https://github.com/microsoft/terminal/releases/download/1904.29002/ColorTool.zip"
 echo Downloading: %download_url% ...

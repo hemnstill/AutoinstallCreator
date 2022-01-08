@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ../.src/env_tools.bat
+@call ..\.src\env_tools.bat
 
 set download_url="https://schinagl.priv.at/nt/hardlinkshellext/HardLinkShellExt_X64.exe"
 echo Downloading: %download_url% ...

@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ../.src/env_tools.bat
+@call ..\.src\env_tools.bat
 
 set latest_version=https://curl.se/windows/
 >raw_download_str.tmp (

@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ../.src/env_tools.bat
+@call ..\.src\env_tools.bat
 
 set golang_version_pattern=%~1
 if "%golang_version_pattern%" == "" (

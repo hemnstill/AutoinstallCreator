@@ -6,7 +6,7 @@ _current_script_path: str = os.path.dirname(os.path.realpath(__file__))
 
 
 _batch_header_with_tools = r"""@pushd "%~dp0"
-@call ../.src/env_tools.bat
+@call ..\.src\env_tools.bat
 
 """
 

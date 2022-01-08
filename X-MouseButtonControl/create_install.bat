@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ../.src/env_tools.bat
+@call ..\.src\env_tools.bat
 
 set latest_filename=X-MouseButtonControlSetup.exe
 set download_url="https://www.highrez.co.uk/scripts/download.asp?package=XMouse"

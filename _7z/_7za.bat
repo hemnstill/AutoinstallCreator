@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ../.src/env_tools.bat
+@call ..\.src\env_tools.bat
 
 set bsdtar=..\_bsdtar\bsdtar.exe
 if not exist %bsdtar% (

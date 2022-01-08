@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ../.src/env_tools.bat
+@call ..\.src\env_tools.bat
 
 set api_url="https://data.services.jetbrains.com/products/releases?code=TBA&latest=true&type=release"
 echo Get latest version: %api_url% ...

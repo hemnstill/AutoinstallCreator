@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ../.src/env_tools.bat
+@call ..\.src\env_tools.bat
 
 set latest_version=https://nodejs.org/dist/index.json
 echo Get latest lts versions: %latest_version% ...

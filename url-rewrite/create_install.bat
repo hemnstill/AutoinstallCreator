@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ../.src/env_tools.bat
+@call ..\.src\env_tools.bat
 
 set latest_version=https://www.iis.net/downloads/microsoft/url-rewrite
 >raw_download_str.tmp (

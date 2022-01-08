@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ../.src/env_tools.bat
+@call ..\.src\env_tools.bat
 
 set busybox=..\_busybox\busybox64.exe
 if not exist %busybox% (
