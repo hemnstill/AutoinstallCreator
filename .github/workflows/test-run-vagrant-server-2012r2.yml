@@ -12,7 +12,7 @@ jobs:
 
       - uses: actions/cache@v2
         with:
-          path: '~/.vagrant.d/boxes'
+          path: '~/.vagrant.d/boxes/devopsgroup-io-VAGRANTSLASH-windows_server-2012r2-standard-amd64-nocm'
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
 
       - run: vagrant up 2012r2

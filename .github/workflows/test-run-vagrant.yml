@@ -12,7 +12,7 @@ jobs:
 
       - uses: actions/cache@v2
         with:
-          path: '~/.vagrant.d/boxes'
+          path: '~/.vagrant.d/boxes/cdaf-VAGRANTSLASH-WindowsServerDC'
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
 
       - run: vagrant up dc
