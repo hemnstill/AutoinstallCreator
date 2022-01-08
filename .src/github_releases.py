@@ -5,14 +5,8 @@ import pathlib
 _current_script_path: str = os.path.dirname(os.path.realpath(__file__))
 
 
-_batch_header = r"""@echo off
-pushd "%~dp0"
-
-"""
-
-_tools = r"""set curl=..\curl --fail
-set p7z=..\7z.exe
-set grep=..\grep
+_batch_header_with_tools = r"""@pushd "%~dp0"
+@call ..\.src\env_tools.bat
 
 """
 
@@ -21,7 +15,7 @@ def _get_latest_version_download_url(author: str, name: str):
     return rf'''set latest_version=https://api.github.com/repos/{author}/{name}/releases/latest
 echo Get latest version: %latest_version% ...
 >raw_download_str.tmp (
-    %curl% %latest_version% | %grep% """browser_download_url""" | %grep% --only-matching "[^"" ]*\.zip"
+    %curl% %latest_version% | %grep% """browser_download_url""" | %grep% --only-matching "[^"" ]*\.zip" | find "" /V
 )
 {_check_errorlevel("Cannot get latest version")}
 '''
@@ -32,6 +26,16 @@ def _download_latest_version():
 echo Downloading: %download_url% ...
 %curl% --remote-name --location %download_url%
 {_check_errorlevel("Cannot download latest version")}
+"""
+
+
+def _autoinstall():
+    return rf"""echo Generating %latest_filename% autoinstall.bat
+> autoinstall.bat (
+    echo "%%~dp0%latest_filename%" /passive
+    echo exit /b %%errorlevel%%
+)
+
 echo Done.
 """
 
@@ -51,10 +55,10 @@ def save_to(file_path: str, content: str):
 
 
 def generate_batch(author: str, name: str):
-    result = _batch_header
-    result += _tools
+    result = _batch_header_with_tools
     result += _get_latest_version_download_url(author, name)
     result += _download_latest_version()
+    result += _autoinstall()
     return result
 
 

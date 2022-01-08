@@ -1,7 +1,5 @@
-@echo off
-pushd "%~dp0"
-set curl=..\curl --fail
-set grep=..\grep
+@pushd "%~dp0"
+@call ..\.src\env_tools.bat
 
 set p7za=7za.exe
 if not exist %p7za% (
@@ -19,7 +17,7 @@ if not "%for_linux%" == "" (
 
 set latest_version=https://www.7-zip.org/download.html
 >raw_download_str.tmp (
-  %curl% %latest_version% | %grep% --only-matching "[^ ]*%search_pattern%"
+  %curl% %latest_version% | %grep% --only-matching "[^ ]*%search_pattern%" | find "" /V
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version
@@ -31,7 +29,6 @@ set download_url=https://www.7-zip.org/%download_url:~6%
 echo Downloading: %download_url% ...
 %curl% --remote-name --location %download_url%
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
-echo Done.
 
 for %%i in ("%download_url%") do (
 	set latest_filename=%%~ni%%~xi
@@ -48,3 +45,5 @@ echo Generating %latest_filename% autoinstall.bat
   echo %extract_command%
   echo exit /b %%errorlevel%%
 )
+
+echo Done.

@@ -1,8 +1,6 @@
 #!/bin/bash
 cd "$(dirname "${BASH_SOURCE[0]}")"
-export LC_ALL=en_US.UTF-8
-curl="../curl --fail --cacert ../curl-ca-bundle.crt" && [[ $(uname) == MINGW64* ]] && curl="../curl.exe --fail"
-grep="grep" && [[ $(uname) == MINGW64* ]] && grep="../grep.exe"
+source ../.src/env_tools.sh
 
 latest_version=https://api.github.com/repos/dtschan/curl-static/releases/latest
 echo Get latest version: $latest_version ...

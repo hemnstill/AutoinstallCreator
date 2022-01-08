@@ -5,15 +5,8 @@ import pathlib
 _current_script_path: str = os.path.dirname(os.path.realpath(__file__))
 
 
-_batch_header = r"""@echo off
-pushd "%~dp0"
-
-"""
-
-_tools = r"""set curl=..\curl --fail
-set p7z=..\7z.exe
-set LC_ALL=en_US.UTF-8
-set grep=..\grep
+_batch_header_with_tools = r"""@pushd "%~dp0"
+@call ..\.src\env_tools.bat
 
 """
 
@@ -22,7 +15,7 @@ def _get_latest_version_download_url(name: str):
     return rf'''set latest_version=https://sourceforge.net/projects/{name}/best_release.json
 echo Get latest version: %latest_version% ...
 >raw_download_str.tmp (
-    %curl% %latest_version% | %grep% -P --only-matching "(?<=""url""\:\s"")[^\s]*(?=/download"",)"
+    %curl% %latest_version% | %grep% -P --only-matching "(?<=""url""\:\s"")[^\s]*(?=/download"",)" | find "" /V
 )
 {_check_errorlevel("Cannot get latest version")}
 '''
@@ -52,8 +45,7 @@ def save_to(file_path: str, content: str):
 
 
 def generate_batch(name: str):
-    result = _batch_header
-    result += _tools
+    result = _batch_header_with_tools
     result += _get_latest_version_download_url(name)
     result += _download_latest_version()
     return result

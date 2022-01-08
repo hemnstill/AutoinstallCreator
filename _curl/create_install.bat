@@ -1,12 +1,9 @@
-@echo off
-pushd "%~dp0"
-set curl=..\curl --fail
-set grep=..\grep
-set p7z=..\7z
+@pushd "%~dp0"
+@call ..\.src\env_tools.bat
 
 set latest_version=https://curl.se/windows/
 >raw_download_str.tmp (
-  %curl% %latest_version% | %grep% --only-matching "dl[^ ]*win64-mingw\.zip"
+  %curl% %latest_version% | %grep% --only-matching "dl[^ ]*win64-mingw\.zip" | find "" /V
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version

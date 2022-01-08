@@ -1,10 +1,5 @@
-@echo off
-pushd "%~dp0"
-
-set curl=..\curl --fail
-set p7z=..\7z.exe
-set LC_ALL=en_US.UTF-8
-set grep=..\grep
+@pushd "%~dp0"
+@call ..\.src\env_tools.bat
 
 set download_url="https://github.com/microsoft/terminal/releases/download/1904.29002/ColorTool.zip"
 echo Downloading: %download_url% ...

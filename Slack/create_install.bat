@@ -1,6 +1,5 @@
-@echo off
-pushd "%~dp0"
-set curl=..\curl --fail
+@pushd "%~dp0"
+@call ..\.src\env_tools.bat
 
 set latest_filename=SlackSetup.msi
 set download_url="https://slack.com/ssb/download-win64-msi-legacy"

@@ -1,8 +1,5 @@
-@echo off
-pushd "%~dp0"
-set curl=..\curl
-set LC_ALL=en_US.UTF-8
-set grep=..\grep
+@pushd "%~dp0"
+@call ..\.src\env_tools.bat
 
 set lang=en-us
 rem dhc mode.
@@ -18,7 +15,7 @@ set product_series=%~1
 if "%~1"=="" (
   echo product_series does not set:
   >raw_download_str.tmp (
-	%curl% -s %lookup_base_url%%product_series_typeid% | %grep% -P --only-matching "(?s).*?(\r\n|\r|\n)" | %grep% -v "LookupValue"
+	%curl% -s %lookup_base_url%%product_series_typeid% | %grep% -P --only-matching "(?s).*?(\r\n|\r|\n)" | %grep% -v "LookupValue" | find "" /V
   )
   type raw_download_str.tmp
   exit /b %errorlevel%
@@ -57,7 +54,7 @@ echo Get query: %search_query%
 set /p result_url=< raw_download_str.tmp
 echo Get direct link from: "%result_url%"
 >result_url.tmp (
-  %curl% --location %result_url% | %grep% --only-matching "[^&]*whql.exe" | %grep% -P --only-matching "(?<=url=).*"
+  %curl% --location %result_url% | %grep% --only-matching "[^&]*whql.exe" | %grep% -P --only-matching "(?<=url=).*" | find "" /V
 )
 set /p download_url=< result_url.tmp
 echo Download driver: "%download_base_url%%download_url%"

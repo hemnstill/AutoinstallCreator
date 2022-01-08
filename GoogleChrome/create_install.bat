@@ -1,6 +1,5 @@
-@echo off
-pushd "%~dp0"
-set curl=..\curl --fail
+@pushd "%~dp0"
+@call ..\.src\env_tools.bat
 
 set download_url="https://dl.google.com/chrome/install/GoogleChromeStandaloneEnterprise64.msi"
 echo Downloading: %download_url% ...

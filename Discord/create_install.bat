@@ -1,6 +1,5 @@
-@echo off
-pushd "%~dp0"
-set curl=..\curl --fail
+@pushd "%~dp0"
+@call ..\.src\env_tools.bat
 
 set latest_filename=DiscordSetup.exe
 set download_url="https://discord.com/api/download?platform=win"

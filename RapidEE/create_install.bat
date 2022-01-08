@@ -1,6 +1,5 @@
-@echo off
-pushd "%~dp0"
-set curl=..\curl --fail
+@pushd "%~dp0"
+@call ..\.src\env_tools.bat
 
 set download_url="https://www.rapidee.com/download/RapidEE_setup.exe"
 echo Downloading: %download_url% ...
