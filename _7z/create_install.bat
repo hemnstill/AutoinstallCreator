@@ -1,7 +1,5 @@
-@echo off
-pushd "%~dp0"
-set curl=..\curl --fail --silent --show-error
-set grep=..\grep
+@pushd "%~dp0"
+@call ../.src/env_tools.bat
 
 set p7za=7za.exe
 if not exist %p7za% (
@@ -31,7 +29,6 @@ set download_url=https://www.7-zip.org/%download_url:~6%
 echo Downloading: %download_url% ...
 %curl% --remote-name --location %download_url%
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
-echo Done.
 
 for %%i in ("%download_url%") do (
 	set latest_filename=%%~ni%%~xi
@@ -48,3 +45,5 @@ echo Generating %latest_filename% autoinstall.bat
   echo %extract_command%
   echo exit /b %%errorlevel%%
 )
+
+echo Done.

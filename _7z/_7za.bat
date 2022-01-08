@@ -1,7 +1,5 @@
-@echo off
-pushd "%~dp0"
-set curl=..\curl --fail --silent --show-error
-set grep=..\grep
+@pushd "%~dp0"
+@call ../.src/env_tools.bat
 
 set bsdtar=..\_bsdtar\bsdtar.exe
 if not exist %bsdtar% (
@@ -11,6 +9,7 @@ if not exist %bsdtar% (
 )
 
 set latest_version=https://www.7-zip.org/download.html
+echo get latest_version: %latest_version% ...
 >raw_download_str.tmp (
   %curl% %latest_version% | %grep% --only-matching "[^ ]*extra.7z"
 )

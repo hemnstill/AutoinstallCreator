@@ -1,10 +1,5 @@
-@echo off
-pushd "%~dp0"
-
-set curl=..\curl --fail
-set p7z=..\7z.exe
-set LC_ALL=en_US.UTF-8
-set grep=..\grep
+@pushd "%~dp0"
+@call ../.src/env_tools.bat
 
 set bsdtar=..\_bsdtar\bsdtar.exe
 if not exist %bsdtar% (
