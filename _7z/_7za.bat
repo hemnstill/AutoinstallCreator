@@ -11,7 +11,7 @@ if not exist %bsdtar% (
 set latest_version=https://www.7-zip.org/download.html
 echo get latest_version: %latest_version% ...
 >raw_download_str.tmp (
-  %curl% %latest_version% | %grep% --only-matching "[^ ]*extra.7z"
+  %curl% %latest_version% | %grep% --only-matching "[^ ]*extra.7z" | find "" /V
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version

@@ -17,7 +17,7 @@ if not "%for_linux%" == "" (
 
 set latest_version=https://www.7-zip.org/download.html
 >raw_download_str.tmp (
-  %curl% %latest_version% | %grep% --only-matching "[^ ]*%search_pattern%"
+  %curl% %latest_version% | %grep% --only-matching "[^ ]*%search_pattern%" | find "" /V
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version

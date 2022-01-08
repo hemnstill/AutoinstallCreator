@@ -11,7 +11,7 @@ if "%golang_version_pattern%" == "" (
 set latest_version="https://golang.org/dl"
 echo Get version from %latest_version% ...
 >raw_download_str.tmp (
-    %curl% --location %latest_version% | %grep% -Po "(?<=href="")[^\s]*\.msi(?="")" | %grep% -F -- "%golang_version_pattern%"
+    %curl% --location %latest_version% | %grep% -Po "(?<=href="")[^\s]*\.msi(?="")" | %grep% -F -- "%golang_version_pattern%" | find "" /V
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version

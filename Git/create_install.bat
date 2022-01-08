@@ -4,7 +4,7 @@
 set latest_version=https://api.github.com/repos/git-for-windows/git/releases/latest
 echo Get latest version: %latest_version% ...
 >raw_download_str.tmp (
-    %curl% %latest_version% | %grep% """browser_download_url""" | %grep% --only-matching "[^"" ]*64-bit\.exe"
+    %curl% %latest_version% | %grep% """browser_download_url""" | %grep% --only-matching "[^"" ]*64-bit\.exe" | find "" /V
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version

@@ -4,7 +4,7 @@
 set latest_version="https://www.isunshare.com/clonego"
 echo Downloading: %latest_version% ...
 >raw_download_str.tmp (
-    %curl% --location %latest_version% | %grep% -Po "(?<=href="")[^\s]*\.exe(?="")"
+    %curl% --location %latest_version% | %grep% -Po "(?<=href="")[^\s]*\.exe(?="")" | find "" /V
 )
 if %errorlevel% neq 0 (
   echo Cannot download latest version
