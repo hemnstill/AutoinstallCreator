@@ -26,6 +26,16 @@ def _download_latest_version():
 echo Downloading: %download_url% ...
 %curl% --remote-name --location %download_url%
 {_check_errorlevel("Cannot download latest version")}
+"""
+
+
+def _autoinstall():
+    return rf"""echo Generating %latest_filename% autoinstall.bat
+> autoinstall.bat (
+    echo "%%~dp0%latest_filename%" /passive
+    echo exit /b %%errorlevel%%
+)
+
 echo Done.
 """
 
@@ -48,6 +58,7 @@ def generate_batch(author: str, name: str):
     result = _batch_header_with_tools
     result += _get_latest_version_download_url(author, name)
     result += _download_latest_version()
+    result += _autoinstall()
     return result
 
 
