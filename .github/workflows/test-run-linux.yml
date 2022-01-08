@@ -17,7 +17,5 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
-        with:
-          path: app
       - name: Internal test-run
-        run: $GITHUB_WORKSPACE/app/.tests/test-run.sh _ create
+        run: $GITHUB_WORKSPACE/GITHUB_JOB/.tests/test-run.sh _ create
