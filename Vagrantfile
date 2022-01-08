@@ -4,22 +4,10 @@ $domain = "mshome.net"
 $domain_ip_address = "192.168.56.2"
 $ubuntu_ip_address = "192.168.56.14"
 
-unless Vagrant.has_plugin?("vagrant-vbguest")
-  puts 'Installing vagrant-vbguest Plugin...'
-  system('vagrant plugin install vagrant-vbguest')
-end
-
-unless Vagrant.has_plugin?("vagrant-reload")
-  puts 'Installing vagrant-reload Plugin...'
-  system('vagrant plugin install vagrant-reload')
-end
-
 Vagrant.configure("2") do |config|
-
   config.vm.define "dc" do |config|
     config.vm.box = "cdaf/WindowsServerDC"
     config.vm.box_version = "2021.31.10"
-
 
     config.winrm.username = "vagrant"
     config.winrm.password = "vagrant"
@@ -45,5 +33,4 @@ Vagrant.configure("2") do |config|
 
   config.vm.box_check_update = false
   config.vm.boot_timeout = 2800
-
 end

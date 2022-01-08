@@ -5,30 +5,16 @@ on: [pull_request]
 jobs:
   build:
     runs-on: macos-latest
-    env:
-      VAGRANT_DISABLE_VBOXSYMLINKCREATE: 1
-
     steps:
-      - name: Show version
-        run: |
-          VBoxManage --version
-          vagrant --version
-
       - uses: actions/checkout@v2
 
-      - name: Cache multiple paths
-        uses: actions/cache@v2
+      - uses: actions/cache@v2
         with:
-          path: |
-            ~/.vagrant.d/boxes/cdaf-VAGRANTSLASH-WindowsServerDC
+          path: '~/.vagrant.d/boxes/cdaf-VAGRANTSLASH-WindowsServerDC'
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
 
-      - name: Vagrant up
-        run: |
-          vagrant plugin install vagrant-vbguest
-          vagrant up dc
+      - run: vagrant up dc
 
       - name: Vagrant shell
         run: |
-          vagrant powershell dc -c 'C:/vagrant/.tests/test-run.bat vc_redist checkinstall'
-          vagrant powershell dc -c 'C:/vagrant/.tests/test-run.bat _ create'
+          vagrant powershell dc -c 'C:/vagrant/.tests/test-run.bat _busybox create'
