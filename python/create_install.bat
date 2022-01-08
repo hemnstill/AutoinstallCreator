@@ -1,9 +1,5 @@
-@echo off
-pushd "%~dp0"
-set LC_ALL=en_US.UTF-8
-set curl=..\curl --fail
-set grep=..\grep.exe
-set p7zip=..\7z.exe
+@pushd "%~dp0"
+@call ../.src/env_tools.bat
 
 set tar=..\_bash\usr\bin\tar.exe
 if not exist %tar% (

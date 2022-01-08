@@ -1,6 +1,5 @@
-@echo off
-pushd "%~dp0"
-set curl=..\curl --fail
+@pushd "%~dp0"
+@call ../.src/env_tools.bat
 
 set latest_version=https://api.github.com/repos/influxdata/telegraf/releases/latest
 echo Get latest version: %latest_version% ...

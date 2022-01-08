@@ -1,10 +1,5 @@
-@echo off
-pushd "%~dp0"
-
-set curl=..\curl --fail --silent --show-error
-set p7z=..\7z.exe
-set LC_ALL=en_US.UTF-8
-set grep=..\grep
+@pushd "%~dp0"
+@call ../.src/env_tools.bat
 
 set download_url="https://aka.ms/vs/17/release/vc_redist.x64.exe"
 echo Downloading: %download_url% ...

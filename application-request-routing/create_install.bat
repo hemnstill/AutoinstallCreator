@@ -1,8 +1,5 @@
-@echo off
-pushd "%~dp0"
-set LC_ALL=en_US.UTF-8
-set curl=..\curl --fail
-set grep=..\grep
+@pushd "%~dp0"
+@call ../.src/env_tools.bat
 
 set latest_version=https://www.iis.net/downloads/microsoft/application-request-routing
 >raw_download_str.tmp (

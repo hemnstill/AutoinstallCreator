@@ -1,8 +1,5 @@
-@echo off
-pushd "%~dp0"
-set curl=..\curl
-set LC_ALL=en_US.UTF-8
-set grep=..\grep
+@pushd "%~dp0"
+@call ../.src/env_tools.bat
 
 set lang=en-us
 rem dhc mode.

@@ -1,5 +1,6 @@
 @echo off
 pushd "%~dp0.."
+
 set errors_count=0
 set "why_not= "
 set startswith=%1

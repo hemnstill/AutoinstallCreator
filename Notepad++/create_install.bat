@@ -1,6 +1,5 @@
-@echo off
-pushd "%~dp0"
-set curl=..\curl --fail
+@pushd "%~dp0"
+@call ../.src/env_tools.bat
 
 set latest_version=https://api.github.com/repos/notepad-plus-plus/notepad-plus-plus/releases/latest
 echo Get latest version: %latest_version% ...

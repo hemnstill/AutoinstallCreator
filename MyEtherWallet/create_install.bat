@@ -1,9 +1,5 @@
-@echo off
-pushd "%~dp0"
-
-set curl=..\curl --fail
-set p7z=..\7z.exe
-set grep=..\grep
+@pushd "%~dp0"
+@call ../.src/env_tools.bat
 
 set latest_version=https://api.github.com/repos/MyEtherWallet/MyEtherWallet/releases/latest
 echo Get latest version: %latest_version% ...

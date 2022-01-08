@@ -1,10 +1,5 @@
-@echo off
-pushd "%~dp0"
-
-set curl=..\curl --fail
-set p7z=..\7z.exe
-set LC_ALL=en_US.UTF-8
-set grep=..\grep
+@pushd "%~dp0"
+@call ../.src/env_tools.bat
 
 set latest_folder_version="https://www.solidfiles.com/folder/bd7165a0d4/"
 echo Downloading: %latest_folder_version% ...

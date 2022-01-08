@@ -1,8 +1,5 @@
-@echo off
-pushd "%~dp0"
-set curl=..\curl --fail
-set grep=..\grep
-set p7z=..\7z
+@pushd "%~dp0"
+@call ../.src/env_tools.bat
 
 set base_url=https://www.dotpdn.com/downloads
 >raw_download_str.tmp (

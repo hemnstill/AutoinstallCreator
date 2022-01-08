@@ -1,6 +1,6 @@
-@echo off
-pushd "%~dp0"
-set LC_ALL=en_US.UTF-8
+@pushd "%~dp0"
+@call ../.src/env_tools.bat
+
 set rclone=..\rclone\rclone.exe
 if not exist %rclone% (
 	call test-run.bat rclone checkinstall
@@ -13,9 +13,6 @@ if not exist %sort% (
 	if %errorlevel% neq 0 ( exit /b %errorlevel% )
 	pushd "%~dp0"
 )
-
-set grep=..\grep
-set curl=..\curl --fail
 
 set client_id=%~1
 set client_secret=%~2
