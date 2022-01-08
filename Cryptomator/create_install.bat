@@ -4,7 +4,7 @@
 set latest_version="https://cryptomator.org/downloads/win/thanks"
 echo Downloading: %latest_version% ...
 >raw_download_str.tmp (
-    %curl% --location %latest_version% | %grep% -Po "(?<=href="")[^\s]*\.exe(?="")"
+    %curl% --location %latest_version% | %grep% -Po "(?<=href="")[^\s]*\.msi(?="")"
 )
 if %errorlevel% neq 0 (
   echo Cannot download latest version
@@ -21,6 +21,12 @@ if %errorlevel% neq 0 (
 
 for %%i in (%download_url%) do (
   set latest_filename=%%~ni%%~xi
+)
+
+echo Generating %latest_filename% autoinstall.bat
+> autoinstall.bat (
+	echo "%%~dp0%latest_filename%" /passive
+	echo exit /b %%errorlevel%%
 )
 
 echo Done.

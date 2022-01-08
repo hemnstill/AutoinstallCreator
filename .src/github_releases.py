@@ -5,14 +5,8 @@ import pathlib
 _current_script_path: str = os.path.dirname(os.path.realpath(__file__))
 
 
-_batch_header = r"""@echo off
-pushd "%~dp0"
-
-"""
-
-_tools = r"""set curl=..\curl --fail
-set p7z=..\7z.exe
-set grep=..\grep
+_batch_header_with_tools = r"""@pushd "%~dp0"
+@call ../.src/env_tools.bat
 
 """
 
@@ -51,8 +45,7 @@ def save_to(file_path: str, content: str):
 
 
 def generate_batch(author: str, name: str):
-    result = _batch_header
-    result += _tools
+    result = _batch_header_with_tools
     result += _get_latest_version_download_url(author, name)
     result += _download_latest_version()
     return result

@@ -3,7 +3,7 @@
 
 set base_url=https://www.dotpdn.com/downloads
 >raw_download_str.tmp (
-  %curl% %base_url%/pdn.html | %grep% --only-matching """[^ ]*install.zip"""
+  %curl% %base_url%/pdn.html | %grep% --only-matching """[^ ]*web.zip"""
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version
