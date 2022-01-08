@@ -1,7 +1,5 @@
-@echo off
-pushd "%~dp0"
-set curl=..\curl --fail
-set grep=..\grep
+@pushd "%~dp0"
+@call ../.src/env_tools.bat
 
 set latest_version=https://www.7-zip.org/download.html
 >raw_download_str.tmp (
