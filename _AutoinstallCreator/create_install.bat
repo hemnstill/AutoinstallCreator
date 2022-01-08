@@ -12,6 +12,7 @@ set self_base_api=https://api.github.com/repos/hemnstill/AutoinstallCreator
 set self_base=https://github.com/hemnstill/AutoinstallCreator
 
 set latest_commits="%self_base_api%/commits?sha=master"
+echo get latest_commits %latest_commits% ...
 >latest_commits.txt (
   %curl% %latest_commits% | %grep% -Po "(?<=""sha"":\s"")[^,]+(?="")" | find "" /V
 )
@@ -21,7 +22,6 @@ if %errorlevel% neq 0 (
 )
 
 set /p latest_commit=< latest_commits.txt
-
 set download_url="%self_base%/archive/%latest_commit%.tar.gz"
 echo Downloading: %download_url% ...
 %curl% --output latest_archive.tar.gz --location %download_url%
@@ -38,3 +38,4 @@ if %errorlevel% neq 0 (
 )
 
 echo Done.
+exit /b %errorlevel%
