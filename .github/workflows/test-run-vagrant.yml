@@ -8,7 +8,9 @@ jobs:
 
     steps:
       - name: Show version
-        run: vagrant --version
+        run: |
+          virtualbox --version
+          vagrant --version
 
       - name: Run vagrant up
         run: |
