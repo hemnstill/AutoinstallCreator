@@ -8,8 +8,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: actions/cache@v2
+        with:
+          path: '~/.vagrant.d/boxes'
+          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+
       - run: vagrant up 2012r2
 
       - name: Vagrant shell
         run: |
           vagrant powershell 2012r2 -c 'C:/vagrant/.tests/test-run.bat _busybox create'
+          vagrant powershell 2012r2 -c 'C:/vagrant/.tests/test-run.bat _7z create'

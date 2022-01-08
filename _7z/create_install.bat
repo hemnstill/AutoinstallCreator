@@ -1,6 +1,6 @@
 @echo off
 pushd "%~dp0"
-set curl=..\curl --fail
+set curl=..\curl --fail --silent --show-error
 set grep=..\grep
 
 set p7za=7za.exe
