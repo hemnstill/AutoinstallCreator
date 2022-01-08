@@ -1,4 +1,4 @@
-name: test-run vagrant-server-dc
+name: test-run vagrant-server-core
 
 on: [pull_request]
 
@@ -12,12 +12,12 @@ jobs:
 
       - uses: actions/cache@v2
         with:
-          path: '~/.vagrant.d/boxes/cdaf-VAGRANTSLASH-WindowsServerDC'
+          path: '~/.vagrant.d/boxes/cdaf-VAGRANTSLASH-WindowsServerCore'
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
 
-      - run: vagrant up dc
+      - run: vagrant up core
 
       - name: Vagrant shell
         run: |
-          vagrant powershell dc -c 'C:/vagrant/.tests/test-run.bat _busybox create'
-          vagrant powershell dc -c 'C:/vagrant/.tests/test-run.bat _7z create'
+          vagrant powershell core -c 'C:/vagrant/.tests/test-run.bat _busybox create'
+          vagrant powershell core -c 'C:/vagrant/.tests/test-run.bat _7z create'
