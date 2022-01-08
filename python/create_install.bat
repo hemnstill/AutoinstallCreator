@@ -23,6 +23,9 @@ if "%python_version%" == "" (
     %curl% --silent --location %latest_version_url% | %grep% -Po "(?<=href=""http://docs\.python\.org/release/)[\d\.]+(?=/"")" | find "" /V
   )
   set /p python_version= < python_latest_version.tmp
+
+  echo set latest python to 3.10.0 (temp workaround)
+  set python_version=3.10.0
 )
 
 if "%python_version%" == "" (
@@ -30,9 +33,6 @@ if "%python_version%" == "" (
   exit /b 1
 )
 echo -^> %python_version%
-
-echo set latest python to 3.10.0 (temp workaround)
-set python_version=3.10.0
 
 set api_url=https://api.github.com/repos/indygreg/python-build-standalone/releases
 echo Get latest portable version: %api_url% ...

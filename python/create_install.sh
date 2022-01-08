@@ -13,6 +13,9 @@ if [[ -z "$python_version" ]]; then
   latest_version_url='https://www.python.org/doc/versions/'
   echo "python_version does not set. get latest from: $latest_version_url ..."
   python_version=$($curl --silent --location "$latest_version_url" | "$grep" -Po '(?<=href="http://docs\.python\.org/release/)[\d\.]+(?=/")' | head -1)
+
+  echo 'set latest python to 3.10.0 (temp workaround)'
+  python_version=3.10.0
 fi
 [[ -z $python_version ]] && { echo 'Cannot get python_version'; exit 1; }
 
