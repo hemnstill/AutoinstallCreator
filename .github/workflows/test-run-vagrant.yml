@@ -30,4 +30,5 @@ jobs:
 
       - name: Vagrant shell
         run: |
-          vagrant powershell dc -c 'C:/vagrant/.tests/test-run.bat _7z checkinstall'
+          vagrant powershell dc -c 'C:/vagrant/.tests/test-run.bat vc_redist checkinstall'
+          vagrant powershell dc -c 'C:/vagrant/.tests/test-run.bat _ create'
