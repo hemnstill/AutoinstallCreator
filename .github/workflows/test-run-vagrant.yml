@@ -27,3 +27,4 @@ jobs:
           vagrant plugin install vagrant-vbguest
           vagrant up dc
           vagrant ssh -c "echo hello world!"
+          vagrant ssh -c "C:/vagrant/grep.exe --version"
