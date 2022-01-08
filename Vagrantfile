@@ -27,10 +27,7 @@ Vagrant.configure("2") do |config|
 	    v.cpus = 1
 	    v.gui = false
     end
-
-    config.vbguest.auto_update = false
   end
-
   config.vm.box_check_update = false
   config.vm.boot_timeout = 2800
 end
