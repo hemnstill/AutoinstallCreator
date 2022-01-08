@@ -1,0 +1,15 @@
+name: test-run vagrant
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - run: vagrant up 2012r2
+
+      - name: Vagrant shell
+        run: |
+          vagrant powershell 2012r2 -c 'C:/vagrant/.tests/test-run.bat _busybox create'
