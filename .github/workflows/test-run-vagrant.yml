@@ -1,0 +1,11 @@
+name: test-run vagrant
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Show version
+        run: vagrant --version
