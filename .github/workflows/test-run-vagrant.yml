@@ -30,7 +30,5 @@ jobs:
 
       - name: Vagrant shell
         run: |
-          vagrant powershell dc -c 'cmd /k echo %cd%'
-          vagrant powershell dc -c 'C:/vagrant/grep.exe --version'
-          vagrant ssh dc -c "echo %cd%"
-          vagrant ssh dc -c "C:/vagrant/grep.exe --version"
+          vagrant powershell dc -c 'cd C:/vagrant'
+          vagrant powershell dc -c '.tests/test-run.bat _ create'
