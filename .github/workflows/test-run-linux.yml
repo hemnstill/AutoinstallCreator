@@ -19,8 +19,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Internal test-run
         run: |
-         apk add --no-cache bash
-         apk add --no-cache grep
-         grep --version
+         apk add --no-cache bash grep
          .tests/test-run.sh _ create
 
