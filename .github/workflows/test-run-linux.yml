@@ -19,6 +19,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Internal test-run
         run: |
-         echo $GITHUB_WORKSPACE
-         ls $GITHUB_WORKSPACE/.tests
+         apk add --no-cache bash
+         .tests/test-run.sh _ create
 
