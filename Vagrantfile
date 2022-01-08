@@ -1,9 +1,3 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-$domain = "mshome.net"
-$domain_ip_address = "192.168.56.2"
-$ubuntu_ip_address = "192.168.56.14"
-
 Vagrant.configure("2") do |config|
   config.vm.define "core" do |config|
     config.vm.box = "cdaf/WindowsServerCore"
