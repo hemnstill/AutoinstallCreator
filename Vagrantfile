@@ -18,8 +18,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "dc" do |config|
     config.vm.box = "cdaf/WindowsServerDC"
-    config.vm.box_version = "2020.05.14"
-	  
+    config.vm.box_version = "2021.31.10"
+
 
     config.winrm.username = "vagrant"
     config.winrm.password = "vagrant"

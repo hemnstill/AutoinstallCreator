@@ -9,11 +9,13 @@ jobs:
       VAGRANT_DISABLE_VBOXSYMLINKCREATE: 1
 
     steps:
-      - name: Show packages version
+      - name: Show version
         run: |
           VBoxManage --version
           vagrant --version
+
       - uses: actions/checkout@v2
+
       - name: Cache multiple paths
         uses: actions/cache@v2
         with:
@@ -21,11 +23,13 @@ jobs:
             ~/.vagrant.d/boxes/cdaf-VAGRANTSLASH-WindowsServerDC
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
 
-
-      - name: vagrant
+      - name: Vagrant up
         run: |
           vagrant plugin install vagrant-vbguest
           vagrant up dc
+
+      - name: Vagrant shell
+        run: |
           vagrant powershell dc -c 'cmd /k echo %cd%'
           vagrant powershell dc -c 'C:/vagrant/grep.exe --version'
           vagrant ssh dc -c "echo %cd%"
