@@ -10,14 +10,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/cache@v2
+      - name: Cache Vagrant boxes
+        uses: actions/cache@v2
         with:
-          path: '~/.vagrant.d/boxes/cdaf-VAGRANTSLASH-WindowsServerCore'
-          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+          path: ~/.vagrant.d/boxes
+          key: ${{ runner.os }}-vagrant-${{ hashFiles('Vagrantfile') }}
+          restore-keys: |
+            ${{ runner.os }}-vagrant-
 
       - run: vagrant up core
 
       - name: Vagrant shell
         run: |
+          ls ~/.vagrant.d/boxes
           vagrant powershell core -c 'C:/vagrant/.tests/test-run.bat _busybox create'
           vagrant powershell core -c 'C:/vagrant/.tests/test-run.bat _7z create'
