@@ -32,6 +32,7 @@ if %errorlevel% neq 0 (
 
 %bsdtar% -tf latest_archive.tar.gz >latest_files.txt
 
+echo Generating autoupdate from latest_archive.tar.gz
 >autoinstall.bat (
   echo pushd "%%~dp0"
   echo "..\_bsdtar\bsdtar.exe" --strip-components 1 -xf latest_archive.tar.gz -C ..
