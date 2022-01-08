@@ -8,6 +8,9 @@ if not exist %busybox% (
 	pushd "%~dp0"
 )
 
+%busybox% rm -f ./.tmp/bsdtar.exe
+%busybox% rm -f ./bsdtar.exe
+
 set latest_version=https://api.github.com/repos/libarchive/libarchive/releases/latest
 echo Get latest version: %latest_version% ...
 >raw_download_str.tmp (
@@ -31,6 +34,6 @@ for %%i in ("%download_url%") do (
 )
 
 %busybox% unzip %latest_filename% -j -o -d ./.tmp
-%busybox% cp -v .tmp/bsdtar.exe .
+%busybox% cp -v ./.tmp/bsdtar.exe .
 
 echo Done.
