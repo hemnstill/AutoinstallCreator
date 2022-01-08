@@ -30,7 +30,7 @@ if %errorlevel% neq 0 (
   exit /b %errorlevel%
 )
 
-%bsdtar% -tf latest_archive.tar.gz >latest_files.txt
+echo disable: %bsdtar% -tf latest_archive.tar.gz ^>latest_files.txt (temp workaround)
 
 echo Generating autoupdate from latest_archive.tar.gz
 >autoinstall.bat (
@@ -39,4 +39,3 @@ echo Generating autoupdate from latest_archive.tar.gz
 )
 
 echo Done.
-exit /b %errorlevel%
