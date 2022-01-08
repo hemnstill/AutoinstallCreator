@@ -1,6 +1,6 @@
 #!/bin/bash
 cd "$(dirname "${BASH_SOURCE[0]}")"
-curl="../curl --fail --cacert ../curl-ca-bundle.crt" && [[ $(uname) == MINGW64* ]] && curl="../curl.exe --fail"
+source ../.src/env_tools.sh
 
 download_url='https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
 $curl --location $download_url --remote-name
