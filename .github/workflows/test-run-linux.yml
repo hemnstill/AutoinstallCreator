@@ -20,8 +20,5 @@ jobs:
       - name: Internal test-run
         run: |
          echo $GITHUB_WORKSPACE
-         echo $GITHUB_RUN_ID
-         echo $GITHUB_JOB
-         echo $GITHUB_ACTION
-         echo $GITHUB_ACTION_PATH
+         ls $GITHUB_WORKSPACE
 
