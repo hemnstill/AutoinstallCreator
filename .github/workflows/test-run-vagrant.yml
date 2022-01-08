@@ -14,7 +14,7 @@ jobs:
 
       - name: Run vagrant up
         run: |
-          vagrant init opentable/win-2012r2-standard-amd64-nocm
+          vagrant init devopsgroup-io/windows_server-2012r2-standard-amd64-nocm
           vagrant up
 
       - name: ssh into box after boot
