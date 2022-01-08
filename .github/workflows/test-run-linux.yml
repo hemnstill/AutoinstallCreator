@@ -20,5 +20,5 @@ jobs:
       - name: Internal test-run
         run: |
          echo $GITHUB_WORKSPACE
-         ls $GITHUB_WORKSPACE
+         ls $GITHUB_WORKSPACE/.tests
 
