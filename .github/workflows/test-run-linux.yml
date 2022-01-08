@@ -3,7 +3,7 @@ name: test-run linux
 on: [pull_request]
 
 jobs:
-  build:
+  vm:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -11,3 +11,11 @@ jobs:
       - name: Internal test-run
         run: .tests/test-run.sh _ create
 
+  container:
+    runs-on: ubuntu-latest
+    container: alpine:latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Internal test-run
+        run: .tests/test-run.sh _ create
