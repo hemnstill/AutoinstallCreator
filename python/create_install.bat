@@ -31,6 +31,9 @@ if "%python_version%" == "" (
 )
 echo -^> %python_version%
 
+echo set latest python to 3.10.0 (temp workaround)
+set python_version=3.10.0
+
 set api_url=https://api.github.com/repos/indygreg/python-build-standalone/releases
 echo Get latest portable version: %api_url% ...
 >raw_download_str.tmp (
