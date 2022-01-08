@@ -5,6 +5,8 @@ on: [pull_request]
 jobs:
   build:
     runs-on: macos-latest
+    env:
+      VAGRANT_DISABLE_VBOXSYMLINKCREATE: 1
     steps:
       - uses: actions/checkout@v2
 
