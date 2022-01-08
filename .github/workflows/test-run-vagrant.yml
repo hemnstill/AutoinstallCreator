@@ -22,4 +22,4 @@ jobs:
 
       - name: Vagrant internal test-run
         run: |
-          vagrant powershell core -c 'C:/vagrant/.tests/test-run.bat _ create'
+          vagrant powershell core -c $env:CI='true'; C:/vagrant/.tests/test-run.bat _ create
