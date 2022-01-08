@@ -25,3 +25,7 @@ jobs:
         shell: cmd
         run: .tests/test-run.mingw64.bat _ create
 
+      - name: External test-run
+        shell: cmd
+        run: .tests/test-run.bat ! _ create
+
