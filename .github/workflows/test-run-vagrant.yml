@@ -12,7 +12,7 @@ jobs:
       - name: Show packages version
         run: |
           VBoxManage --version
-          vagrant up --version
+          vagrant --version
       - uses: actions/checkout@v2
       - name: Cache multiple paths
         uses: actions/cache@v2
@@ -26,4 +26,4 @@ jobs:
         run: |
           vagrant plugin install vagrant-vbguest
           vagrant up dc
-          vagrant powershell dc -c 'systeminfo'
+          vagrant ssh -c "echo hello world!"
