@@ -18,4 +18,10 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
       - name: Internal test-run
-        run: $GITHUB_WORKSPACE/$GITHUB_JOB/.tests/test-run.sh _ create
+        run: |
+         echo $GITHUB_WORKSPACE
+         echo $GITHUB_RUN_ID
+         echo $GITHUB_JOB
+         echo $GITHUB_ACTION
+         echo $GITHUB_ACTION_PATH
+
