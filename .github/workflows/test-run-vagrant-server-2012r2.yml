@@ -1,4 +1,4 @@
-name: test-run vagrant
+name: test-run vagrant-server-2012r2
 
 on: [pull_request]
 
