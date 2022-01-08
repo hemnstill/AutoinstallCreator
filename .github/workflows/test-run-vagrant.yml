@@ -20,12 +20,6 @@ jobs:
 
       - run: vagrant up core
 
-      - name: Vagrant vc_runtime check
-        run: |
-          vagrant powershell core -c 'C:/vagrant/.tests/test-run.bat vc_redist checkinstall'
-          vagrant powershell core -c 'C:/vagrant/.tests/test-run.bat _7z checkinstall'
-          vagrant powershell core -c 'C:/vagrant/.tests/test-run.bat _7z checkinstall 1'
-
-      - name: Vagrant shell
+      - name: Vagrant internal test-run
         run: |
           vagrant powershell core -c 'C:/vagrant/.tests/test-run.bat _ create'
