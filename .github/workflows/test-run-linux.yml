@@ -20,5 +20,6 @@ jobs:
       - name: Internal test-run
         run: |
          apk add --no-cache bash
+         grep --version
          .tests/test-run.sh _ create
 
