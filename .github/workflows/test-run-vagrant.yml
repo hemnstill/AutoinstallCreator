@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Show version
         run: |
-          virtualbox --version
+          VBoxManage -version
           vagrant --version
 
       - name: Run vagrant up
