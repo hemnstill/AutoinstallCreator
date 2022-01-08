@@ -79,7 +79,7 @@ echo Extracting from tar: %tar_file_name% ...
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 echo Creating archive %p7z_file_name%
-%p7zip% u %p7z_file_name% -uq0 python
+%p7z% u %p7z_file_name% -uq0 python
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 echo Removing 'python' folder...
