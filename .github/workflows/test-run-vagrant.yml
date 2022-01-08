@@ -9,22 +9,29 @@ jobs:
       VAGRANT_DISABLE_VBOXSYMLINKCREATE: 1
 
     steps:
-      - name: vagrant init
+      - name: Update packages
         run: |
-          VBoxManage -version
-          vagrant --version
-          vagrant init devopsgroup-io/windows_server-2012r2-standard-amd64-nocm
+          brew cask uninstall vagrant
+          brew cask install https://raw.githubusercontent.com/Homebrew/homebrew-cask/7f340b97d60907da225e9f5c10e81f9285ef2edb/Casks/vagrant.rb
+          brew cask uninstall virtualbox
+          brew cask install https://raw.githubusercontent.com/danielmenezesbr/homebrew-cask/virtualbox-6024/Casks/virtualbox.rb
 
-      - name: Cache Vagrant boxes
+      - name: Show packages version
+        run: |
+          VBoxManage --version
+          vagrant up --version
+      - uses: actions/checkout@v2
+
+      - name: Cache multiple paths
         uses: actions/cache@v2
         with:
-          path: ~/.vagrant.d/boxes
-          key: ${{ runner.os }}-vagrant-${{ hashFiles('Vagrantfile') }}
-          restore-keys: |
-            ${{ runner.os }}-vagrant-
+          path: |
+            ~/.vagrant.d/boxes/cdaf-VAGRANTSLASH-WindowsServerDC
+          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
 
-      - name: Run vagrant up
-        run: vagrant up
 
-      - name: ssh into box after boot
-        run: vagrant ssh -c "echo 'hello world!'"
+      - name: vagrant
+        run: |
+          vagrant plugin install vagrant-vbguest
+          vagrant up dc
+          vagrant powershell dc -c 'systeminfo'
