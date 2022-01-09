@@ -3,6 +3,7 @@
 [![Public download link](https://img.shields.io/badge/⭳-E95420?logo=ubuntu&logoColor=white&labelColor=E95420)](https://drive.google.com/drive/folders/1wchCOCZ4yThu2r2ro4-D8nti91zDeQmW)
 [![test-run windows](https://github.com/hemnstill/AutoinstallCreator/actions/workflows/test-run-windows.yml/badge.svg)](https://github.com/hemnstill/AutoinstallCreator/actions/workflows/test-run-windows.yml)
 [![test-run linux](https://github.com/hemnstill/AutoinstallCreator/actions/workflows/test-run-linux.yml/badge.svg)](https://github.com/hemnstill/AutoinstallCreator/actions/workflows/test-run-linux.yml)
+[![test-run vagrant-server-core](https://github.com/hemnstill/AutoinstallCreator/actions/workflows/test-run-vagrant.yml/badge.svg)](https://github.com/hemnstill/AutoinstallCreator/actions/workflows/test-run-vagrant.yml)
 
 Download latest version and create autoinstall script for silent install.
 
