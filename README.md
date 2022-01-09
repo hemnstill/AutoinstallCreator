@@ -1,12 +1,8 @@
 # AutoinstallCreator
-[![Public download link](https://img.shields.io/badge/windows-master-gray?labelColor=blue)](https://drive.google.com/drive/folders/1MvqnTlNni0caAexdIKmB9hiAb593Z_88)
-[![Build status](https://ci.appveyor.com/api/projects/status/3ox1tqup81x07e0q/branch/master?svg=true)](https://ci.appveyor.com/project/hemnstill/autoinstallcreator/branch/master)
-
-[![Public download link](https://img.shields.io/badge/mingw64-master-gray?labelColor=darkviolet)](https://drive.google.com/drive/folders/1wchCOCZ4yThu2r2ro4-D8nti91zDeQmW)
-[![Build status](https://ci.appveyor.com/api/projects/status/xmlata16730rd62w/branch/master?svg=true)](https://ci.appveyor.com/project/hemnstill/autoinstallcreator-mingw64/branch/master)
-
-[![Public download link](https://img.shields.io/badge/-ubuntu-dd4814)](https://ubuntu.com/)
-[![Build status](https://ci.appveyor.com/api/projects/status/bxpp6p5d55ei504c/branch/master?svg=true)](https://ci.appveyor.com/project/hemnstill/autoinstallcreator-ubuntu/branch/master)
+[![Public download link](https://img.shields.io/badge/⭳-blue?logo=windows&labelColor=blue)](https://drive.google.com/drive/folders/1MvqnTlNni0caAexdIKmB9hiAb593Z_88)
+[![Public download link](https://img.shields.io/badge/⭳-E95420?logo=ubuntu&logoColor=white&labelColor=E95420)](https://drive.google.com/drive/folders/1wchCOCZ4yThu2r2ro4-D8nti91zDeQmW)
+[![test-run windows](https://github.com/hemnstill/AutoinstallCreator/actions/workflows/test-run-windows.yml/badge.svg)](https://github.com/hemnstill/AutoinstallCreator/actions/workflows/test-run-windows.yml)
+[![test-run linux](https://github.com/hemnstill/AutoinstallCreator/actions/workflows/test-run-linux.yml/badge.svg)](https://github.com/hemnstill/AutoinstallCreator/actions/workflows/test-run-linux.yml)
 
 Download latest version and create autoinstall script for silent install.
 
