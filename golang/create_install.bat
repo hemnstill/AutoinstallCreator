@@ -1,10 +1,5 @@
-@echo off
-pushd "%~dp0"
-
-set curl=..\curl --fail
-set p7z=..\7z.exe
-set LC_ALL=en_US.UTF-8
-set grep=..\grep
+@pushd "%~dp0"
+@call ..\.src\env_tools.bat
 
 set golang_version_pattern=%~1
 if "%golang_version_pattern%" == "" (
@@ -16,7 +11,7 @@ if "%golang_version_pattern%" == "" (
 set latest_version="https://golang.org/dl"
 echo Get version from %latest_version% ...
 >raw_download_str.tmp (
-    %curl% --location %latest_version% | %grep% -Po "(?<=href="")[^\s]*\.msi(?="")" | %grep% -F -- "%golang_version_pattern%"
+    %curl% --location %latest_version% | %grep% -Po "(?<=href="")[^\s]*\.msi(?="")" | %grep% -F -- "%golang_version_pattern%" | find "" /V
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version

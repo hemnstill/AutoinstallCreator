@@ -1,5 +1,6 @@
 #!/bin/bash
 cd "$(dirname "${BASH_SOURCE[0]}")"
+
 errors_count=0
 startswith=$1
 action=$2

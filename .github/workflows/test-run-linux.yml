@@ -3,11 +3,24 @@ name: test-run linux
 on: [pull_request]
 
 jobs:
-  build:
+  ubuntu-host:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+
       - name: Internal test-run
         run: .tests/test-run.sh _ create
 
+      - name: External test-run
+        run: .tests/test-run.sh "" create
+
+  alpine-docker:
+    runs-on: ubuntu-latest
+    container: alpine:latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Internal test-run
+        run: |
+         apk add --no-cache bash grep
+         .tests/test-run.sh _ create

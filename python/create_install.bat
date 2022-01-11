@@ -1,9 +1,5 @@
-@echo off
-pushd "%~dp0"
-set LC_ALL=en_US.UTF-8
-set curl=..\curl --fail
-set grep=..\grep.exe
-set p7zip=..\7z.exe
+@pushd "%~dp0"
+@call ..\.src\env_tools.bat
 
 set tar=..\_bash\usr\bin\tar.exe
 if not exist %tar% (
@@ -27,6 +23,9 @@ if "%python_version%" == "" (
     %curl% --silent --location %latest_version_url% | %grep% -Po "(?<=href=""http://docs\.python\.org/release/)[\d\.]+(?=/"")" | find "" /V
   )
   set /p python_version= < python_latest_version.tmp
+
+  echo set latest python to 3.10.0 (temp workaround)
+  set python_version=3.10.0
 )
 
 if "%python_version%" == "" (
@@ -80,7 +79,7 @@ echo Extracting from tar: %tar_file_name% ...
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 echo Creating archive %p7z_file_name%
-%p7zip% u %p7z_file_name% -uq0 python
+%p7z% u %p7z_file_name% -uq0 python
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 echo Removing 'python' folder...

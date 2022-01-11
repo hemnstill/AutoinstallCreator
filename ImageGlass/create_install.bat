@@ -1,14 +1,10 @@
-@echo off
-pushd "%~dp0"
-
-set curl=..\curl --fail
-set p7z=..\7z.exe
-set grep=..\grep
+@pushd "%~dp0"
+@call ..\.src\env_tools.bat
 
 set latest_version=https://api.github.com/repos/d2phap/ImageGlass/releases/latest
 echo Get latest version: %latest_version% ...
 >raw_download_str.tmp (
-    %curl% %latest_version% | %grep% """browser_download_url""" | %grep% --only-matching "[^"" ]*x64\.msi"
+    %curl% %latest_version% | %grep% """browser_download_url""" | %grep% --only-matching "[^"" ]*x64\.msi" | find "" /V
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version

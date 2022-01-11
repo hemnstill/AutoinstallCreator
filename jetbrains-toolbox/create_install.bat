@@ -1,13 +1,10 @@
-@echo off
-pushd "%~dp0"
-set LC_ALL=en_US.UTF-8
-set curl=..\curl --fail
-set grep=..\grep
+@pushd "%~dp0"
+@call ..\.src\env_tools.bat
 
 set api_url="https://data.services.jetbrains.com/products/releases?code=TBA&latest=true&type=release"
 echo Get latest version: %api_url% ...
 >raw_download_str.tmp (
-  %curl% %api_url% | %grep% -Po "(?<=""link"":"")[^,]+\.exe(?="")
+  %curl% %api_url% | %grep% -Po "(?<=""link"":"")[^,]+\.exe(?="")" | find "" /V
 )
 
 if %errorlevel% neq 0 (

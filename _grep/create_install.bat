@@ -1,6 +1,6 @@
-@echo off
-pushd "%~dp0"
-set curl=..\curl --fail
+@pushd "%~dp0"
+@call ..\.src\env_tools.bat
+
 set busybox=..\_busybox\busybox64.exe
 if not exist %busybox% (
 	call ..\.tests\test-run.bat _busybox create

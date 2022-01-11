@@ -1,11 +1,9 @@
-@echo off
-pushd "%~dp0"
-set curl=..\curl --fail
-set grep=..\grep
+@pushd "%~dp0"
+@call ..\.src\env_tools.bat
 
 set download_url="https://www.iis.net/downloads/microsoft/web-deploy"
 >raw_download_str.tmp (
-  %curl% %download_url% | %grep% --only-matching """[^ ]*amd64_en-US.msi"""
+  %curl% %download_url% | %grep% --only-matching """[^ ]*amd64_en-US.msi""" | find "" /V
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version

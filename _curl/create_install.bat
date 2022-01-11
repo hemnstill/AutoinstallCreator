@@ -1,8 +1,5 @@
-@echo off
-pushd "%~dp0"
-set curl=..\curl --fail
-set grep=..\grep
-set p7z=..\7z
+@pushd "%~dp0"
+@call ..\.src\env_tools.bat
 
 set busybox=..\_busybox\busybox64.exe
 if not exist %busybox% (

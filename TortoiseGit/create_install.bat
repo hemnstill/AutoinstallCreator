@@ -1,11 +1,9 @@
-@echo off
-pushd "%~dp0"
-set curl=..\curl --fail
-set grep=..\grep
+@pushd "%~dp0"
+@call ..\.src\env_tools.bat
 
 set latest_version=https://tortoisegit.org/download/
 >raw_download_str.tmp (
-  %curl% %latest_version% | %grep% --only-matching "download[^ ]*64bit.msi"
+  %curl% %latest_version% | %grep% --only-matching "download[^ ]*64bit.msi" | find "" /V
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version

@@ -1,10 +1,5 @@
-@echo off
-pushd "%~dp0"
-
-set curl=..\curl --fail
-set p7z=..\7z.exe
-set LC_ALL=en_US.UTF-8
-set grep=..\grep
+@pushd "%~dp0"
+@call ..\.src\env_tools.bat
 
 for /f "tokens=2 delims==" %%a in ('wmic OS Get localdatetime /value') do set "dt=%%a"
 set "datestamp=%dt:~0,10%"
@@ -12,7 +7,7 @@ set "datestamp=%dt:~0,10%"
 set download_token_url="https://www.msi.com/api/v1/get_token?date=%datestamp%"
 echo Downloading: %download_token_url% ...
 >raw_download_str.tmp (
-    %curl% --location %download_token_url% | %grep% -Po "(?<=\["")[^\s]*(?=""\])"
+    %curl% --location %download_token_url% | %grep% -Po "(?<=\["")[^\s]*(?=""\])" | find "" /V
 )
 if %errorlevel% neq 0 (
   echo Cannot download_token

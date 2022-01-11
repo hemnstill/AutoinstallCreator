@@ -1,9 +1,7 @@
 #!/bin/bash
 cd "$(dirname "${BASH_SOURCE[0]}")"
-export LC_ALL=en_US.UTF-8
-curl="../curl --fail --cacert ../curl-ca-bundle.crt" && [[ $(uname) == MINGW64* ]] && curl="../curl.exe --fail"
-grep="grep" && [[ $(uname) == MINGW64* ]] && grep="../grep.exe"
-p7zip="../7zzs" && [[ $(uname) == MINGW64* ]] && p7zip="../7z.exe"
+source ../.src/env_tools.sh
+
 zstd="zstd" && [[ $(uname) == MINGW64* ]] && {
   zstd="../_zstd/zstd.exe";
   [[ ! -f "$zstd" ]] && { "../_zstd/create_install.sh"; cd "$(dirname "${BASH_SOURCE[0]}")"; };
@@ -15,6 +13,9 @@ if [[ -z "$python_version" ]]; then
   latest_version_url='https://www.python.org/doc/versions/'
   echo "python_version does not set. get latest from: $latest_version_url ..."
   python_version=$($curl --silent --location "$latest_version_url" | "$grep" -Po '(?<=href="http://docs\.python\.org/release/)[\d\.]+(?=/")' | head -1)
+
+  echo 'set latest python to 3.10.0 (temp workaround)'
+  python_version=3.10.0
 fi
 [[ -z $python_version ]] && { echo 'Cannot get python_version'; exit 1; }
 

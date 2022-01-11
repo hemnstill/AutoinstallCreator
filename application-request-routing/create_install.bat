@@ -1,12 +1,9 @@
-@echo off
-pushd "%~dp0"
-set LC_ALL=en_US.UTF-8
-set curl=..\curl --fail
-set grep=..\grep
+@pushd "%~dp0"
+@call ..\.src\env_tools.bat
 
 set latest_version=https://www.iis.net/downloads/microsoft/application-request-routing
 >raw_download_str.tmp (
-  %curl% %latest_version% | %grep% -Po "(?<=<a\shref="")[^\s]*(?="">x64)"
+  %curl% %latest_version% | %grep% -Po "(?<=<a\shref="")[^\s]*(?="">x64)" | find "" /V
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version
