@@ -19,6 +19,12 @@ jobs:
 
       - run: vagrant up core
 
-      - name: Vagrant internal test-run
+      - name: Vagrant internal test-run core
         run: |
           vagrant winrm core --shell cmd --command 'call set CI=true && C:\vagrant\.tests\test-run.bat _ create'
+
+      - run: vagrant up win8.1
+
+      - name: Vagrant internal test-run win8.1
+        run: |
+          vagrant winrm win8.1 --shell cmd --command 'call set CI=true && C:\vagrant\.tests\test-run.bat _ create'
