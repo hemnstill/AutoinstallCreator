@@ -26,8 +26,8 @@ for %%i in (%download_url%) do (
 
 echo Generating %latest_filename% autoinstall.bat
 > autoinstall.bat (
-	echo "%%~dp0%p7z%" x "%%~dp0%latest_filename%" "-o%%~dp0%latest_dirname%" -aoa -r
-	echo exit /b %%errorlevel%%
+  echo "%%~dp0%p7z%" x "%%~dp0%latest_filename%" "-o%%~dp0%latest_dirname%" -aoa -r
+  echo exit /b %%errorlevel%%
 )
 
 echo Done.

@@ -3,9 +3,9 @@
 
 set busybox=..\_busybox\busybox64.exe
 if not exist %busybox% (
-	call ..\.tests\test-run.bat _busybox create
-	if %errorlevel% neq 0 ( exit /b %errorlevel% )
-	pushd "%~dp0"
+  call ..\.tests\test-run.bat _busybox create
+  if %errorlevel% neq 0 ( exit /b %errorlevel% )
+  pushd "%~dp0"
 )
 
 %busybox% rm -f ./.tmp/bsdtar.exe
@@ -30,7 +30,7 @@ if %errorlevel% neq 0 (
 )
 
 for %%i in ("%download_url%") do (
-	set latest_filename=%%~ni%%~xi
+  set latest_filename=%%~ni%%~xi
 )
 
 %busybox% unzip %latest_filename% -j -o -d ./.tmp

@@ -4,11 +4,11 @@
 set latest_version=https://api.github.com/repos/notepad-plus-plus/notepad-plus-plus/releases/latest
 echo Get latest version: %latest_version% ...
 >raw_download_str.tmp (
-	%curl% %latest_version% | findstr /r /c:"browser_download_url.*\.x64\.exe\""
+  %curl% %latest_version% | findstr /r /c:"browser_download_url.*\.x64\.exe\""
 )
 if %errorlevel% neq 0 (
-	echo Cannot get latest version
-	exit /b %errorlevel%
+  echo Cannot get latest version
+  exit /b %errorlevel%
 )
 
 set /p download_url= < raw_download_str.tmp
@@ -20,7 +20,7 @@ if %errorlevel% neq 0 ( exit /b %errorlevel% )
 echo Done.
 
 for %%i in ("%download_url%") do (
-	set latest_filename=%%~ni%%~xi
+  set latest_filename=%%~ni%%~xi
 )
 echo Generating %latest_filename% autoinstall.bat
 echo "%%~dp0%latest_filename%" /S > autoinstall.bat

@@ -26,32 +26,32 @@ if not "%action%" == "install" ^
 if not "%action%" == "checkinstall" ^
 if not "%action%" == "show" ^
 if not "%action%" == "" (
-	echo wrong "action": %action%
-	set errorlevel=1
-	exit /b %errorlevel%
+  echo wrong "action": %action%
+  set errorlevel=1
+  exit /b %errorlevel%
 )
 
 if "%action%" == "checkinstall" (
-	set "need_check=y"
+  set "need_check=y"
 )
 
 for /D %%I in ("%~dp0..\*") do (
-	set dirname=%%~nxI
-	setlocal EnableDelayedExpansion
-	set matched_dirname=%startswith%!dirname:%startswith%=!
-	if not "!dirname:~0,1!" == "." if %why_not% "!matched_dirname!" == "!dirname!" (
-		if exist "%%~fI\create_install.bat" (
-			endlocal
-			echo ^>^> Test %%~fI
-			if "%action%" == "create" (
-			   call "%%~fI\create_install.bat" %external_args% && call :passed_test || call :failed_test
-			) else if "%action%" == "install" (
-			   call "%%~fI\autoinstall.bat" && call :passed_test || call :failed_test
-			) else if "%action%" == "checkinstall" (
-				call "%%~fI\create_install.bat" %external_args% && call "%%~fI\autoinstall.bat" && call :passed_test || call :failed_test
-			)
-		) else ( endlocal )
-	) else ( endlocal )
+  set dirname=%%~nxI
+  setlocal EnableDelayedExpansion
+  set matched_dirname=%startswith%!dirname:%startswith%=!
+  if not "!dirname:~0,1!" == "." if %why_not% "!matched_dirname!" == "!dirname!" (
+    if exist "%%~fI\create_install.bat" (
+      endlocal
+      echo ^>^> Test %%~fI
+      if "%action%" == "create" (
+         call "%%~fI\create_install.bat" %external_args% && call :passed_test || call :failed_test
+      ) else if "%action%" == "install" (
+         call "%%~fI\autoinstall.bat" && call :passed_test || call :failed_test
+      ) else if "%action%" == "checkinstall" (
+        call "%%~fI\create_install.bat" %external_args% && call "%%~fI\autoinstall.bat" && call :passed_test || call :failed_test
+      )
+    ) else ( endlocal )
+  ) else ( endlocal )
 )
 
 if defined need_check call :git_check

@@ -19,6 +19,6 @@ echo Done.
 
 echo Generating %latest_filename% autoinstall.bat
 > autoinstall.bat (
-	echo "%%~dp0%latest_filename%" /passive
-	echo exit /b %%errorlevel%%
+  echo "%%~dp0%latest_filename%" /passive
+  echo exit /b %%errorlevel%%
 )

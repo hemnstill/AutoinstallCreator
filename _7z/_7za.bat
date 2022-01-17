@@ -3,9 +3,9 @@
 
 set bsdtar=..\_bsdtar\bsdtar.exe
 if not exist %bsdtar% (
-	call ..\.tests\test-run.bat _bsdtar create
-	if %errorlevel% neq 0 ( exit /b %errorlevel% )
-	pushd "%~dp0"
+  call ..\.tests\test-run.bat _bsdtar create
+  if %errorlevel% neq 0 ( exit /b %errorlevel% )
+  pushd "%~dp0"
 )
 
 set latest_version=https://www.7-zip.org/download.html
@@ -25,7 +25,7 @@ echo Downloading: %download_url% ...
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 for %%i in ("%download_url%") do (
-	set latest_filename=%%~ni%%~xi
+  set latest_filename=%%~ni%%~xi
 )
 
 "%bsdtar%" --strip-components 1 -xf %latest_filename% x64/7za.exe

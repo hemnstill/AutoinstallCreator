@@ -30,7 +30,7 @@ if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 for /r . %%a in (MSIAfterburnerSetup*.exe) do set "latest_filepath=%%a"
 for %%i in ("%latest_filepath%") do (
-	set latest_filename=%%~ni%%~xi
+  set latest_filename=%%~ni%%~xi
 )
 
 echo Generating %latest_filename% autoinstall.bat

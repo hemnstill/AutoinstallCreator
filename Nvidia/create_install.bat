@@ -15,7 +15,7 @@ set product_series=%~1
 if "%~1"=="" (
   echo product_series does not set:
   >raw_download_str.tmp (
-	%curl% -s %lookup_base_url%%product_series_typeid% | %grep% -P --only-matching "(?s).*?(\r\n|\r|\n)" | %grep% -v "LookupValue" | find "" /V
+  %curl% -s %lookup_base_url%%product_series_typeid% | %grep% -P --only-matching "(?s).*?(\r\n|\r|\n)" | %grep% -v "LookupValue" | find "" /V
   )
   type raw_download_str.tmp
   exit /b %errorlevel%
@@ -61,7 +61,7 @@ echo Download driver: "%download_base_url%%download_url%"
 %curl% --location %download_base_url%%download_url% --remote-name
 
 for %%i in ("%download_url%") do (
-	set latest_filename=%%~ni%%~xi
+  set latest_filename=%%~ni%%~xi
 )
 
 echo Generating %latest_filename% autoinstall.bat

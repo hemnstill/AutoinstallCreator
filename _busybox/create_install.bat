@@ -10,7 +10,7 @@ if %errorlevel% neq 0 (
 )
 
 for %%i in (%download_url%) do (
-	set latest_filename=%%~ni%%~xi
+  set latest_filename=%%~ni%%~xi
 )
 
 echo %latest_filename% Done.

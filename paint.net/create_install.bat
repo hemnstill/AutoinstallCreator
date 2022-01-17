@@ -22,7 +22,7 @@ if %errorlevel% neq 0 (
 %p7z% e %latest_filename% -aoa
 
 for %%i in ("%download_url%") do (
-	set latest_filename=%%~ni.msi
+  set latest_filename=%%~ni.msi
 )
 
 echo Generating %latest_filename% autoinstall.bat

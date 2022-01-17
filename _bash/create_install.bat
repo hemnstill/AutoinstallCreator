@@ -3,9 +3,9 @@
 
 set busybox=..\_busybox\busybox64.exe
 if not exist %busybox% (
-	call ..\.tests\test-run.bat _busybox create
-	if %errorlevel% neq 0 ( exit /b %errorlevel% )
-	pushd "%~dp0"
+  call ..\.tests\test-run.bat _busybox create
+  if %errorlevel% neq 0 ( exit /b %errorlevel% )
+  pushd "%~dp0"
 )
 
 if not exist tmp mkdir tmp\

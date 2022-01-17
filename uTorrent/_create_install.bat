@@ -3,15 +3,15 @@
 
 set busybox=..\_busybox\busybox64.exe
 if not exist %busybox% (
-	call ..\.tests\test-run.bat _busybox create
-	if %errorlevel% neq 0 ( exit /b %errorlevel% )
-	pushd "%~dp0"
+  call ..\.tests\test-run.bat _busybox create
+  if %errorlevel% neq 0 ( exit /b %errorlevel% )
+  pushd "%~dp0"
 )
 set aria2c=..\aria2\aria2c.exe
 if not exist %aria2c% (
-	call ..\.tests\test-run.bat aria2 checkinstall
-	if %errorlevel% neq 0 ( exit /b %errorlevel% )
-	pushd "%~dp0"
+  call ..\.tests\test-run.bat aria2 checkinstall
+  if %errorlevel% neq 0 ( exit /b %errorlevel% )
+  pushd "%~dp0"
 )
 
 set latest_version=https://antizapret.prostovpn.org/proxy.pac
@@ -50,11 +50,11 @@ echo Generating %latest_filename% autoinstall.bat
 )
 set /p first_file_path=< file_paths_list.tmp
 for %%I in (%first_file_path%) do (
-	%busybox% cp -v %%~dpI%%~nI.* .
+  %busybox% cp -v %%~dpI%%~nI.* .
 )
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 >autoinstall.bat (
     echo pushd "%%~dp0"
-	echo uTorrent.exe /S
+  echo uTorrent.exe /S
 )

@@ -3,9 +3,9 @@
 
 set busybox=..\_busybox\busybox64.exe
 if not exist %busybox% (
-	call ..\.tests\test-run.bat _busybox create
-	if %errorlevel% neq 0 ( exit /b %errorlevel% )
-	pushd "%~dp0"
+  call ..\.tests\test-run.bat _busybox create
+  if %errorlevel% neq 0 ( exit /b %errorlevel% )
+  pushd "%~dp0"
 )
 
 set base_url=https://github.com/git-for-windows/git-sdk-64/raw/main/usr/bin
