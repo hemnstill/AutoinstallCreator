@@ -22,5 +22,5 @@ jobs:
 
       - name: Internal test-run
         run: |
-         apk add --no-cache bash grep
-         .tests/test-run.sh _ create
+          apk add --no-cache bash grep
+          .tests/test-run.sh _ create

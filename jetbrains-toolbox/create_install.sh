@@ -7,16 +7,18 @@ echo Get latest version: $api_url ...
 download_url=$($curl --location "$api_url" | "$grep" -Po "(?<=\"link\":\")[^,]+tar.gz(?=\")")
 echo Downloading: $download_url ...
 $curl --location $download_url --remote-name
-errorlevel=$?; if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
+errorlevel=$?
+if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 
 tar -xzf $(basename -- "$download_url") --strip-components 1
-errorlevel=$?; if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
+errorlevel=$?
+if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 
 {
   echo '#!/bin/bash'
   echo 'cd "$(dirname "${BASH_SOURCE[0]}")"'
   echo ./jetbrains-toolbox
-} > autoinstall.sh
+} >autoinstall.sh
 chmod +x ./autoinstall.sh
 
 echo Done.

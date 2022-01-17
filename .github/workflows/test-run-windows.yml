@@ -27,4 +27,3 @@ jobs:
       - name: External test-run
         shell: cmd
         run: call .tests\test-run.bat ! _ create
-

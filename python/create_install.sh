@@ -3,10 +3,16 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 source ../.src/env_tools.sh
 
 zstd="zstd" && [[ $(uname) == MINGW64* ]] && {
-  zstd="../_zstd/zstd.exe";
-  [[ ! -f "$zstd" ]] && { "../_zstd/create_install.sh"; cd "$(dirname "${BASH_SOURCE[0]}")"; };
+  zstd="../_zstd/zstd.exe"
+  [[ ! -f "$zstd" ]] && {
+    "../_zstd/create_install.sh"
+    cd "$(dirname "${BASH_SOURCE[0]}")"
+  }
 }
-[[ $(command -v $zstd) == '' ]] && { echo "zstd is not available. Try 'sudo apt install zstd'"; exit 1; }
+[[ $(command -v $zstd) == '' ]] && {
+  echo "zstd is not available. Try 'sudo apt install zstd'"
+  exit 1
+}
 
 python_version=$1
 if [[ -z "$python_version" ]]; then
@@ -17,35 +23,43 @@ if [[ -z "$python_version" ]]; then
   echo 'set latest python to 3.10.0 (temp workaround)'
   python_version=3.10.0
 fi
-[[ -z $python_version ]] && { echo 'Cannot get python_version'; exit 1; }
+[[ -z $python_version ]] && {
+  echo 'Cannot get python_version'
+  exit 1
+}
 
 echo "-> $python_version"
 
 api_url='https://api.github.com/repos/indygreg/python-build-standalone/releases'
 echo Get latest portable version: $api_url ...
-download_url=$($curl --silent --location "$api_url" | "$grep" -Po '(?<="browser_download_url":\s")[^,]+linux-musl-debug[^,]+tar\.zst(?=")' \
-| "$grep" -F -- "-$python_version" | head -1)
-[[ -z "$download_url" ]] && { echo "Cannot get release version"; exit 1; }
+download_url=$($curl --silent --location "$api_url" | "$grep" -Po '(?<="browser_download_url":\s")[^,]+linux-musl-debug[^,]+tar\.zst(?=")' |
+  "$grep" -F -- "-$python_version" | head -1)
+[[ -z "$download_url" ]] && {
+  echo "Cannot get release version"
+  exit 1
+}
 
 echo "Downloading: $download_url ..."
 $curl --location "$download_url" --remote-name
-errorlevel=$?; if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
+errorlevel=$?
+if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 
 gz_file_name="cpython-$python_version-linux-musl.tar.gz"
 zst_file_name="$(basename -- "$download_url")"
 tar_file_name="${zst_file_name%.*}"
 
 "$zstd" -df "$zst_file_name"
-errorlevel=$?; if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
+errorlevel=$?
+if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 
 cat $tar_file_name | tar f - --wildcards \
---delete "python/build" \
---delete "python/install/include" \
---delete "*.whl" \
---delete "*.exe" \
---delete "*/config-*" \
---delete "*/test/*" \
---delete "*/tests/*" \
---delete "*/idle_test/*" \
---delete "*/site-packages/*" \
-| "$p7zip" u "$gz_file_name" -uq0 -si
+  --delete "python/build" \
+  --delete "python/install/include" \
+  --delete "*.whl" \
+  --delete "*.exe" \
+  --delete "*/config-*" \
+  --delete "*/test/*" \
+  --delete "*/tests/*" \
+  --delete "*/idle_test/*" \
+  --delete "*/site-packages/*" |
+  "$p7zip" u "$gz_file_name" -uq0 -si
