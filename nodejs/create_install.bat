@@ -13,8 +13,8 @@ echo Get latest lts versions: %latest_version% ...
 
 set /p download_str= < raw_download_str.tmp
 for /f "tokens=2 delims=:," %%A in ("%download_str%") do (
- set node_version=%%A
- call set node_version=%%node_version:"=%%
+  set node_version=%%A
+  call set node_version=%%node_version:"=%%
 )
 
 if "%node_version%" == "" (

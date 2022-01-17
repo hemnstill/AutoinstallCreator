@@ -44,9 +44,9 @@ for /D %%I in ("%~dp0..\*") do (
       endlocal
       echo ^>^> Test %%~fI
       if "%action%" == "create" (
-         call "%%~fI\create_install.bat" %external_args% && call :passed_test || call :failed_test
+        call "%%~fI\create_install.bat" %external_args% && call :passed_test || call :failed_test
       ) else if "%action%" == "install" (
-         call "%%~fI\autoinstall.bat" && call :passed_test || call :failed_test
+        call "%%~fI\autoinstall.bat" && call :passed_test || call :failed_test
       ) else if "%action%" == "checkinstall" (
         call "%%~fI\create_install.bat" %external_args% && call "%%~fI\autoinstall.bat" && call :passed_test || call :failed_test
       )
