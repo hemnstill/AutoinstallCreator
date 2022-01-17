@@ -32,15 +32,15 @@ echo Done.
 
 def _latest_filename():
     return r"""for %%i in (%download_url%) do (
-  set latest_filename=%%~ni%%~xi
+    set latest_filename=%%~ni%%~xi
 )
 """
 
 
 def _check_errorlevel(message: str):
     return rf"""if %errorlevel% neq 0 (
-  echo {message}
-  exit /b %errorlevel%
+    echo {message}
+    exit /b %errorlevel%
 )
 """
 
