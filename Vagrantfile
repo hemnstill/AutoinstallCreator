@@ -17,7 +17,7 @@ Vagrant.configure("2") do |config|
     config.vm.network "private_network", ip: "192.168.56.2"
 
     config.vm.provider :virtualbox do |v, override|
-      v.memory = 2024
+      v.memory = 4096
 	    v.cpus = 1
 	    v.gui = false
     end
