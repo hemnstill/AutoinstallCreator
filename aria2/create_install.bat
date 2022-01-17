@@ -27,3 +27,5 @@ echo Generating %latest_filename% autoinstall.bat
   echo "%p7z%" e "%latest_filename%" "-o." aria2c.exe -aoa -r
   echo exit /b %%errorlevel%%
 )
+
+exit /b %errorlevel%

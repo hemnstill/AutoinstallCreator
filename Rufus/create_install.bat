@@ -15,4 +15,6 @@ set /p download_url= < raw_download_str.tmp
 echo Downloading: %download_url% ...
 %curl% --remote-name --location %download_url%
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
+
 echo Done.
+exit /b %errorlevel%

@@ -34,3 +34,5 @@ for %%i in (%download_url%) do (
 
 echo Generating %latest_filename% autoinstall.bat
 echo "%%~dp0%latest_filename%" /passive > "%~dp0autoinstall.bat"
+
+exit /b %errorlevel%

@@ -58,3 +58,5 @@ if %errorlevel% neq 0 ( exit /b %errorlevel% )
     echo pushd "%%~dp0"
   echo uTorrent.exe /S
 )
+
+exit /b %errorlevel%

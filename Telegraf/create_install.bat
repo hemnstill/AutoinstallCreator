@@ -20,4 +20,6 @@ set download_url="https://dl.influxdata.com/telegraf/releases/telegraf-%telegraf
 echo Downloading: %download_url% ...
 %curl% --location %download_url% --remote-name
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
+
 echo Done.
+exit /b %errorlevel%

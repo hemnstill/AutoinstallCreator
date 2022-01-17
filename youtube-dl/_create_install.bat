@@ -20,3 +20,4 @@ if %errorlevel% neq 0 (
 )
 
 echo Done.
+exit /b %errorlevel%

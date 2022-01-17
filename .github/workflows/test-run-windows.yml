@@ -12,7 +12,6 @@ jobs:
       - name: vc_runtime check
         shell: cmd
         run: |
-          call .tests\test-run.bat vc_redist checkinstall
           call .tests\test-run.bat _7z checkinstall
           call .tests\test-run.bat _7z checkinstall 1
 

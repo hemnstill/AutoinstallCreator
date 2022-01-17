@@ -27,3 +27,5 @@ echo Generating %latest_filename% autoinstall.bat
   echo "%busybox%" cp -v grep.exe ../
   echo exit /b %%errorlevel%%
 )
+
+exit /b %errorlevel%

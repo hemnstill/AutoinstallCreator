@@ -50,4 +50,6 @@ echo Generating %latest_filename% autoinstall.bat
   echo %extract_command%
   echo exit /b %%errorlevel%%
 )
+
 echo Done.
+exit /b %errorlevel%

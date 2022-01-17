@@ -29,3 +29,4 @@ echo Generating autoinstall.bat
 )
 
 echo Done.
+exit /b %errorlevel%

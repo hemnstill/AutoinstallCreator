@@ -70,6 +70,6 @@ echo Generating %latest_filename% autoinstall.bat
   echo "%latest_filename%" -s
   echo exit /b %%errorlevel%%
 )
-echo Done.
 
+echo Done.
 exit /b %errorlevel%

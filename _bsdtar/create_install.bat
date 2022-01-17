@@ -37,3 +37,4 @@ for %%i in ("%download_url%") do (
 %busybox% cp -v ./.tmp/bsdtar.exe .
 
 echo Done.
+exit /b %errorlevel%

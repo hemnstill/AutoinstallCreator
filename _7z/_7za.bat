@@ -29,4 +29,5 @@ for %%i in ("%download_url%") do (
 )
 
 "%bsdtar%" --strip-components 1 -xf %latest_filename% x64/7za.exe
+
 exit /b %errorlevel%
