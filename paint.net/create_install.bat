@@ -19,10 +19,14 @@ if %errorlevel% neq 0 (
   exit /b %errorlevel%
 )
 
-%p7z% e %latest_filename% -aoa
-
 for %%i in ("%download_url%") do (
-  set latest_filename=%%~ni.msi
+  set latest_filename=%%~ni.zip
+)
+
+%p7z% e %latest_filename% -aoa
+if %errorlevel% neq 0 (
+  echo Cannot extract from %latest_filename%
+  exit /b %errorlevel%
 )
 
 echo Generating %latest_filename% autoinstall.bat

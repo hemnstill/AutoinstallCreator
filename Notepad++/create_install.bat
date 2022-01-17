@@ -17,12 +17,15 @@ call set download_url=%%download_url:"=%%
 echo Downloading: %download_url% ...
 %curl% --remote-name --location %download_url%
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
-echo Done.
 
 for %%i in ("%download_url%") do (
   set latest_filename=%%~ni%%~xi
 )
-echo Generating %latest_filename% autoinstall.bat
-echo "%%~dp0%latest_filename%" /S > autoinstall.bat
 
+echo Generating %latest_filename% autoinstall.bat
+> autoinstall.bat (
+  echo "%%~dp0%latest_filename%" /S
+)
+
+echo Done.
 exit /b %errorlevel%
