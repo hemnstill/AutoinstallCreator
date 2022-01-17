@@ -44,6 +44,7 @@ jobs:
           # ADD YOUR CUSTOM ENV VARIABLES HERE OR DEFINE THEM IN A FILE .mega-linter.yml AT THE ROOT OF YOUR REPOSITORY
           DISABLE: COPYPASTE,SPELL
           DISABLE_LINTERS: BASH_SHELLCHECK
+          DEFAULT_BRANCH: master
 
       # Upload MegaLinter artifacts
       - name: Archive production artifacts
