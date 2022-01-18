@@ -18,11 +18,13 @@ if %errorlevel% neq 0 ( exit /b %errorlevel% )
 echo Done.
 
 for %%i in ("%download_url%") do (
-	set latest_filename=%%~ni%%~xi
+  set latest_filename=%%~ni%%~xi
 )
 
 echo Generating %latest_filename% autoinstall.bat
 > autoinstall.bat (
-	echo "%%~dp0%latest_filename%" /passive
-	echo exit /b %%errorlevel%%
+  echo "%%~dp0%latest_filename%" /passive
+  echo exit /b %%errorlevel%%
 )
+
+exit /b %errorlevel%

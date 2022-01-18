@@ -42,8 +42,8 @@ echo Done.
 
 def _check_errorlevel(message: str):
     return rf"""if %errorlevel% neq 0 (
-  echo {message}
-  exit /b %errorlevel%
+    echo {message}
+    exit /b %errorlevel%
 )
 """
 

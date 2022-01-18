@@ -34,3 +34,4 @@ for %%i in (%download_url%) do (
 )
 
 echo Done.
+exit /b %errorlevel%

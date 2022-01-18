@@ -3,16 +3,16 @@
 
 set tar=..\_bash\usr\bin\tar.exe
 if not exist %tar% (
-	call ..\.tests\test-run.bat _bash create
-	if %errorlevel% neq 0 ( exit /b %errorlevel% )
-	pushd "%~dp0"
+  call ..\.tests\test-run.bat _bash create
+  if %errorlevel% neq 0 ( exit /b %errorlevel% )
+  pushd "%~dp0"
 )
 
 set zstd=..\_zstd\zstd.exe
 if not exist %zstd% (
-	call ..\.tests\test-run.mingw64.bat _zstd create
-	if %errorlevel% neq 0 ( exit /b %errorlevel% )
-	pushd "%~dp0"
+  call ..\.tests\test-run.mingw64.bat _zstd create
+  if %errorlevel% neq 0 ( exit /b %errorlevel% )
+  pushd "%~dp0"
 )
 
 set python_version=%~1
@@ -87,3 +87,4 @@ rmdir python /s /q
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 echo Done.
+exit /b %errorlevel%

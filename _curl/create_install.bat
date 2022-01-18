@@ -3,9 +3,9 @@
 
 set busybox=..\_busybox\busybox64.exe
 if not exist %busybox% (
-	call ..\.tests\test-run.bat _busybox create
-	if %errorlevel% neq 0 ( exit /b %errorlevel% )
-	pushd "%~dp0"
+  call ..\.tests\test-run.bat _busybox create
+  if %errorlevel% neq 0 ( exit /b %errorlevel% )
+  pushd "%~dp0"
 )
 
 set for_linux=%1
@@ -50,4 +50,6 @@ echo Generating %latest_filename% autoinstall.bat
   echo %extract_command%
   echo exit /b %%errorlevel%%
 )
+
 echo Done.
+exit /b %errorlevel%

@@ -18,3 +18,4 @@ for %%i in (%download_url%) do (
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 echo Done.
+exit /b %errorlevel%

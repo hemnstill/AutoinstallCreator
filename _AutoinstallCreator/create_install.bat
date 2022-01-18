@@ -39,3 +39,4 @@ echo Generating autoupdate from latest_archive.tar.gz
 )
 
 echo Done.
+exit /b %errorlevel%

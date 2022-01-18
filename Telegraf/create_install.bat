@@ -4,11 +4,11 @@
 set latest_version=https://api.github.com/repos/influxdata/telegraf/releases/latest
 echo Get latest version: %latest_version% ...
 >raw_download_str.tmp (
-	%curl% %latest_version% | findstr /r /c:"\"tag_name\":"
+  %curl% %latest_version% | findstr /r /c:"\"tag_name\":"
 )
 if %errorlevel% neq 0 (
-	echo Cannot get latest version
-	exit /b %errorlevel%
+  echo Cannot get latest version
+  exit /b %errorlevel%
 )
 
 set /p telegraf_version= < raw_download_str.tmp
@@ -20,4 +20,6 @@ set download_url="https://dl.influxdata.com/telegraf/releases/telegraf-%telegraf
 echo Downloading: %download_url% ...
 %curl% --location %download_url% --remote-name
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
+
 echo Done.
+exit /b %errorlevel%

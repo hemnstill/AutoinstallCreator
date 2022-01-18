@@ -3,9 +3,9 @@
 
 set p7za=7za.exe
 if not exist %p7za% (
-	call _7za.bat
-	if %errorlevel% neq 0 ( exit /b %errorlevel% )
-	pushd "%~dp0"
+  call _7za.bat
+  if %errorlevel% neq 0 ( exit /b %errorlevel% )
+  pushd "%~dp0"
 )
 
 set for_linux=%1
@@ -31,7 +31,7 @@ echo Downloading: %download_url% ...
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 for %%i in ("%download_url%") do (
-	set latest_filename=%%~ni%%~xi
+  set latest_filename=%%~ni%%~xi
 )
 
 set extract_command="%p7za%" e "%latest_filename%" "-o.." 7z.exe 7z.dll -aoa -r
@@ -47,3 +47,4 @@ echo Generating %latest_filename% autoinstall.bat
 )
 
 echo Done.
+exit /b %errorlevel%

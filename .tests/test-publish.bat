@@ -3,15 +3,15 @@
 
 set rclone=..\rclone\rclone.exe
 if not exist %rclone% (
-	call test-run.bat rclone checkinstall
-	if %errorlevel% neq 0 ( exit /b %errorlevel% )
-	pushd "%~dp0"
+  call test-run.bat rclone checkinstall
+  if %errorlevel% neq 0 ( exit /b %errorlevel% )
+  pushd "%~dp0"
 )
 set sort=..\_bash\usr\bin\sort.exe
 if not exist %sort% (
-	call test-run.bat _bash create
-	if %errorlevel% neq 0 ( exit /b %errorlevel% )
-	pushd "%~dp0"
+  call test-run.bat _bash create
+  if %errorlevel% neq 0 ( exit /b %errorlevel% )
+  pushd "%~dp0"
 )
 
 set client_id=%~1
@@ -63,12 +63,12 @@ if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 set obsolete_dirs=obsolete_dirs.tmp
 >%obsolete_dirs% (
-	%rclone% --verbose lsf %storage_provider%:%root_dir%/ --config %rclone_config_name% | %grep% "1\.0\." | %sort% --version-sort --reverse | more +6
+  %rclone% --verbose lsf %storage_provider%:%root_dir%/ --config %rclone_config_name% | %grep% "1\.0\." | %sort% --version-sort --reverse | more +6
 )
 for /f "tokens=*" %%a in (%obsolete_dirs%) do (
   if not "%%a"=="" (
-	echo purge obsolete version: %%a
-	%rclone% --verbose --stats-one-line purge %storage_provider%:%root_dir%/%%a --config %rclone_config_name%
+  echo purge obsolete version: %%a
+  %rclone% --verbose --stats-one-line purge %storage_provider%:%root_dir%/%%a --config %rclone_config_name%
   )
 )
 

@@ -13,8 +13,8 @@ echo Get latest lts versions: %latest_version% ...
 
 set /p download_str= < raw_download_str.tmp
 for /f "tokens=2 delims=:," %%A in ("%download_str%") do (
- set node_version=%%A
- call set node_version=%%node_version:"=%%
+  set node_version=%%A
+  call set node_version=%%node_version:"=%%
 )
 
 if "%node_version%" == "" (
@@ -29,8 +29,10 @@ if %errorlevel% neq 0 ( exit /b %errorlevel% )
 echo Done.
 
 for %%i in (%download_url%) do (
-	set latest_filename=%%~ni%%~xi
+  set latest_filename=%%~ni%%~xi
 )
 
 echo Generating %latest_filename% autoinstall.bat
 echo "%%~dp0%latest_filename%" /passive > "%~dp0autoinstall.bat"
+
+exit /b %errorlevel%
