@@ -4,7 +4,7 @@
 set latest_version=https://api.github.com/repos/MyEtherWallet/MyEtherWallet/releases/latest
 echo Get latest version: %latest_version% ...
 >raw_download_str.tmp (
-    %curl% %latest_version% | %grep% """browser_download_url""" | %grep% --only-matching "[^"" ]*MyEtherWallet-[^"" ]*\.zip" | find "" /V
+    %curl% %latest_version% | %grep% """browser_download_url""" | %grep% --only-matching "[^"" ]*MyEtherWallet-[^"" ]*\.zip" | %head% -n1
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version

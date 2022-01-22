@@ -20,7 +20,7 @@ set latest_version_url=https://www.python.org/doc/versions/
 if "%python_version%" == "" (
   echo python_version does not set. get latest from: %latest_version_url% ...
   >python_latest_version.tmp (
-    %curl% --silent --location %latest_version_url% | %grep% -Po "(?<=href=""http://docs\.python\.org/release/)[\d\.]+(?=/"")" | find "" /V
+    %curl% --silent --location %latest_version_url% | %grep% -Po "(?<=href=""http://docs\.python\.org/release/)[\d\.]+(?=/"")" | %head% -n1
   )
   set /p python_version= < python_latest_version.tmp
 
@@ -37,7 +37,7 @@ echo -^> %python_version%
 set api_url=https://api.github.com/repos/indygreg/python-build-standalone/releases
 echo Get latest portable version: %api_url% ...
 >raw_download_str.tmp (
-%curl% --silent --location %api_url% | %grep% -Po "(?<=""browser_download_url"":\s"")[^,]+x86_64[^,]+windows-msvc-static[^,]+tar\.zst(?="")" | %grep% -F -- "-%python_version%" | find "" /V
+%curl% --silent --location %api_url% | %grep% -Po "(?<=""browser_download_url"":\s"")[^,]+x86_64[^,]+windows-msvc-static[^,]+tar\.zst(?="")" | %grep% -F -- "-%python_version%" | %head% -n1
 )
 
 set download_url=

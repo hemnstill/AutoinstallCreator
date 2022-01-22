@@ -3,7 +3,7 @@
 
 set latest_version=https://www.7-zip.org/download.html
 >raw_download_str.tmp (
-  %curl% %latest_version% | %grep% --only-matching "[^ ]*x64.msi" | find "" /V
+  %curl% %latest_version% | %grep% --only-matching "[^ ]*x64.msi" | %head% -n1
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version

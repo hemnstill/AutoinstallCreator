@@ -4,7 +4,7 @@
 set latest_version=https://api.github.com/repos/aria2/aria2/releases/latest
 echo Get latest version: %latest_version% ...
 >raw_download_str.tmp (
-  %curl% %latest_version% | %grep% """browser_download_url""" | %grep% --only-matching "[^"" ]*win-64bit-build1\.zip" | find "" /V
+  %curl% %latest_version% | %grep% """browser_download_url""" | %grep% --only-matching "[^"" ]*win-64bit-build1\.zip" | %head% -n1
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version

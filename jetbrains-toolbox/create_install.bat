@@ -4,7 +4,7 @@
 set api_url="https://data.services.jetbrains.com/products/releases?code=TBA&latest=true&type=release"
 echo Get latest version: %api_url% ...
 >raw_download_str.tmp (
-  %curl% %api_url% | %grep% -Po "(?<=""link"":"")[^,]+\.exe(?="")" | find "" /V
+  %curl% %api_url% | %grep% -Po "(?<=""link"":"")[^,]+\.exe(?="")" | %head% -n1
 )
 
 if %errorlevel% neq 0 (

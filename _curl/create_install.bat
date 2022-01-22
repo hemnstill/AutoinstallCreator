@@ -3,7 +3,7 @@
 
 set for_linux=%1
 
-set search_pattern=--only-matching "dl[^ ]*win64-mingw\.zip" ^| find "" /V
+set search_pattern=--only-matching "dl[^ ]*win64-mingw\.zip" ^| %head% -n1
 set latest_version=https://curl.se/windows/
 if not "%for_linux%" == "" (
   set search_pattern="""browser_download_url""" ^| %grep% --only-matching "[^"" ]*curl-amd64"

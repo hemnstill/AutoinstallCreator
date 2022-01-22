@@ -11,7 +11,7 @@ if not exist %aria2c% (
 set latest_version=https://antizapret.prostovpn.org/proxy.pac
 echo Get proxy from %latest_version%
 >raw_download_str.tmp (
-  %curl% --location %latest_version% | %grep% "return ""PROXY" | %grep% --only-matching "[^ ]*;" | find "" /V
+  %curl% --location %latest_version% | %grep% "return ""PROXY" | %grep% --only-matching "[^ ]*;" | %head% -n1
 )
 
 if %errorlevel% neq 0 (
@@ -24,7 +24,7 @@ call set proxy_from_vpn=%%proxy_from_vpn:;=%%
 set download_url="https://rutracker.org/forum/viewtopic.php?t=5181383"
 echo Download topic %download_url% using proxy: %proxy_from_vpn%
 >raw_download_str.tmp (
-  %curl% %download_url% --proxy %proxy_from_vpn% | %grep% --only-matching """magnet:?xt[^ ]*""" | find "" /V
+  %curl% %download_url% --proxy %proxy_from_vpn% | %grep% --only-matching """magnet:?xt[^ ]*""" | %head% -n1
 )
 
 if %errorlevel% neq 0 (
