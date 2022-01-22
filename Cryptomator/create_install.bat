@@ -4,7 +4,7 @@
 set latest_version="https://cryptomator.org/downloads/win/thanks"
 echo Downloading: %latest_version% ...
 >raw_download_str.tmp (
-    %curl% --location %latest_version% | %grep% -Po "(?<=href="")[^\s]*\.msi(?="")" | %head% -n1
+    %curl% --location %latest_version% | %grep% --only-matching "(?<=href="")[^\s]*\.msi(?="")" | %head% -n1
 )
 if %errorlevel% neq 0 (
   echo Cannot download latest version

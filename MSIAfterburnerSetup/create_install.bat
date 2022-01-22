@@ -7,7 +7,7 @@ set "datestamp=%dt:~0,10%"
 set download_token_url="https://www.msi.com/api/v1/get_token?date=%datestamp%"
 echo Downloading: %download_token_url% ...
 >raw_download_str.tmp (
-    %curl% --location %download_token_url% | %grep% -Po "(?<=\["")[^\s]*(?=""\])" | %head% -n1
+    %curl% --location %download_token_url% | %grep% --only-matching "(?<=\["")[^\s]*(?=""\])" | %head% -n1
 )
 if %errorlevel% neq 0 (
   echo Cannot download_token

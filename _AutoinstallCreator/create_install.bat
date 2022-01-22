@@ -14,7 +14,7 @@ set self_base=https://github.com/hemnstill/AutoinstallCreator
 set latest_commits="%self_base_api%/commits?sha=master"
 echo get latest_commits %latest_commits% ...
 >latest_commits.txt (
-  %curl% %latest_commits% | %grep% -Po "(?<=""sha"":\s"")[^,]+(?="")" | %head% -n1
+  %curl% %latest_commits% | %grep% --only-matching "(?<=""sha"":\s"")[^,]+(?="")" | %head% -n1
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest_commits
