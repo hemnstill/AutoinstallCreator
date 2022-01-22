@@ -4,7 +4,7 @@ source ../.src/env_tools.sh
 
 api_url='https://www.virtualbox.org/wiki/Downloads'
 echo Get latest version: $api_url ...
-download_url=$($curl --silent --location "$api_url" | "$grep" -Po '(?<=href=")[^,]+Win\.exe(?=")' | head -1)
+download_url=$($curl --silent --location "$api_url" | "$grep" --only-matching '(?<=href=")[^,]+Win\.exe(?=")' | head -1)
 [[ -z "$download_url" ]] && {
   echo "Cannot get release version"
   exit 1

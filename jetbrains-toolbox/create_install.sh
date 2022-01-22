@@ -4,7 +4,7 @@ source ../.src/env_tools.sh
 
 api_url='https://data.services.jetbrains.com/products/releases?code=TBA&latest=true&type=release'
 echo Get latest version: $api_url ...
-download_url=$($curl --location "$api_url" | "$grep" -Po "(?<=\"link\":\")[^,]+tar.gz(?=\")")
+download_url=$($curl --location "$api_url" | "$grep" --only-matching "(?<=\"link\":\")[^,]+tar.gz(?=\")")
 echo Downloading: $download_url ...
 $curl --location $download_url --remote-name
 errorlevel=$?

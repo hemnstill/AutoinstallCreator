@@ -22,5 +22,5 @@ jobs:
 
       - name: Internal test-run
         run: |
-          apk add --no-cache bash grep
+          apk add --no-cache bash pcre2-tools
           .tests/test-run.sh _ create

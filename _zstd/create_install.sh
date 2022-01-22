@@ -4,7 +4,7 @@ source ../.src/env_tools.sh
 
 api_url='https://api.github.com/repos/facebook/zstd/releases/latest'
 echo Get latest version: $api_url ...
-download_url=$($curl --silent --location "$api_url" | "$grep" -Po '(?<="browser_download_url":\s")[^,]+win64\.zip(?=")' | head -1)
+download_url=$($curl --silent --location "$api_url" | "$grep" --only-matching '(?<="browser_download_url":\s")[^,]+win64\.zip(?=")' | head -1)
 [[ -z "$download_url" ]] && {
   echo "Cannot get release version"
   exit 1
