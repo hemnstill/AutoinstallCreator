@@ -1,12 +1,12 @@
 #!/bin/bash
-cd "$(dirname "${BASH_SOURCE[0]}")"
+cd "$(dirname "$0")"
 source ../.src/env_tools.sh
 
 zstd="zstd" && [[ $(uname) == MINGW64* ]] && {
   zstd="../_zstd/zstd.exe"
   [[ ! -f "$zstd" ]] && {
     "../_zstd/create_install.sh"
-    cd "$(dirname "${BASH_SOURCE[0]}")"
+    cd "$(dirname "$0")"
   }
 }
 [[ $(command -v $zstd) == '' ]] && {

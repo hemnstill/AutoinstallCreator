@@ -1,5 +1,5 @@
 #!/bin/bash
-cd "$(dirname "${BASH_SOURCE[0]}")"
+cd "$(dirname "$0")"
 source ../.src/env_tools.sh
 
 api_url='https://data.services.jetbrains.com/products/releases?code=TBA&latest=true&type=release'
@@ -16,7 +16,7 @@ if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 
 {
   echo '#!/bin/bash'
-  echo 'cd "$(dirname "${BASH_SOURCE[0]}")"'
+  echo 'cd "$(dirname "$0")"'
   echo ./jetbrains-toolbox
 } >autoinstall.sh
 chmod +x ./autoinstall.sh
