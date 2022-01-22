@@ -17,7 +17,7 @@ if "%python_version%" == "" (
   )
   set /p python_version= < python_latest_version.tmp
 
-  echo set latest python to 3.10.0 (temp workaround)
+  echo set latest python to 3.10.0 #TODO: temp workaround
   set python_version=3.10.0
 )
 
@@ -41,21 +41,20 @@ set p7z_file_name=cpython-%python_version%-windows-msvc.7z
 set zst_file_name=%tar_file_name%.zst
 
 echo Downloading: %download_url% ...
-%curl% --output %zst_file_name% --location "%download_url%"
+rem %curl% --output %zst_file_name% --location "%download_url%"
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 echo Extracting from: %zst_file_name% to .tar ...
 %zstd% -df %zst_file_name%
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
-
-if exist python (
-  echo Removing 'python' folder...
-  rmdir python /s /q
-)
+echo Removing 'python' folder...
+%busybox% rm -rf python/install
+if %errorlevel% neq 0 ( exit /b %errorlevel% )
+%busybox% mkdir -p python/install
 
 echo Extracting from tar: %tar_file_name% ...
-%busybox% tar -xf %tar_file_name% -C python/install ^
+%busybox% tar -xf %tar_file_name% python/install ^
 --exclude="__pycache__" ^
 --exclude="test" ^
 --exclude="tests" ^
@@ -69,14 +68,9 @@ echo Extracting from tar: %tar_file_name% ...
 --exclude="*.pickle" ^
 --exclude="pythonw.exe" ^
 --exclude="python/install/include"
-if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 echo Creating archive %p7z_file_name%
 %p7z% u %p7z_file_name% -uq0 python
-if %errorlevel% neq 0 ( exit /b %errorlevel% )
-
-echo Removing 'python' folder...
-rmdir python /s /q
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 echo Done.

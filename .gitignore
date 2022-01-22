@@ -33,5 +33,6 @@ uTorrent/*.lng
 .tests/git_status.txt
 
 bsdtar/*.bat
+python/python/
 
 tmp/
