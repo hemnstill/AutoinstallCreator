@@ -1,13 +1,6 @@
 @pushd "%~dp0"
 @call ..\.src\env_tools.bat
 
-set busybox=..\_busybox\busybox64.exe
-if not exist %busybox% (
-  call ..\.tests\test-run.bat _busybox create
-  if %errorlevel% neq 0 ( exit /b %errorlevel% )
-  pushd "%~dp0"
-)
-
 if not exist tmp mkdir tmp\
 type NUL > tmp\.empty
 if not exist mingw64\bin\ mkdir mingw64\bin\

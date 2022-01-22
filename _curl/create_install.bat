@@ -1,13 +1,6 @@
 @pushd "%~dp0"
 @call ..\.src\env_tools.bat
 
-set busybox=..\_busybox\busybox64.exe
-if not exist %busybox% (
-  call ..\.tests\test-run.bat _busybox create
-  if %errorlevel% neq 0 ( exit /b %errorlevel% )
-  pushd "%~dp0"
-)
-
 set for_linux=%1
 
 set search_pattern=--only-matching "dl[^ ]*win64-mingw\.zip" ^| find "" /V

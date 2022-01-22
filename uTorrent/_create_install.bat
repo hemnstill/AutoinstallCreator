@@ -1,12 +1,6 @@
 @pushd "%~dp0"
 @call ..\.src\env_tools.bat
 
-set busybox=..\_busybox\busybox64.exe
-if not exist %busybox% (
-  call ..\.tests\test-run.bat _busybox create
-  if %errorlevel% neq 0 ( exit /b %errorlevel% )
-  pushd "%~dp0"
-)
 set aria2c=..\aria2\aria2c.exe
 if not exist %aria2c% (
   call ..\.tests\test-run.bat aria2 checkinstall
