@@ -1,9 +1,9 @@
 @pushd "%~dp0"
 @call ..\.src\env_tools.bat
 
-set p7za=7za.exe
-if not exist %p7za% (
-  call _7za.bat
+set bsdtar=..\_bsdtar\bsdtar.exe
+if not exist %bsdtar% (
+  call ..\.tests\test-run.bat _bsdtar create
   if %errorlevel% neq 0 ( exit /b %errorlevel% )
   pushd "%~dp0"
 )
@@ -34,17 +34,14 @@ for %%i in ("%download_url%") do (
   set latest_filename=%%~ni%%~xi
 )
 
-set extract_command="%p7za%" e "%latest_filename%" "-o.." 7z.exe 7z.dll -aoa -r
+set extract_command="%p7z%" e "%latest_filename%" "-o.tmp" 7z.exe 7z.dll -aoa -r
 if not "%for_linux%" == "" (
-  set extract_command="..\_bsdtar\bsdtar.exe" -xf "%latest_filename%" -C .. 7zzs
+  set extract_command="..\_bsdtar\bsdtar.exe" -xf "%latest_filename%" -C .tmp 7zzs
 )
 
-echo Generating %latest_filename% autoinstall.bat
->autoinstall.bat (
-  echo pushd "%%~dp0"
-  echo %extract_command%
-  echo exit /b %%errorlevel%%
-)
+%busybox% rm -f .tmp/*
+%busybox% mkdir -p .tmp
+%extract_command%
 
 echo Done.
 exit /b %errorlevel%
