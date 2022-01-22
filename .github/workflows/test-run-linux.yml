@@ -8,6 +8,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: install deps
+        run: sudo apt-get --assume-yes install pcre2-utils
+
       - name: Internal test-run
         run: .tests/test-run.sh _ create
 
