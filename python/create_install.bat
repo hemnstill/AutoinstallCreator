@@ -1,13 +1,6 @@
 @pushd "%~dp0"
 @call ..\.src\env_tools.bat
 
-set tar=..\_bash\usr\bin\tar.exe
-if not exist %tar% (
-  call ..\.tests\test-run.bat _bash create
-  if %errorlevel% neq 0 ( exit /b %errorlevel% )
-  pushd "%~dp0"
-)
-
 set zstd=..\_zstd\zstd.exe
 if not exist %zstd% (
   call ..\.tests\test-run.mingw64.bat _zstd create
@@ -62,7 +55,7 @@ if exist python (
 )
 
 echo Extracting from tar: %tar_file_name% ...
-%tar% -xf %tar_file_name% python/install ^
+%busybox% tar -xf %tar_file_name% -C python/install ^
 --exclude="__pycache__" ^
 --exclude="test" ^
 --exclude="tests" ^

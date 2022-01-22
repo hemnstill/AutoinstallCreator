@@ -12,8 +12,7 @@ jobs:
       - name: vc_runtime check
         shell: cmd
         run: |
-          call .tests\test-run.bat _7z checkinstall
-          call .tests\test-run.bat _7z checkinstall 1
+          call _7z\create_install_for.bat
 
       - name: Internal test-run
         shell: cmd
