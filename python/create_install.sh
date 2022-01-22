@@ -1,12 +1,12 @@
 #!/bin/bash
-cd "$(dirname "${BASH_SOURCE[0]}")"
+cd "$(dirname "$0")"
 source ../.src/env_tools.sh
 
 zstd="zstd" && [[ $(uname) == MINGW64* ]] && {
   zstd="../_zstd/zstd.exe"
   [[ ! -f "$zstd" ]] && {
     "../_zstd/create_install.sh"
-    cd "$(dirname "${BASH_SOURCE[0]}")"
+    cd "$(dirname "$0")"
   }
 }
 [[ $(command -v $zstd) == '' ]] && {
@@ -18,7 +18,7 @@ python_version=$1
 if [[ -z "$python_version" ]]; then
   latest_version_url='https://www.python.org/doc/versions/'
   echo "python_version does not set. get latest from: $latest_version_url ..."
-  python_version=$($curl --silent --location "$latest_version_url" | "$grep" -Po '(?<=href="http://docs\.python\.org/release/)[\d\.]+(?=/")' | head -1)
+  python_version=$($curl --silent --location "$latest_version_url" | "$grep" --only-matching '(?<=href="http://docs\.python\.org/release/)[\d\.]+(?=/")' | head -1)
 
   echo 'set latest python to 3.10.0 (temp workaround)'
   python_version=3.10.0
@@ -32,7 +32,7 @@ echo "-> $python_version"
 
 api_url='https://api.github.com/repos/indygreg/python-build-standalone/releases'
 echo Get latest portable version: $api_url ...
-download_url=$($curl --silent --location "$api_url" | "$grep" -Po '(?<="browser_download_url":\s")[^,]+linux-musl-debug[^,]+tar\.zst(?=")' |
+download_url=$($curl --silent --location "$api_url" | "$grep" --only-matching '(?<="browser_download_url":\s")[^,]+linux-musl-debug[^,]+tar\.zst(?=")' |
   "$grep" -F -- "-$python_version" | head -1)
 [[ -z "$download_url" ]] && {
   echo "Cannot get release version"

@@ -3,7 +3,7 @@
 
 set latest_version=https://www.iis.net/downloads/microsoft/application-request-routing
 >raw_download_str.tmp (
-  %curl% %latest_version% | %grep% -Po "(?<=<a\shref="")[^\s]*(?="">x64)" | find "" /V
+  %curl% %latest_version% | %grep% --only-matching "(?<=<a\shref="")[^\s]*(?="">x64)" | %head% -n1
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version

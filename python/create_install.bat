@@ -1,9 +1,9 @@
 @pushd "%~dp0"
 @call ..\.src\env_tools.bat
 
-set tar=..\_bash\usr\bin\tar.exe
+set tar=..\_tar\tar.exe
 if not exist %tar% (
-  call ..\.tests\test-run.bat _bash create
+  call ..\_tar\_create_install.bat
   if %errorlevel% neq 0 ( exit /b %errorlevel% )
   pushd "%~dp0"
 )
@@ -20,11 +20,11 @@ set latest_version_url=https://www.python.org/doc/versions/
 if "%python_version%" == "" (
   echo python_version does not set. get latest from: %latest_version_url% ...
   >python_latest_version.tmp (
-    %curl% --silent --location %latest_version_url% | %grep% -Po "(?<=href=""http://docs\.python\.org/release/)[\d\.]+(?=/"")" | find "" /V
+    %curl% --silent --location %latest_version_url% | %grep% --only-matching "(?<=href=""http://docs\.python\.org/release/)[\d\.]+(?=/"")" | %head% -n1
   )
   set /p python_version= < python_latest_version.tmp
 
-  echo set latest python to 3.10.0 (temp workaround)
+  echo set latest python to 3.10.0 #TODO: temp workaround
   set python_version=3.10.0
 )
 
@@ -37,7 +37,7 @@ echo -^> %python_version%
 set api_url=https://api.github.com/repos/indygreg/python-build-standalone/releases
 echo Get latest portable version: %api_url% ...
 >raw_download_str.tmp (
-%curl% --silent --location %api_url% | %grep% -Po "(?<=""browser_download_url"":\s"")[^,]+x86_64[^,]+windows-msvc-static[^,]+tar\.zst(?="")" | %grep% -F -- "-%python_version%" | find "" /V
+%curl% --silent --location %api_url% | %grep% --only-matching "(?<=""browser_download_url"":\s"")[^,]+x86_64[^,]+windows-msvc-static[^,]+tar\.zst(?="")" | %grep% -F -- "-%python_version%" | %head% -n1
 )
 
 set download_url=
@@ -55,11 +55,10 @@ echo Extracting from: %zst_file_name% to .tar ...
 %zstd% -df %zst_file_name%
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
-
-if exist python (
-  echo Removing 'python' folder...
-  rmdir python /s /q
-)
+echo Removing 'python' folder...
+%busybox% rm -rf python/install
+if %errorlevel% neq 0 ( exit /b %errorlevel% )
+%busybox% mkdir -p python/install
 
 echo Extracting from tar: %tar_file_name% ...
 %tar% -xf %tar_file_name% python/install ^
@@ -80,10 +79,6 @@ if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 echo Creating archive %p7z_file_name%
 %p7z% u %p7z_file_name% -uq0 python
-if %errorlevel% neq 0 ( exit /b %errorlevel% )
-
-echo Removing 'python' folder...
-rmdir python /s /q
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 echo Done.

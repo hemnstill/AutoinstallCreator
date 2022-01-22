@@ -1,5 +1,5 @@
 #!/bin/bash
-cd "$(dirname "${BASH_SOURCE[0]}")"
+cd "$(dirname "$0")"
 source ../.src/env_tools.sh
 
 tarxz_name=tsetup.tar.xz
@@ -18,7 +18,7 @@ chmod +x ./Telegram
 
 {
   printf '#!/bin/bash
-cd "$(dirname "${BASH_SOURCE[0]}")"
+cd "$(dirname "$0")"
 ./Telegram'
 } >autoinstall.sh
 chmod +x ./autoinstall.sh

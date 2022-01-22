@@ -3,7 +3,7 @@
 
 set download_url="https://www.iis.net/downloads/microsoft/web-deploy"
 >raw_download_str.tmp (
-  %curl% %download_url% | %grep% --only-matching """[^ ]*amd64_en-US.msi""" | find "" /V
+  %curl% %download_url% | %grep% --only-matching """[^ ]*amd64_en-US.msi""" | %head% -n1
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version

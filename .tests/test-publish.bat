@@ -39,7 +39,7 @@ set rclone_config_name=rclone.conf.tmp
 echo get access_token ...
 >%rclone_config_name% ( %curl% --silent --request POST ^
 --data "client_id=%client_id%&client_secret=%client_secret%&refresh_token=%refresh_token%&grant_type=refresh_token" ^
-https://accounts.google.com/o/oauth2/token | %grep% -Po "(?<=""access_token"":\s"")[^,]+(?="")
+https://accounts.google.com/o/oauth2/token | %grep% --only-matching "(?<=""access_token"":\s"")[^,]+(?="")
 )
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
 

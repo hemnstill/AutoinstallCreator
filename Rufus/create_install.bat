@@ -4,7 +4,7 @@
 set latest_version=https://api.github.com/repos/pbatard/rufus/releases/latest
 echo Get latest version: %latest_version% ...
 >raw_download_str.tmp (
-  %curl% %latest_version% | %grep% """browser_download_url""" | %grep% -P --only-matching "(?<="")[^\s]*rufus-[\d\.]*exe(?="")" | find "" /V
+  %curl% %latest_version% | %grep% """browser_download_url""" | %grep% --only-matching "(?<="")[^\s]*rufus-[\d\.]*exe(?="")" | %head% -n1
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version

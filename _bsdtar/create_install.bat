@@ -1,20 +1,13 @@
 @pushd "%~dp0"
 @call ..\.src\env_tools.bat
 
-set busybox=..\_busybox\busybox64.exe
-if not exist %busybox% (
-  call ..\.tests\test-run.bat _busybox create
-  if %errorlevel% neq 0 ( exit /b %errorlevel% )
-  pushd "%~dp0"
-)
-
 %busybox% rm -f ./.tmp/bsdtar.exe
 %busybox% rm -f ./bsdtar.exe
 
 set latest_version=https://api.github.com/repos/libarchive/libarchive/releases/latest
 echo Get latest version: %latest_version% ...
 >raw_download_str.tmp (
-    %curl% %latest_version% | %grep% """browser_download_url""" | %grep% -P --only-matching "(?<=""browser_download_url"":\s"")[^,]+win64\.zip(?="")" | find "" /V
+    %curl% %latest_version% | %grep% """browser_download_url""" | %grep% --only-matching "(?<=""browser_download_url"":\s"")[^,]+win64\.zip(?="")" | %head% -n1
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version
@@ -35,6 +28,9 @@ for %%i in ("%download_url%") do (
 
 %busybox% unzip %latest_filename% -j -o -d ./.tmp
 %busybox% cp -v ./.tmp/bsdtar.exe .
+
+echo bsdtar version:
+bsdtar --version
 
 echo Done.
 exit /b %errorlevel%

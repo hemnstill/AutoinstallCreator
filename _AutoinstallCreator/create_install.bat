@@ -14,7 +14,7 @@ set self_base=https://github.com/hemnstill/AutoinstallCreator
 set latest_commits="%self_base_api%/commits?sha=master"
 echo get latest_commits %latest_commits% ...
 >latest_commits.txt (
-  %curl% %latest_commits% | %grep% -Po "(?<=""sha"":\s"")[^,]+(?="")" | find "" /V
+  %curl% %latest_commits% | %grep% --only-matching "(?<=""sha"":\s"")[^,]+(?="")" | %head% -n1
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest_commits
@@ -30,7 +30,7 @@ if %errorlevel% neq 0 (
   exit /b %errorlevel%
 )
 
-echo disable: %bsdtar% -tf latest_archive.tar.gz ^>latest_files.txt (temp workaround)
+%bsdtar% -tf latest_archive.tar.gz >latest_files.txt
 
 echo Generating autoupdate from latest_archive.tar.gz
 >autoinstall.bat (

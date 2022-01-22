@@ -4,7 +4,7 @@
 set latest_folder_version="https://www.solidfiles.com/folder/bd7165a0d4/"
 echo Downloading: %latest_folder_version% ...
 >raw_download_str.tmp (
-    %curl% --location %latest_folder_version% | %grep% "KMS Tools Portable" | %grep% -Po "(?<=<a\shref="")[^\s]*(?="")" | find "" /V
+    %curl% --location %latest_folder_version% | %grep% "KMS Tools Portable" | %grep% --only-matching "(?<=<a\shref="")[^\s]*(?="")" | %head% -n1
 )
 if %errorlevel% neq 0 (
   echo Cannot download latest version
@@ -15,7 +15,7 @@ set /p latest_relative_version= < raw_download_str.tmp
 set latest_version="https://www.solidfiles.com%latest_relative_version%"
 echo Downloading: %latest_version% ...
 >raw_download_str.tmp (
-    %curl% --location %latest_version%  | %grep% -Po "(?<=""downloadUrl"":"")[^\s]*\.7z(?="")" | find "" /V
+    %curl% --location %latest_version%  | %grep% --only-matching "(?<=""downloadUrl"":"")[^\s]*\.7z(?="")" | %head% -n1
 )
 if %errorlevel% neq 0 (
   echo Cannot download latest version

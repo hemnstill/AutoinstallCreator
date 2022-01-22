@@ -60,7 +60,7 @@ goto :log_errors
 
 :git_check
   pushd "%~dp0"
-  git status --porcelain | find "" /V > git_status.txt
+  git status --porcelain | %head% -n1 > git_status.txt
   set /p first_char_diff=< git_status.txt
   if not "%first_char_diff%" == "" (
     type git_status.txt

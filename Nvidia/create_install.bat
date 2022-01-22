@@ -15,7 +15,7 @@ set product_series=%~1
 if "%~1"=="" (
   echo product_series does not set:
   >raw_download_str.tmp (
-  %curl% -s %lookup_base_url%%product_series_typeid% | %grep% -P --only-matching "(?s).*?(\r\n|\r|\n)" | %grep% -v "LookupValue" | find "" /V
+  %curl% -s %lookup_base_url%%product_series_typeid% | %grep% --only-matching "(?s).*?(\r\n|\r|\n)" | %grep% -v "LookupValue" | %head% -n1
   )
   type raw_download_str.tmp
   exit /b %errorlevel%
@@ -23,8 +23,8 @@ if "%~1"=="" (
 
 >raw_download_str.tmp (
   %curl% -s %lookup_base_url%%os_typeid% ^
-  | %grep% -P --only-matching "(?s)<Name>Windows 10 64-bit</Name>.*?</Value>" | %grep% -P --only-matching "(?<=<Value>).+(?=</Value>)" ^
-  | find "" /V
+  | %grep% --only-matching "(?s)<Name>Windows 10 64-bit</Name>.*?</Value>" | %grep% --only-matching "(?<=<Value>).+(?=</Value>)" ^
+  | %head% -n1
 )
 if %errorlevel% neq 0 (
   echo Cannot find os_id
@@ -35,8 +35,8 @@ echo "%os_name%" os_id: "%os_id%"
 
 >raw_download_str.tmp (
   %curl% -s %lookup_base_url%%product_series_typeid% ^
-  | %grep% -P --only-matching "(?s)<Name>%product_series%</Name>.*?</Value>" | %grep% -P --only-matching "(?<=<Value>).+(?=</Value>)" ^
-  | find "" /V
+  | %grep% --only-matching "(?s)<Name>%product_series%</Name>.*?</Value>" | %grep% --only-matching "(?<=<Value>).+(?=</Value>)" ^
+  | %head% -n1
 )
 if %errorlevel% neq 0 (
   echo Cannot find ps_id
@@ -54,7 +54,7 @@ echo Get query: %search_query%
 set /p result_url=< raw_download_str.tmp
 echo Get direct link from: "%result_url%"
 >result_url.tmp (
-  %curl% --location %result_url% | %grep% --only-matching "[^&]*whql.exe" | %grep% -P --only-matching "(?<=url=).*" | find "" /V
+  %curl% --location %result_url% | %grep% --only-matching "[^&]*whql.exe" | %grep% --only-matching "(?<=url=).*" | %head% -n1
 )
 set /p download_url=< result_url.tmp
 echo Download driver: "%download_base_url%%download_url%"

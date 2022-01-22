@@ -3,7 +3,7 @@
 
 set latest_version=https://www.iis.net/downloads/microsoft/url-rewrite
 >raw_download_str.tmp (
-  %curl% %latest_version% | %grep% --only-matching """[^ ]*amd64_en-US.msi""" | find "" /V
+  %curl% %latest_version% | %grep% --only-matching """[^ ]*amd64_en-US.msi""" | %head% -n1
 )
 if %errorlevel% neq 0 (
   echo Cannot get latest version
