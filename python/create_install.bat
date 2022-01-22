@@ -1,6 +1,13 @@
 @pushd "%~dp0"
 @call ..\.src\env_tools.bat
 
+set tar=..\_tar\tar.exe
+if not exist %tar% (
+  call ..\_tar\_create_install.bat
+  if %errorlevel% neq 0 ( exit /b %errorlevel% )
+  pushd "%~dp0"
+)
+
 set zstd=..\_zstd\zstd.exe
 if not exist %zstd% (
   call ..\.tests\test-run.mingw64.bat _zstd create
@@ -41,7 +48,7 @@ set p7z_file_name=cpython-%python_version%-windows-msvc.7z
 set zst_file_name=%tar_file_name%.zst
 
 echo Downloading: %download_url% ...
-rem %curl% --output %zst_file_name% --location "%download_url%"
+%curl% --output %zst_file_name% --location "%download_url%"
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 echo Extracting from: %zst_file_name% to .tar ...
@@ -54,7 +61,7 @@ if %errorlevel% neq 0 ( exit /b %errorlevel% )
 %busybox% mkdir -p python/install
 
 echo Extracting from tar: %tar_file_name% ...
-%busybox% tar -xf %tar_file_name% python/install ^
+%tar% -xf %tar_file_name% python/install ^
 --exclude="__pycache__" ^
 --exclude="test" ^
 --exclude="tests" ^
@@ -68,6 +75,7 @@ echo Extracting from tar: %tar_file_name% ...
 --exclude="*.pickle" ^
 --exclude="pythonw.exe" ^
 --exclude="python/install/include"
+if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 echo Creating archive %p7z_file_name%
 %p7z% u %p7z_file_name% -uq0 python
