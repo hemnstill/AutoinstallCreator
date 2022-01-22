@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: vc_runtime check
+      - name: 7z check
         shell: cmd
         run: |
           call _7z\create_install_for.bat

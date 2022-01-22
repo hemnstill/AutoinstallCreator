@@ -17,9 +17,14 @@ jobs:
           docker pull ${{ env.IMAGE_NAME }}
           docker images ${{ env.IMAGE_NAME }}
 
-      - name: test-run
+      - name: 7z check
         shell: cmd
         run: >
-          docker container run --rm --env CI=true -v ${{ github.workspace }}:C:\app
-          ${{ env.IMAGE_NAME }}
+          docker container run --rm --env CI=true -v ${{ github.workspace }}:C:\app ${{ env.IMAGE_NAME }}
           cmd /c C:\app\_7z\create_install_for.bat
+
+      - name: Internal test-run
+        shell: cmd
+        run: >
+          docker container run --rm --env CI=true -v ${{ github.workspace }}:C:\app ${{ env.IMAGE_NAME }}
+          cmd /c C:\app\.tests\test-run.bat _ create
