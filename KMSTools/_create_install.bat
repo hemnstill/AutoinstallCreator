@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ..\.src\env_tools.bat
+@call "%~dp0..\.tools\env_tools.bat"
 
 set latest_folder_version="https://www.solidfiles.com/folder/bd7165a0d4/"
 echo Downloading: %latest_folder_version% ...

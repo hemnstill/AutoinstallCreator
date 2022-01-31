@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ..\.src\env_tools.bat
+@call "%~dp0..\.tools\env_tools.bat"
 
 set aria2c=..\aria2\aria2c.exe
 if not exist %aria2c% (

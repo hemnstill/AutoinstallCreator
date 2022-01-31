@@ -1,6 +1,7 @@
 #!/bin/bash
-cd "$(dirname "$0")"
-source ../.src/env_tools.sh
+dp0="$(dirname "$0")"
+dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
+cd "$dp0"
 
 api_url='https://api.github.com/repos/libarchive/libarchive/releases/latest'
 echo Get latest version: $api_url ...

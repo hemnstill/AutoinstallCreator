@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ..\.src\env_tools.bat
+@call "%~dp0..\.tools\env_tools.bat"
 
 set latest_filename=BuildTools_Full.exe
 set download_url="https://go.microsoft.com/fwlink/?LinkId=615458"

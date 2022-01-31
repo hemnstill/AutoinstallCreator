@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ..\.src\env_tools.bat
+@call "%~dp0..\.tools\env_tools.bat"
 
 %busybox% rm -f ./.tmp/bsdtar.exe
 %busybox% rm -f ./bsdtar.exe

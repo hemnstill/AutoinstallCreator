@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ..\.src\env_tools.bat
+@call "%~dp0..\.tools\env_tools.bat"
 
 set base_url=https://github.com/git-for-windows/git-sdk-64/raw/main/usr/bin
 %curl% --location %base_url%/msys-2.0.dll --remote-name
