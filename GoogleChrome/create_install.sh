@@ -1,6 +1,7 @@
 #!/bin/bash
-cd "$(dirname "$0")"
+dp0="$(dirname "$0")"
 dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
+cd "$dp0"
 
 download_url='https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
 $curl --location $download_url --remote-name
