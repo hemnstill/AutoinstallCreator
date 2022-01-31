@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ..\.src\env_tools.bat
+@call "%~dp0..\.tools\env_tools.bat"
 
 set latest_version=https://www.iis.net/downloads/microsoft/application-request-routing
 >raw_download_str.tmp (

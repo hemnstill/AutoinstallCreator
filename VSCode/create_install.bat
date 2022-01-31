@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ..\.src\env_tools.bat
+@call "%~dp0..\.tools\env_tools.bat"
 
 set latest_filename=VSCodeUserSetup.exe
 set download_url="https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user"

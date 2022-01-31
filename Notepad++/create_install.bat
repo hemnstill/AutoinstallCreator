@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ..\.src\env_tools.bat
+@call "%~dp0..\.tools\env_tools.bat"
 
 set latest_version=https://api.github.com/repos/notepad-plus-plus/notepad-plus-plus/releases/latest
 echo Get latest version: %latest_version% ...

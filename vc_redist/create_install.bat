@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ..\.src\env_tools.bat
+@call "%~dp0..\.tools\env_tools.bat"
 
 set download_url="https://aka.ms/vs/17/release/vc_redist.x64.exe"
 echo Downloading: %download_url% ...

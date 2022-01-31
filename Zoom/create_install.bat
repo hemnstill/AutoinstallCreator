@@ -1,5 +1,5 @@
 @pushd "%~dp0"
-@call ..\.src\env_tools.bat
+@call "%~dp0..\.tools\env_tools.bat"
 
 set download_url="https://zoom.us/client/latest/ZoomInstaller.exe"
 echo Downloading: %latest_filename% %download_url% ...
