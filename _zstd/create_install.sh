@@ -1,6 +1,6 @@
 #!/bin/bash
 cd "$(dirname "$0")"
-source ../.src/env_tools.sh
+dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
 
 api_url='https://api.github.com/repos/facebook/zstd/releases/latest'
 echo Get latest version: $api_url ...

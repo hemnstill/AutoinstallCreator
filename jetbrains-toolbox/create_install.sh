@@ -1,6 +1,6 @@
 #!/bin/bash
 cd "$(dirname "$0")"
-source ../.src/env_tools.sh
+dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
 
 api_url='https://data.services.jetbrains.com/products/releases?code=TBA&latest=true&type=release'
 echo Get latest version: $api_url ...
