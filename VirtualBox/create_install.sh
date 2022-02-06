@@ -1,5 +1,5 @@
 #!/bin/bash
-dp0="$(dirname "$0")"
+dp0="$(realpath "$(dirname "$0")")"
 dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
 cd "$dp0"
 
@@ -17,10 +17,11 @@ $curl --location "$download_url" --output $vbox_file_name
 errorlevel=$?
 if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 
-[[ $(uname) != MINGW64* ]] && {
-  echo "Done. MINGW64 required for create autoinstall.bat"
+$is_windows_os && {
+  echo "Done. Windows is required for create autoinstall.bat"
   exit
 }
+
 echo "Remove *.msi && extracting from: $vbox_file_name ..."
 rm -f *.msi && ./$vbox_file_name --silent --extract --path .
 errorlevel=$?
