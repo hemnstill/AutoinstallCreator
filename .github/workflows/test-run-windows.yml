@@ -13,10 +13,6 @@ jobs:
         shell: cmd
         run: .tools\busybox64.exe bash .tests\ci-test-run.sh
 
-#      - name: Internal test-run mingw64
-#        shell: cmd
-#        run: call .tests\test-run.mingw64.bat _ create
-#
 #      - name: External test-run
 #        shell: cmd
 #        run: call .tests\test-run.bat ! _ create
