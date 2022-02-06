@@ -41,12 +41,16 @@ Release-Date: 2022-01-05
 Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp \nFeatures: alt-svc AsynchDNS HSTS HTTP2 HTTPS-proxy IPv6 Largefile libz NTLM NTLM_WB SSL TLS-SRP UnixSockets"
 
   test_stdout "$grep --version" "pcre2grep version 10.39 2021-10-29"
-  test_stdout "$p7zip --" "
-7-Zip (z) 21.07 (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-12-26
- 64-bit locale=en_US.UTF-8 Threads:2, ASM"
 
   if [[ "$is_alpine_os" == true ]]; then
+    test_stdout "$p7zip --" "
+7-Zip (z) 21.07 (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-12-26
+ 64-bit locale=C UTF8=- Threads:2, ASM"
     test_stdout "$busybox tar --version" "tar (busybox) 1.34.1"
+  else
+    test_stdout "$p7zip --" "
+7-Zip (z) 21.07 (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-12-26
+ 64-bit locale=en_US.UTF-8 Threads:2, ASM"
   fi
 fi
 
