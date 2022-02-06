@@ -6,3 +6,4 @@ if [[ -n "$CI" ]]; then
 fi
 grep="pcre2grep" && $is_windows_os && grep="$dp0_tools/pcre2grep.exe"
 p7zip="$dp0_tools/7zzs" && $is_windows_os && p7zip="$dp0_tools/7z.exe"
+busybox="$dp0_tools/busybox" && $is_windows_os && busybox="$dp0_tools/busybox64.exe"

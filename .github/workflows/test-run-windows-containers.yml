@@ -1,6 +1,6 @@
 name: test-run nanoserver
 
-on: [pull_request]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -17,14 +17,8 @@ jobs:
           docker pull ${{ env.IMAGE_NAME }}
           docker images ${{ env.IMAGE_NAME }}
 
-      - name: 7z check
-        shell: cmd
-        run: >
-          docker container run --rm --env CI=true -v ${{ github.workspace }}:C:\app ${{ env.IMAGE_NAME }}
-          cmd /c C:\app\_7z\create_install_for.bat
-
       - name: Internal test-run
         shell: cmd
         run: >
-          docker container run --rm --env CI=true -v ${{ github.workspace }}:C:\app ${{ env.IMAGE_NAME }}
-          cmd /c C:\app\.tests\test-run.bat _ create
+          docker container run --rm --env CI=true -v ${{ github.workspace }}:C:\app -w C:\app ${{ env.IMAGE_NAME }}
+          .tools\busybox64.exe bash .tests\ci-test-run.sh
