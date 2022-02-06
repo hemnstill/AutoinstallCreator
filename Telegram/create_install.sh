@@ -1,7 +1,7 @@
 #!/bin/bash
-dp0="$(dirname "$0")"
+dp0="$(realpath "$(dirname "$0")")"
 dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
-cd "$dp0"
+cd "$dp0" || exit
 
 tarxz_name=tsetup.tar.xz
 tar_name=tsetup.tar
@@ -19,7 +19,7 @@ chmod +x ./Telegram
 
 {
   printf '#!/bin/bash
-cd "$(dirname "$0")"
+cd "$(realpath "$(dirname "$0")")" || exit
 ./Telegram'
 } >autoinstall.sh
 chmod +x ./autoinstall.sh

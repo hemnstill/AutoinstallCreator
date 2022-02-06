@@ -1,13 +1,13 @@
 #!/bin/bash
-dp0="$(dirname "$0")"
+dp0="$(realpath "$(dirname "$0")")"
 dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
-cd "$dp0"
+cd "$dp0" || exit
 
 zstd="zstd" && [[ "$is_windows_os" == true ]] && {
   zstd="../_zstd/zstd.exe"
   [[ ! -f "$zstd" ]] && {
     "../_zstd/create_install.sh"
-    cd "$(dirname "$0")"
+    cd "$dp0" || exit
   }
 }
 
