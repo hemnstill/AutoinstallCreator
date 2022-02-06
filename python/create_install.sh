@@ -3,13 +3,14 @@ dp0="$(dirname "$0")"
 dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
 cd "$dp0"
 
-zstd="zstd" && [[ $(uname) == MINGW64* ]] && {
+zstd="zstd" && [[ "$is_windows_os" == true ]] && {
   zstd="../_zstd/zstd.exe"
   [[ ! -f "$zstd" ]] && {
     "../_zstd/create_install.sh"
     cd "$(dirname "$0")"
   }
 }
+
 [[ $(command -v $zstd) == '' ]] && {
   echo "zstd is not available. Try 'sudo apt install zstd'"
   exit 1
