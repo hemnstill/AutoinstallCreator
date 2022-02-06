@@ -5,22 +5,32 @@ on: [push, pull_request]
 jobs:
   ubuntu-host:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
 
       - name: install deps
         run: sudo apt-get --assume-yes install pcre2-utils
 
-      - name: test-run
+      - name: ci test-run
         run: .tests/ci-test-run.sh
+
+  ubuntu-host-create:
+    needs: ubuntu-host
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: External test-run
+        run: .tests/test-run.sh "" create
 
   alpine-docker:
     runs-on: ubuntu-latest
     container: alpine:3.15.0
+
     steps:
       - uses: actions/checkout@v2
 
-      - name: Internal test-run
+      - name: ci test-run
         run: |
           apk add --no-cache bash pcre2-tools
           .tests/ci-test-run.sh
@@ -31,9 +41,22 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Internal test-run
+      - name: ci test-run
         shell: cmd
         run: .tools\busybox64.exe bash .tests\ci-test-run.sh
+
+  windows-host-create:
+    needs: windows-host
+    runs-on: windows-latest
+
+    steps:
+      - name: Internal test-run
+        shell: cmd
+        run: call .tests\test-run.bat _ create
+
+      - name: External test-run
+        shell: cmd
+        run: call .tests\test-run.bat ! _ create
 
   nanoserver-docker:
     runs-on: windows-2022
