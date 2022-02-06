@@ -17,10 +17,10 @@ $curl --location "$download_url" --output $vbox_file_name
 errorlevel=$?
 if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 
-$is_windows_os && {
+if [[ "$is_windows_os" != true ]]; then
   echo "Done. Windows is required for create autoinstall.bat"
   exit
-}
+fi
 
 echo "Remove *.msi && extracting from: $vbox_file_name ..."
 rm -f *.msi && ./$vbox_file_name --silent --extract --path .
