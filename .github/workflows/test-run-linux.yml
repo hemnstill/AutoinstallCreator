@@ -1,6 +1,6 @@
 name: test-run linux
 
-on: [pull_request]
+on: [push, pull_request]
 
 jobs:
   ubuntu-host:
@@ -11,11 +11,8 @@ jobs:
       - name: install deps
         run: sudo apt-get --assume-yes install pcre2-utils
 
-      - name: Internal test-run
-        run: .tests/test-run.sh _ create
-
-      - name: External test-run
-        run: .tests/test-run.sh "" create
+      - name: test-run
+        run: .tests/ci-test-run.sh
 
   alpine-docker:
     runs-on: ubuntu-latest
@@ -26,4 +23,4 @@ jobs:
       - name: Internal test-run
         run: |
           apk add --no-cache bash pcre2-tools
-          .tests/test-run.sh _ create
+          .tests/ci-test-run.sh
