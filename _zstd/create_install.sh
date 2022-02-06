@@ -17,4 +17,4 @@ errorlevel=$?
 if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 
 zip_file_name="$(basename -- "$download_url")"
-"$p7zip" e "$zip_file_name" "-o." zstd.exe -aoa -r
+"$p7z" e "$zip_file_name" "-o." zstd.exe -aoa -r

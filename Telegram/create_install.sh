@@ -11,8 +11,8 @@ $curl --location $download_url --output $tarxz_name
 errorlevel=$?
 if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 
-$p7zip e ./$tarxz_name -aoa
-$p7zip e ./$tar_name -aoa
+$p7z e ./$tarxz_name -aoa
+$p7z e ./$tar_name -aoa
 errorlevel=$?
 if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 chmod +x ./Telegram

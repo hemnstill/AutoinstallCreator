@@ -63,4 +63,4 @@ cat $tar_file_name | tar f - --wildcards \
   --delete "*/tests/*" \
   --delete "*/idle_test/*" \
   --delete "*/site-packages/*" |
-  "$p7zip" u "$gz_file_name" -uq0 -si
+  "$p7z" u "$gz_file_name" -uq0 -si

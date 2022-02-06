@@ -32,7 +32,7 @@ Release-Date: 2022-01-05
 Protocols: dict file ftp ftps gopher gophers http https imap imaps ldap ldaps mqtt pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp \nFeatures: alt-svc AsynchDNS brotli gsasl HSTS HTTP2 HTTPS-proxy IDN IPv6 Kerberos Largefile libz MultiSSL NTLM SPNEGO SSL SSPI TLS-SRP UnixSockets"
 
   test_stdout "$grep --version" "pcre2grep version 10.39 2021-10-29"
-  test_stdout "$p7zip --" "
+  test_stdout "$p7z --" "
 7-Zip 21.07 (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-12-26"
   test_stdout "$busybox tar --version" "tar (busybox) 1.35.0-FRP-4487-gd239d2d52"
 else
@@ -43,12 +43,12 @@ Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop
   test_stdout "$grep --version" "pcre2grep version 10.39 2021-10-29"
 
   if [[ "$is_alpine_os" == true ]]; then
-    test_stdout "$p7zip --" "
+    test_stdout "$p7z --" "
 7-Zip (z) 21.07 (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-12-26
  64-bit locale=C UTF8=- Threads:2, ASM"
     test_stdout "$busybox tar --version" "tar (busybox) 1.34.1"
   else
-    test_stdout "$p7zip --" "
+    test_stdout "$p7z --" "
 7-Zip (z) 21.07 (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-12-26
  64-bit locale=en_US.UTF-8 Threads:2, ASM"
   fi
