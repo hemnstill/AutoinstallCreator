@@ -42,12 +42,12 @@ Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop
 
   test_stdout "$grep --version" "pcre2grep version 10.39 2021-10-29"
   test_stdout "$p7zip --" "
-7-Zip 21.07 (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-12-26
+7-Zip (z) 21.07 (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-12-26
+ 64-bit locale=en_US.UTF-8 Threads:2, ASM"
 
-Command Line Error:
-The command must be specified"
-
-  $is_alpine_os && test_stdout "$busybox tar --version" "tar (busybox) 1.34.1"
+  if [[ $is_alpine_os ]]; then
+    test_stdout "$busybox tar --version" "tar (busybox) 1.34.1"
+  fi
 fi
 
 echo Errors: $errors_count
