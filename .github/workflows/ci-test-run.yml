@@ -1,0 +1,86 @@
+name: ci build
+
+on: [pull_request]
+
+jobs:
+  ubuntu-host:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: install deps
+        run: sudo apt-get --assume-yes install pcre2-utils
+
+      - name: ci test-run
+        run: .tests/ci-test-run.sh
+
+  ubuntu-host-create:
+    needs: ubuntu-host
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: install deps
+        run: sudo apt-get --assume-yes install pcre2-utils
+
+      - name: External test-run
+        run: .tests/test-run.sh "" create
+
+  alpine-docker:
+    runs-on: ubuntu-latest
+    container: alpine:3.15.0
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: ci test-run
+        run: |
+          apk add --no-cache bash pcre2-tools
+          .tests/ci-test-run.sh
+
+  windows-host:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: ci test-run
+        shell: cmd
+        run: .tools\busybox64.exe bash .tests\ci-test-run.sh
+
+  windows-host-create:
+    needs: windows-host
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Internal test-run
+        shell: cmd
+        run: call .tests\test-run.bat _ create
+
+      - name: External test-run
+        shell: cmd
+        run: call .tests\test-run.bat ! _ create
+
+  nanoserver-docker:
+    runs-on: windows-2022
+    env:
+      IMAGE_NAME: mcr.microsoft.com/windows/nanoserver:ltsc2022-amd64
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: pull windows container ${{ env.IMAGE_NAME }}
+        shell: cmd
+        run: |
+          docker pull ${{ env.IMAGE_NAME }}
+          docker images ${{ env.IMAGE_NAME }}
+
+      - name: Internal test-run
+        shell: cmd
+        run: >
+          docker container run --rm -v ${{ github.workspace }}:C:\app -w C:\app ${{ env.IMAGE_NAME }}
+          .tools\busybox64.exe bash .tests\ci-test-run.sh

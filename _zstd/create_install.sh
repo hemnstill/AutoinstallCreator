@@ -1,7 +1,7 @@
 #!/bin/bash
-dp0="$(dirname "$0")"
+dp0="$(realpath "$(dirname "$0")")"
 dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
-cd "$dp0"
+cd "$dp0" || exit
 
 api_url='https://api.github.com/repos/facebook/zstd/releases/latest'
 echo Get latest version: $api_url ...
@@ -17,4 +17,4 @@ errorlevel=$?
 if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 
 zip_file_name="$(basename -- "$download_url")"
-"$p7zip" e "$zip_file_name" "-o." zstd.exe -aoa -r
+"$p7z" e "$zip_file_name" "-o." zstd.exe -aoa -r

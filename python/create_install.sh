@@ -1,15 +1,16 @@
 #!/bin/bash
-dp0="$(dirname "$0")"
+dp0="$(realpath "$(dirname "$0")")"
 dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
-cd "$dp0"
+cd "$dp0" || exit
 
-zstd="zstd" && [[ $(uname) == MINGW64* ]] && {
+zstd="zstd" && [[ "$is_windows_os" == true ]] && {
   zstd="../_zstd/zstd.exe"
   [[ ! -f "$zstd" ]] && {
     "../_zstd/create_install.sh"
-    cd "$(dirname "$0")"
+    cd "$dp0" || exit
   }
 }
+
 [[ $(command -v $zstd) == '' ]] && {
   echo "zstd is not available. Try 'sudo apt install zstd'"
   exit 1
@@ -63,4 +64,4 @@ cat $tar_file_name | tar f - --wildcards \
   --delete "*/tests/*" \
   --delete "*/idle_test/*" \
   --delete "*/site-packages/*" |
-  "$p7zip" u "$gz_file_name" -uq0 -si
+  "$p7z" u "$gz_file_name" -uq0 -si

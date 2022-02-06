@@ -10,7 +10,7 @@ if not exist %tar% (
 
 set zstd=..\_zstd\zstd.exe
 if not exist %zstd% (
-  call ..\.tests\test-run.mingw64.bat _zstd create
+  %busybox% bash ..\.tests\test-run.sh _zstd create
   if %errorlevel% neq 0 ( exit /b %errorlevel% )
   pushd "%~dp0"
 )
