@@ -3,10 +3,7 @@
 # More info at https://megalinter.github.io
 name: MegaLinter
 
-on:
-  # Trigger mega-linter at every push. Action will also be visible from Pull Requests to master
-  pull_request:
-    branches: [master]
+on: [push, pull_request]
 
 env: # Comment env block if you do not want to apply fixes
   # Apply linter fixes configuration
