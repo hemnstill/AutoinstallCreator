@@ -24,7 +24,7 @@ function test_stdout() {
 
 echo ">> env:"
 uname -a
-echo is_windows: "$is_windows_os"
+echo is_windows: "$is_windows_os", is_alpine: "$is_alpine_os"
 
 if [[ $is_windows_os ]]; then
   test_stdout "$curl --version" "curl 7.81.0 (x86_64-pc-win32) libcurl/7.81.0 OpenSSL/3.0.1 (Schannel) zlib/1.2.11 brotli/1.0.9 libidn2/2.3.2 libssh2/1.10.0 nghttp2/1.46.0 libgsasl/1.10.0
@@ -43,6 +43,8 @@ else
   test_stdout "$grep --version" "pcre2grep version 10.39 2021-10-29"
   test_stdout "$p7zip --" "
   7-Zip 21.07 (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-12-26"
+
+  $is_alpine_os && test_stdout "$busybox tar --version" "tar (busybox) 1.34.1"
 fi
 
 echo Errors: $errors_count
