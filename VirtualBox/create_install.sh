@@ -1,7 +1,7 @@
 #!/bin/bash
 dp0="$(realpath "$(dirname "$0")")"
 dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
-cd "$dp0"
+cd "$dp0" || exit 1
 
 api_url='https://www.virtualbox.org/wiki/Downloads'
 echo Get latest version: $api_url ...
@@ -19,7 +19,7 @@ if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 
 if [[ "$is_windows_os" != true ]]; then
   echo "Done. Windows is required for create autoinstall.bat"
-  exit
+  exit 1
 fi
 
 echo "Remove *.msi && extracting from: $vbox_file_name ..."

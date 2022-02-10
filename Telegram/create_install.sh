@@ -1,7 +1,7 @@
 #!/bin/bash
 dp0="$(realpath "$(dirname "$0")")"
 dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
-cd "$dp0" || exit
+cd "$dp0" || exit 1
 
 tarxz_name=tsetup.tar.xz
 tar_name=tsetup.tar
