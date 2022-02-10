@@ -28,7 +28,7 @@ if %errorlevel% neq 0 (
   exit /b %errorlevel%
 )
 
-%bsdtar% -tf latest_archive.tar.gz >latest_files.txt
+"%~dp0%bsdtar%" -tf latest_archive.tar.gz >latest_files.txt
 
 echo Generating autoupdate from latest_archive.tar.gz
 >autoinstall.bat (

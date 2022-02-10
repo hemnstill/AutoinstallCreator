@@ -19,7 +19,7 @@ if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 
 if [[ "$is_windows_os" != true ]]; then
   echo "Done. Windows is required for create autoinstall.bat"
-  exit 1
+  exit
 fi
 
 echo "Remove *.msi && extracting from: $vbox_file_name ..."
