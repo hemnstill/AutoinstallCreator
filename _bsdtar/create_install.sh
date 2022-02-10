@@ -18,6 +18,7 @@ if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 
 zip_file_name="$(basename -- "$download_url")"
 "$p7z" e "$zip_file_name" "-o." bsdtar.exe -aoa -r
+pwd; ls;
 [[ "$is_windows_os" == true ]] && {
   echo bsdtar version:
   "$dp0/bsdtar.exe" --version
