@@ -1,7 +1,7 @@
 #!/bin/bash
 dp0="$(realpath "$(dirname "$0")")"
 dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
-cd "$dp0"
+cd "$dp0" || exit 1
 
 api_url='https://www.virtualbox.org/wiki/Downloads'
 echo Get latest version: $api_url ...

@@ -1,5 +1,5 @@
 #!/bin/bash
-cd "$(realpath "$(dirname "$0")")" || exit
+cd "$(realpath "$(dirname "$0")")" || exit 1
 
 errors_count=0
 startswith=$1
