@@ -3,9 +3,7 @@
 
 set bsdtar=..\_bsdtar\bsdtar.exe
 if not exist %bsdtar% (
-  call ..\.tests\test-run.bat _bsdtar create
-  if %errorlevel% neq 0 ( exit /b %errorlevel% )
-  pushd "%~dp0"
+  %bash% ..\_bsdtar\create_install.sh || exit /b %errorlevel%
 )
 
 set self_base_api=https://api.github.com/repos/hemnstill/AutoinstallCreator
