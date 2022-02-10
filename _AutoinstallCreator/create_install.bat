@@ -3,7 +3,7 @@
 
 set bsdtar=..\_bsdtar\bsdtar.exe
 if not exist %bsdtar% (
-  %bash% ..\_bsdtar\create_install.sh || exit /b %errorlevel%
+  %busybox% bash ..\_bsdtar\create_install.sh || exit /b %errorlevel%
 )
 
 set self_base_api=https://api.github.com/repos/hemnstill/AutoinstallCreator

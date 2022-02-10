@@ -3,7 +3,7 @@
 
 set bsdtar=..\_bsdtar\bsdtar.exe
 if not exist %bsdtar% (
-  %bash% ..\_bsdtar\create_install.sh || exit /b %errorlevel%
+  %busybox% bash ..\_bsdtar\create_install.sh || exit /b %errorlevel%
 )
 
 set for_linux=%1
