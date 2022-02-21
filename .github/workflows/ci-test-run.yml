@@ -9,9 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: install deps
-        run: sudo apt-get --assume-yes install pcre2-utils
-
       - name: ci test-run
         run: .tests/ci-test-run.sh
 
@@ -21,9 +18,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: install deps
-        run: sudo apt-get --assume-yes install pcre2-utils
 
       - name: External test-run
         run: .tests/test-run.sh "" create
@@ -37,7 +31,7 @@ jobs:
 
       - name: ci test-run
         run: |
-          apk add --no-cache bash pcre2-tools
+          apk add --no-cache bash
           .tests/ci-test-run.sh
 
   windows-host:

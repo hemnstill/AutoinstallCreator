@@ -6,6 +6,6 @@ curl="$dp0_tools/curl-amd64 --fail --cacert $dp0_tools/curl-ca-bundle.crt" && $i
 if [[ -n "$CI" ]]; then
   curl="$curl --silent --show-error"
 fi
-grep="pcre2grep" && $is_windows_os && grep="$dp0_tools/pcre2grep.exe"
+grep="$dp0_tools/pcre2grep" && $is_windows_os && grep="$dp0_tools/pcre2grep.exe"
 p7z="$dp0_tools/7zzs" && $is_windows_os && p7z="$dp0_tools/7z.exe"
 busybox="busybox" && $is_windows_os && busybox="$dp0_tools/busybox64.exe"
