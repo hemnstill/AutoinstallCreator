@@ -28,7 +28,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: release-win
-          path: ./_win.tar.gz
+          path: ./_win.zip
 
       - name: ci test-run
         run: .tests/ci-test-run.sh
