@@ -13,22 +13,22 @@ jobs:
           { printf '/.tools/*.exe export-ignore
             /.tools/*.dll export-ignore'
           } >${{ github.workspace }}/.git/info/attributes
-          git archive HEAD --output _linux.tar.gz
+          git archive HEAD --output release-linux.tar.gz
       - uses: actions/upload-artifact@v3
         with:
           name: release-linux
-          path: ./_linux.tar.gz
+          path: ./release-linux.tar.gz
 
       - run: |
           { printf '/.tools/7zzs export-ignore
             /.tools/curl-amd64 export-ignore
             /.tools/pcre2grep export-ignore'
           } >${{ github.workspace }}/.git/info/attributes
-          git archive HEAD --output _win.zip
+          git archive HEAD --output release-win.zip
       - uses: actions/upload-artifact@v3
         with:
           name: release-win
-          path: ./_win.zip
+          path: ./release-win.zip
 
       - name: ci test-run
         run: .tests/ci-test-run.sh
