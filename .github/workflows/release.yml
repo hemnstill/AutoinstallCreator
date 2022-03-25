@@ -20,6 +20,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - uses: actions/download-artifact@v3
       - run: ${{ inputs.prepare_body }}
       - uses: ncipollo/release-action@v1
