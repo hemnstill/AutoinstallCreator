@@ -8,11 +8,23 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - run: |
           { printf '/.tools/*.exe export-ignore
             /.tools/*.dll export-ignore'
           } >${{ github.workspace }}/.git/info/attributes
-          git archive HEAD --output _win.tar.gz
+          git archive HEAD --output _linux.tar.gz
+      - uses: actions/upload-artifact@v3
+        with:
+          name: release-linux
+          path: ./_linux.tar.gz
+
+      - run: |
+          { printf '/.tools/7zzs export-ignore
+            /.tools/curl-amd64 export-ignore
+            /.tools/pcre2grep export-ignore'
+          } >${{ github.workspace }}/.git/info/attributes
+          git archive HEAD --output _win.zip
       - uses: actions/upload-artifact@v3
         with:
           name: release-win
