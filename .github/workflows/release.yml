@@ -2,19 +2,24 @@ on:
   workflow_call:
     inputs:
       workflow:
+        description: tool name
         required: true
         type: string
       tool_version:
+        description: tool version
         required: true
         type: string
       prepare_body:
+        description: scripts for prepare body.md
         required: true
         type: string
       artifacts:
+        description: list of artifacts
         required: true
         type: string
     secrets:
       token:
+        description: secrets.GITHUB_TOKEN
         required: true
 jobs:
   release:
@@ -30,3 +35,4 @@ jobs:
           artifacts: ${{ inputs.artifacts }}
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
+
