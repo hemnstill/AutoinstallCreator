@@ -1,0 +1,20 @@
+name: ci build
+
+on: [pull_request, workflow_dispatch]
+
+jobs:
+  ubuntu-host:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          {
+            printf '/.tools/*.exe export-ignore'
+            printf '/.tools/*.dll export-ignore'
+          } >${{ github.workspace }}/.git/info/attributes
+          git archive HEAD --output _win.tar.gz
+      - uses: actions/upload-artifact@v3
+        with:
+          name: release-win
+          path: ./_win.tar.gz
