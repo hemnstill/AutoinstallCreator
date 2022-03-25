@@ -5,7 +5,7 @@
 [![MegaLinter](https://github.com/hemnstill/AutoinstallCreator/actions/workflows/mega-linter.yml/badge.svg)](https://github.com/hemnstill/AutoinstallCreator/actions/workflows/mega-linter.yml)
 [![ci build](https://github.com/hemnstill/AutoinstallCreator/actions/workflows/ci-test-run.yml/badge.svg)](https://github.com/hemnstill/AutoinstallCreator/actions/workflows/ci-test-run.yml)
 
-Download latest version and create autoinstall script for silent install.
+Download the latest version and create autoinstall script for silent installation.
 
 ## How to create autoinstall.bat
 * run `<Application>/create_install.bat`. Batch script downloads latest version and creates autoinstall.bat.
