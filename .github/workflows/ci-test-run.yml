@@ -1,6 +1,6 @@
 name: ci build
 
-on: [pull_request]
+on: [pull_request, workflow_dispatch]
 
 jobs:
   ubuntu-host:
@@ -8,6 +8,27 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - run: |
+          { printf '/.tools/*.exe export-ignore
+            /.tools/*.dll export-ignore'
+          } >${{ github.workspace }}/.git/info/attributes
+          git archive HEAD --output release-linux.tar.gz
+      - uses: actions/upload-artifact@v3
+        with:
+          name: release-linux
+          path: ./release-linux.tar.gz
+
+      - run: |
+          { printf '/.tools/7zzs export-ignore
+            /.tools/curl-amd64 export-ignore
+            /.tools/pcre2grep export-ignore'
+          } >${{ github.workspace }}/.git/info/attributes
+          git archive HEAD --output release-win.zip
+      - uses: actions/upload-artifact@v3
+        with:
+          name: release-win
+          path: ./release-win.zip
 
       - name: ci test-run
         run: .tests/ci-test-run.sh
@@ -78,3 +99,19 @@ jobs:
         run: >
           docker container run --rm -v ${{ github.workspace }}:C:\app -w C:\app ${{ env.IMAGE_NAME }}
           .tools\busybox64.exe bash .tests\ci-test-run.sh
+
+  self-release:
+    needs: [alpine-docker,
+            nanoserver-docker,
+            ubuntu-host-create,
+            windows-host-create]
+    uses: ./.github/workflows/release.yml
+    with:
+      workflow: 'latest'
+      tool_version: 'master'
+      prepare_body: |
+        git rev-list --count HEAD >> body.md
+        git show --abbrev=10 --no-patch --pretty=%h HEAD >> body.md
+      artifacts: ./release-linux/release-linux.tar.gz,./release-win/release-win.zip
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
