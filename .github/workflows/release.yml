@@ -1,31 +1,35 @@
-name: release
-
-on: [pull_request, workflow_dispatch]
-
+on:
+  workflow_call:
+    inputs:
+      workflow:
+        required: true
+        type: string
+      tool_version:
+        required: true
+        type: string
+      prepare_body:
+        required: true
+        type: string
+      artifacts:
+        required: true
+        type: string
+    secrets:
+      token:
+        required: true
 jobs:
-  ubuntu-host:
+  release:
     runs-on: ubuntu-latest
-
+    container: ubuntu:latest
     steps:
-      - uses: actions/checkout@v2
-
       - run: |
-          { printf '/.tools/*.exe export-ignore
-            /.tools/*.dll export-ignore'
-          } >${{ github.workspace }}/.git/info/attributes
-          git archive HEAD --output _linux.tar.gz
-      - uses: actions/upload-artifact@v3
+          apt update -y
+          apt install -y libarchive-tools
+      - uses: actions/download-artifact@v3
+      - run: ${{ inputs.prepare_body }}
+      - uses: ncipollo/release-action@v1
         with:
-          name: release-linux
-          path: ./_linux.tar.gz
-
-      - run: |
-          { printf '/.tools/7zzs export-ignore
-            /.tools/curl-amd64 export-ignore
-            /.tools/pcre2grep export-ignore'
-          } >${{ github.workspace }}/.git/info/attributes
-          git archive HEAD --output _win.zip
-      - uses: actions/upload-artifact@v3
-        with:
-          name: release-win
-          path: ./_win.tar.gz
+          tag: ${{ inputs.workflow }}-${{ inputs.tool_version }}
+          bodyFile: './body.md'
+          artifacts: ${{ inputs.artifacts }}
+          allowUpdates: true
+          token: ${{ secrets.GITHUB_TOKEN }}
