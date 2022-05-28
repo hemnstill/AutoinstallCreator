@@ -1,4 +1,3 @@
-export LC_ALL=en_US.UTF-8
 is_windows_os=false && [[ $(uname) == Windows_NT* ]] && is_windows_os=true
 is_alpine_os=false && [[ -f "/etc/alpine-release" ]] && is_alpine_os=true
 
