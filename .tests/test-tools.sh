@@ -50,7 +50,7 @@ Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop
   else
     test_stdout "$p7z --" "
 7-Zip (z) 21.07 (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-12-26
- 64-bit locale=en_US.UTF-8 Threads:2, ASM" // editorconfig-checker-disable-line
+ 64-bit locale=C.UTF-8 Threads:2, ASM" // editorconfig-checker-disable-line
   fi
 fi
 
