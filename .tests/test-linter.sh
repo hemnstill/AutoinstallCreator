@@ -20,13 +20,26 @@ cd "$dp0"
   done
 }
 
-testBatStartsWith() {
+testBatWithShStartsWith() {
   for d in ../*/; do
     dir_name=${d:3}
     if [[ -f "${d}create_install.bat" && -f "${d}create_install.sh" ]]; then
       echo ">> Test $dir_name"
       local etalon_head="$(printf '@echo off
 "%%~dp0..\\.tools\\busybox64.exe" bash "%%~dp0create_install.sh"
+')"
+      assertEquals  "$etalon_head" "$(cat "${d}create_install.bat" | dos2unix | head -3)"
+    fi
+  done
+}
+
+testSingleBatStartsWith() {
+  for d in ../*/; do
+    dir_name=${d:3}
+    if [[ -f "${d}create_install.bat" && ! -f "${d}create_install.sh" ]]; then
+      echo ">> Test $dir_name"
+      local etalon_head="$(printf '@pushd "%%~dp0"
+@call "%%~dp0..\\.tools\\env_tools.bat"
 ')"
       assertEquals  "$etalon_head" "$(cat "${d}create_install.bat" | dos2unix | head -3)"
     fi
