@@ -1,7 +1,8 @@
 #!/bin/bash
 dp0="$(realpath "$(dirname "$0")")"
 dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
-cd "$dp0" || exit 1
+set -e
+cd "$dp0"
 
 latest_filename="X-MouseButtonControlSetup.exe"
 download_url="https://www.highrez.co.uk/scripts/download.asp?package=XMouse"

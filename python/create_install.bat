@@ -10,7 +10,7 @@ if not exist %tar% (
 
 set zstd=..\_zstd\zstd.exe
 if not exist %zstd% (
-  %busybox% bash ..\.tests\test-run.sh _zstd create
+  call %batch_runner% _zstd create
   if %errorlevel% neq 0 ( exit /b %errorlevel% )
   pushd "%~dp0"
 )
@@ -82,4 +82,5 @@ echo Creating archive %p7z_file_name%
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
 
 echo Done.
+
 exit /b %errorlevel%

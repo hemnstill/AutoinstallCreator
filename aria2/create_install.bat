@@ -21,11 +21,8 @@ for %%i in ("%download_url%") do (
   set latest_filename=%%~ni%%~xi
 )
 
-echo Generating %latest_filename% autoinstall.bat
->autoinstall.bat (
-  echo pushd "%%~dp0"
-  echo "%p7z%" e "%latest_filename%" "-o." aria2c.exe -aoa -r
-  echo exit /b %%errorlevel%%
-)
+%p7z% e "%latest_filename%" "-o." aria2c.exe -aoa -r
+
+echo Done.
 
 exit /b %errorlevel%

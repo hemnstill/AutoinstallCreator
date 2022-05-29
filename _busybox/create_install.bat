@@ -14,4 +14,5 @@ for %%i in (%download_url%) do (
 )
 
 echo %latest_filename% Done.
+
 exit /b %errorlevel%

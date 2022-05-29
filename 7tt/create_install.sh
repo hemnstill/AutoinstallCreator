@@ -1,7 +1,8 @@
 #!/bin/bash
 dp0="$(realpath "$(dirname "$0")")"
 dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
-cd "$dp0" || exit 1
+set -e
+cd "$dp0"
 
 download_url="https://rammichael.com/downloads/7tt_setup.exe"
 echo "Downloading: $download_url ..."
