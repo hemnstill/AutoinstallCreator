@@ -42,4 +42,5 @@ if not "%for_linux%" == "" (
 %extract_command%
 
 echo Done.
+
 exit /b %errorlevel%

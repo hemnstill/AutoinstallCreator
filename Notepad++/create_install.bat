@@ -28,4 +28,5 @@ echo Generating %latest_filename% autoinstall.bat
 )
 
 echo Done.
+
 exit /b %errorlevel%
