@@ -15,7 +15,7 @@ dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
 set -e
 cd "$dp0"
 ')"
-      assertEquals  "$etalon_head" "$(cat "${d}create_install.sh" | head -6)"
+      assertEquals  "$etalon_head" "$(cat "${d}create_install.sh" | dos2unix | head -6)"
     fi
   done
 }
@@ -27,7 +27,7 @@ testBatEndsWith() {
       echo ">> Test $dir_name"
       local etalon_head="$(echo "
 exit /b %errorlevel%")"
-      assertEquals  "$etalon_head" "$(cat "${d}create_install.bat" | tail -2 | dos2unix)"
+      assertEquals  "$etalon_head" "$(cat "${d}create_install.bat" | dos2unix | tail -2)"
     fi
   done
 }
