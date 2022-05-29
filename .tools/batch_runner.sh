@@ -13,13 +13,18 @@ for d in ../*/; do
   dir_name=${d:3}
   matched_dirname=${startswith}${dir_name/$startswith/}
   if [[ "$matched_dirname" == "$dir_name" ]]; then
-    if [[ -f "${d}create_install$extension" ]]; then
-      echo ">> Test $matched_dirname"
+    create_install_name="${d}create_install$extension"
+    if [[ -f "$create_install_name" ]]; then
+      echo ">> Test $create_install_name"
       if [[ "$action" == "create" ]]; then
-        ("${d}create_install$extension" "$external_args" && echo "<< Passed.") || {
-          ((errors_count++))
+        "$create_install_name"
+        errorlevel=$?
+        if [[ $errorlevel -ne 0 ]]; then
+          errors_count=$((errors_count+1))
           echo "<< Failed."
-        }
+        else
+          echo "<< Passed."
+        fi
       fi
     fi
   fi
