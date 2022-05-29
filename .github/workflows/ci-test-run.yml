@@ -10,8 +10,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - run: |
-          { printf '*.bat export-ignore
-            /.tools/*.exe export-ignore
+          { printf '/.tools/*.exe export-ignore
             /.tools/*.dll export-ignore'
           } >${{ github.workspace }}/.git/info/attributes
           git archive HEAD --output release-linux.tar.gz
