@@ -25,7 +25,9 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - uses: actions/download-artifact@v3
       - run: ${{ inputs.prepare_body }}
       - uses: ncipollo/release-action@v1
@@ -34,5 +36,6 @@ jobs:
           bodyFile: './body.md'
           artifacts: ${{ inputs.artifacts }}
           allowUpdates: true
+          removeArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
 

@@ -84,21 +84,15 @@ jobs:
     runs-on: windows-2022
     env:
       IMAGE_NAME: mcr.microsoft.com/windows/nanoserver:ltsc2022-amd64
-
     steps:
       - uses: actions/checkout@v2
-
       - name: pull windows container ${{ env.IMAGE_NAME }}
-        shell: cmd
         run: |
           docker pull ${{ env.IMAGE_NAME }}
           docker images ${{ env.IMAGE_NAME }}
 
       - name: Internal test-run
-        shell: cmd
-        run: >
-          docker container run --rm -v ${{ github.workspace }}:C:\app -w C:\app ${{ env.IMAGE_NAME }}
-          .tools\busybox64.exe bash .tests\ci-test-run.sh
+        run: docker container run --rm -v ${{ github.workspace }}:C:\app -w C:\app ${{ env.IMAGE_NAME }} C:\app\.tools\busybox64.exe bash .tests\ci-test-run.sh
 
   self-release:
     needs: [alpine-docker,
@@ -110,8 +104,9 @@ jobs:
       workflow: 'latest'
       tool_version: 'master'
       prepare_body: |
-        git rev-list --count HEAD >> body.md
-        git show --abbrev=10 --no-patch --pretty=%h HEAD >> body.md
+        { echo version: "$(git rev-list --count HEAD)"."$(git show --abbrev=10 --no-patch --pretty=%h HEAD)"
+        } >body.md
+        git push origin :refs/tags/latest-master
       artifacts: ./release-linux/release-linux.tar.gz,./release-win/release-win.zip
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
