@@ -76,7 +76,7 @@ jobs:
 
       - name: External test-run
         shell: cmd
-        run: call .tests\test-run.bat testExternalCreate
+        run: call .tests\test-run.bat -- testExternalCreate
 
   nanoserver-docker:
     runs-on: windows-2022
