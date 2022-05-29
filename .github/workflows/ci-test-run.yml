@@ -43,7 +43,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: External test-run
-        run: .tests/test-run.sh testExternalCreate
+        run: .tests/test-run.sh -- testExternalCreate
 
   alpine-docker:
     runs-on: ubuntu-latest

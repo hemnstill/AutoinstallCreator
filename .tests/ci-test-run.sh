@@ -7,4 +7,4 @@ set -e
 
 "$dp0/test-tools.sh" || exit 1
 
-"$dp0/test-run.sh" testInternalCreate || exit 1
+"$dp0/test-run.sh" -- testInternalCreate || exit 1
