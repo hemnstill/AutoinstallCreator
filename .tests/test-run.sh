@@ -5,11 +5,11 @@ set -e
 cd "$dp0"
 
 testInternalCreate() {
-  "$busybox" bash "$dp0_tools/batch_runner.sh" _ create || fail
+  "$dp0_tools/batch_runner.sh" _ create || fail
 }
 
 testExternalCreate() {
-  "$busybox" bash "$dp0_tools/batch_runner.sh" "" create || fail
+  "$dp0_tools/batch_runner.sh" "" create || fail
 }
 
 # Load and run shUnit2.
