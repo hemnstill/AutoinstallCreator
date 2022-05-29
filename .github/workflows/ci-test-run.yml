@@ -112,6 +112,7 @@ jobs:
       prepare_body: |
         git rev-list --count HEAD >> body.md
         git show --abbrev=10 --no-patch --pretty=%h HEAD >> body.md
+        git push origin :refs/tags/latest-master
       artifacts: ./release-linux/release-linux.tar.gz,./release-win/release-win.zip
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
