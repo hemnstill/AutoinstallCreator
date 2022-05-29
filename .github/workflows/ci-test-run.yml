@@ -65,7 +65,7 @@ jobs:
 
       - name: ci test-run
         shell: cmd
-        run: .tools\busybox64.exe bash .tests\ci-test-run.sh
+        run: call .tests\ci-test-run.bat
 
   windows-host-create:
     needs: windows-host
@@ -74,13 +74,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Internal test-run
-        shell: cmd
-        run: call .tests\test-run.bat _ create
-
       - name: External test-run
         shell: cmd
-        run: call .tests\test-run.bat ! _ create
+        run: call .tests\test-run.bat testExternalCreate
 
   nanoserver-docker:
     runs-on: windows-2022
@@ -94,7 +90,7 @@ jobs:
           docker images ${{ env.IMAGE_NAME }}
 
       - name: Internal test-run
-        run: docker container run --rm -v ${{ github.workspace }}:C:\app -w C:\app ${{ env.IMAGE_NAME }} C:\app\.tools\busybox64.exe bash .tests\ci-test-run.sh
+        run: docker container run --rm -v ${{ github.workspace }}:C:\app -w C:\app ${{ env.IMAGE_NAME }} C:\app\.tests\ci-test-run.bat
 
   self-release:
     needs: [alpine-docker,
