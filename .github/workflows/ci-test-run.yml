@@ -32,7 +32,8 @@ jobs:
 
       - name: ci test-run
         run: |
-          apt install dos2unix
+          apt update -y
+          apt install -y dos2unix
           .tests/ci-test-run.sh
 
   ubuntu-host-create:
