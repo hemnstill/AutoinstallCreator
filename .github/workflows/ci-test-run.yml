@@ -105,7 +105,7 @@ jobs:
       workflow: 'latest'
       tool_version: 'master'
       prepare_body: |
-        { printf 'version: "$(git rev-list --count HEAD)"."$(git show --abbrev=10 --no-patch --pretty=%%h HEAD)"'
+        { echo version: "$(git rev-list --count HEAD)"."$(git show --abbrev=10 --no-patch --pretty=%h HEAD)"
         } >body.md
         git push origin :refs/tags/latest-master
       artifacts: ./release-linux/release-linux.tar.gz,./release-win/release-win.zip
