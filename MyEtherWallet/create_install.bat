@@ -1,7 +1,7 @@
 @pushd "%~dp0"
 @call "%~dp0..\.tools\env_tools.bat"
 
-set latest_version=https://api.github.com/repos/MyEtherWallet/MyEtherWallet/releases/latest
+set latest_version=https://api.github.com/repos/MyEtherWallet/MyEtherWallet/releases
 echo Get latest version: %latest_version% ...
 >raw_download_str.tmp (
     %curl% %latest_version% | %grep% """browser_download_url""" | %grep% --only-matching "[^"" ]*MyEtherWallet-[^"" ]*\.zip" | %head% -n1
