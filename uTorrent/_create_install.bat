@@ -3,7 +3,7 @@
 
 set aria2c=..\aria2\aria2c.exe
 if not exist %aria2c% (
-  call ..\.tests\test-run.bat aria2 checkinstall
+  call %batch_runner% aria2 create .bat
   if %errorlevel% neq 0 ( exit /b %errorlevel% )
   pushd "%~dp0"
 )
