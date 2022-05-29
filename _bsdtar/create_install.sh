@@ -3,9 +3,9 @@ dp0="$(realpath "$(dirname "$0")")"
 dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
 cd "$dp0" || exit 1
 
-api_url='https://api.github.com/repos/libarchive/libarchive/releases/latest'
+api_url='https://api.github.com/repos/hemnstill/StandaloneTools/releases?per_page=100'
 echo Get latest version: $api_url ...
-download_url=$($curl --silent --location "$api_url" | "$grep" --only-matching '(?<="browser_download_url":\s")[^,]+(amd64|win64)\.zip(?=")' | head -1)
+download_url=$($curl --silent --location "$api_url" | "$grep" --only-matching '(?<="browser_download_url":\s")[^,]+bsdtar[^,]+build-mingw\.tar\.gz(?=")' | head -1)
 [[ -z "$download_url" ]] && {
   echo "Cannot get release version"
   exit 1
