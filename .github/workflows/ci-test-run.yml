@@ -31,7 +31,9 @@ jobs:
           path: ./release-win.zip
 
       - name: ci test-run
-        run: .tests/ci-test-run.sh
+        run: |
+          apt install dos2unix
+          .tests/ci-test-run.sh
 
   ubuntu-host-create:
     needs: ubuntu-host
