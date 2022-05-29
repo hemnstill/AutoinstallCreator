@@ -18,5 +18,7 @@ $curl --location "$download_url" --remote-name
 zip_file_name="$(basename -- "$download_url")"
 "$p7z" e "$zip_file_name" -so | "$p7z" e -si -ttar "-o." bsdtar.exe -aoa -r
 
-./test_windows.sh
+if [[ "$is_windows_os" == true ]]; then
+  ./test_windows.sh;
+fi
 
