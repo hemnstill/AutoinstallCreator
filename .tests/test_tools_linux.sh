@@ -18,11 +18,11 @@ test7zVersion() {
   if [[ "$is_alpine_os" == true ]]; then
     assertEquals "
 7-Zip (z) 21.07 (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-12-26
- 64-bit locale=C UTF8=- Threads:2, ASM" "$actual_version"
+ 64-bit locale=C UTF8=- Threads:2, ASM" "$actual_version" // editorconfig-checker-disable-line
   else
     assertEquals "
 7-Zip (z) 21.07 (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-12-26
- 64-bit locale=C.UTF-8 Threads:2, ASM" "$actual_version"
+ 64-bit locale=C.UTF-8 Threads:2, ASM" "$actual_version" // editorconfig-checker-disable-line
  fi
 }
 
