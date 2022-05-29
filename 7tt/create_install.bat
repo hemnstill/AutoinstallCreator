@@ -1,5 +1,4 @@
 @echo off
-call "%~dp0..\.tools\env_tools.bat"
-%busybox% bash "%~dp0create_install.sh"
+"%~dp0..\.tools\busybox64.exe" bash "%~dp0create_install.sh"
 
 exit /b %errorlevel%
