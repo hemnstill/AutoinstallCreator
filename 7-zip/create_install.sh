@@ -20,7 +20,7 @@ echo Generating autoinstall ...
 { printf '#!/bin/bash
 cd "$(realpath "$(dirname "$0")")" || exit 1
 set -v
-"./%s" /passive' "$(basename -- "$download_url")"
+msiexec.exe /i "./%s" /passive' "$(basename -- "$download_url")"
 } >autoinstall.sh
 chmod +x ./autoinstall.sh
 
