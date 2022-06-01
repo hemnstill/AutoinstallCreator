@@ -17,7 +17,10 @@ echo "Downloading: $download_url ..."
 $curl --location "$download_url" --remote-name
 
 echo Generating autoinstall ...
-{ printf '"%%~dp0%s" /passive' "$(basename -- "$download_url")"
+{ printf '#!/bin/bash
+cd "$(realpath "$(dirname "$0")")" || exit 1
+set -v
+"./%s" /passive' "$(basename -- "$download_url")"
 } >autoinstall.sh
 chmod +x ./autoinstall.sh
 
