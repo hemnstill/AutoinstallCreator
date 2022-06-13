@@ -94,21 +94,18 @@ jobs:
             /.tools/*.dll export-ignore'
           } >${{ github.workspace }}/.git/info/attributes
           git archive HEAD --output release-linux.tar.gz
-      - uses: actions/upload-artifact@v3
-        with:
-          name: release-linux
-          path: ./release-linux.tar.gz
 
-      - run: |
           { printf '/.tools/7zzs export-ignore
             /.tools/curl-amd64 export-ignore
             /.tools/pcre2grep export-ignore'
           } >${{ github.workspace }}/.git/info/attributes
           git archive HEAD --output release-win.zip
-      - uses: actions/upload-artifact@v3
+
+      - if: matrix.artifact == 'ubuntu'
+        uses: actions/upload-artifact@v3
         with:
           name: release-win
-          path: ./release-win.zip
+          path: ./release-*.zip
 
   self-release:
     needs: [test, test-create]
