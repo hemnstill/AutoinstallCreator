@@ -76,7 +76,7 @@ jobs:
         run: .tests/test-run.sh -- testExternalCreate
 
       - name: External test-run (windows)
-        if: matrix.artifact == 'windows'
+        if: matrix.os == 'windows-latest'
         shell: cmd
         run: call .tests\test-run.bat -- testExternalCreate
 
