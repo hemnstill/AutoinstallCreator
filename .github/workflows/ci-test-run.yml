@@ -102,7 +102,14 @@ jobs:
       - if: matrix.artifact == 'ubuntu'
         uses: actions/upload-artifact@v3
         with:
-          path: ./release-*
+          name: release-win
+          path: ./release-win.zip
+
+      - if: matrix.artifact == 'ubuntu'
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-linux
+          path: ./release-linux.tar.gz
 
   self-release:
     needs: [test, test-create]
