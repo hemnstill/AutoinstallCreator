@@ -1,5 +1,7 @@
 @echo off
+"%~dp0..\.tools\busybox64.exe" bash "%~dp0create_install.sh"
+
 assoc .sh=_bash_file
-ftype _bash_file="%~dp0busybox64.exe" bash "%%1" %%*
+ftype _bash_file="%busybox%" bash "%%1" %%*
 
 exit /b %errorlevel%
