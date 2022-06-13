@@ -18,8 +18,6 @@ for d in ../*/; do
     need_skip=false
     if [[ -f "$create_install_name" ]]; then
 
-      [[ "$create_install_name" == "url-rewrite.bat" ]] && need_skip=true
-
       echo ">> Test $create_install_name"
       if [[ "$action" == "create" ]]; then
         "$create_install_name"
