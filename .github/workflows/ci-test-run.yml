@@ -34,7 +34,7 @@ jobs:
         apt install -y dos2unix
 
     - name: Install Alpine packages
-      if: matrix.container == 'ubuntu:latest'
+      if: matrix.container == 'alpine:latest'
       run: |
         apk add --no-cache bash
 
