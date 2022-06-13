@@ -28,7 +28,7 @@ jobs:
     container: ${{ matrix.container }}
     steps:
     - name: Install Ubuntu packages
-      if: matrix.container == 'ubuntu'
+      if: matrix.artifact == 'ubuntu'
       run: |
         apt update
         apt install -y dos2unix
