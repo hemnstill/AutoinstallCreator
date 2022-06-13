@@ -16,7 +16,7 @@ jobs:
             artifact: 'ubuntu'
 
           - os: ubuntu-latest
-            container: 'alpine:latest'
+            container: 'alpine:3.15.0'
             artifact: 'alpine'
 
           - os: windows-latest
@@ -28,13 +28,13 @@ jobs:
     container: ${{ matrix.container }}
     steps:
     - name: Install Ubuntu packages
-      if: matrix.container == 'ubuntu:latest'
+      if: matrix.container == 'ubuntu'
       run: |
         apt update
         apt install -y dos2unix
 
     - name: Install Alpine packages
-      if: matrix.container == 'alpine:latest'
+      if: matrix.artifact == 'alpine'
       run: |
         apk add --no-cache bash
 
