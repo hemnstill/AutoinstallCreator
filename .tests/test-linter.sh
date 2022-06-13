@@ -33,7 +33,7 @@ testBatWithShStartsWith() {
     if [[ -f "${d}create_install.bat" && -f "${d}create_install.sh" ]]; then
       echo ">> Test $dir_name"
       local etalon_head="$(printf '@echo off
-"%%~dp0..\\.tools\\busybox64.exe" bash "%%~dp0create_install.sh"
+"%%~dp0..\\.tools\\busybox.exe" bash "%%~dp0create_install.sh"
 ')"
       assertEquals  "$etalon_head" "$(cat "${d}create_install.bat" | dos2unix | head -3)"
     fi

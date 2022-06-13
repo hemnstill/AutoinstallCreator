@@ -25,6 +25,6 @@ msiexec.exe /i "./%s" /passive' "$(basename -- "$download_url")"
 chmod +x ./autoinstall.sh
 
 { printf '@echo off
-"%%~dp0..\\.tools\\busybox64.exe" bash "%%~dp0autoinstall.sh"
+"%%~dp0..\\.tools\\busybox.exe" bash "%%~dp0autoinstall.sh"
 exit /b %%errorlevel%%'
 } >autoinstall.bat

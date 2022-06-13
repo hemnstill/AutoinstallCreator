@@ -5,6 +5,6 @@ if not "%CI%" == "" (
 )
 set p7z="%~dp07z.exe"
 set grep="%~dp0pcre2grep.exe"
-set busybox="%~dp0busybox64.exe"
+set busybox="%~dp0busybox.exe"
 set head=%busybox% head
 set batch_runner="%~dp0batch_runner.bat"
