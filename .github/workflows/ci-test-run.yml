@@ -71,6 +71,8 @@ jobs:
 
     container: ${{ matrix.container }}
     steps:
+      - uses: actions/checkout@v3
+
       - name: External test-run (non windows)
         if: matrix.os != 'windows-latest'
         run: .tests/test-run.sh -- testExternalCreate
