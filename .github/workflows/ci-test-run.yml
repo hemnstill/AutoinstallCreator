@@ -67,7 +67,10 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
+            artifact: 'ubuntu'
+
           - os: windows-latest
+            artifact: 'windows'
 
     container: ${{ matrix.container }}
     steps:
@@ -79,11 +82,6 @@ jobs:
 
       - name: External test-run (windows)
         if: matrix.os == 'windows-latest'
-        shell: cmd
-        run: call .tests\test-run.bat -- testExternalCreate
-
-      - name: External test-run (nanoserver)
-        if: matrix.artifact == 'nanoserver'
         shell: cmd
         run: call .tests\test-run.bat -- testExternalCreate
 
