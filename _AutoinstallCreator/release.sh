@@ -19,19 +19,19 @@ makeself_sh_path="$makeself_target_path/makeself.sh"
 [[ ! -f "$makeself_version_path" ]] && "$dp0/../makeself/create_install.sh" "$makeself_version_rule"
 [[ ! -f "$makeself_sh_path" ]] && "$makeself_version_path" --target "$makeself_target_path"
 
-release_version_dirpath="$dp0/$self_version"
-tmp_version_path="$dp0/tmp_version.zip"
+temp_dir_path="$dp0/.tmp"
+rm -rf "$temp_dir_path" && mkdir -p "$temp_dir_path"
+
+release_version_dirpath="$temp_dir_path/$self_version"
+tmp_version_path="$temp_dir_path/tmp_version.zip"
 (cd "$dp0/.." && git archive --format zip -1 --output "$tmp_version_path" HEAD)
 
-rm -rf "$release_version_dirpath"
 "$p7z" x "$tmp_version_path" "-o$release_version_dirpath"
-
 
 artifact_file_path="$dp0/$self_name.sh" && $is_windows_os && artifact_file_path="$dp0/$self_name.bat"
 
 export BB_OVERRIDE_APPLETS=tar
-export TMPDIR="$dp0/.tmp"
-mkdir -p "$TMPDIR"
+export TMPDIR="$temp_dir_path"
 
 "$makeself_sh_path" \
 --notemp \
@@ -39,8 +39,6 @@ mkdir -p "$TMPDIR"
 "$artifact_file_path" \
 "$self_name" \
 echo "$self_version has extracted itself"
-
-rm -rf "$release_version_dirpath"
 
 echo version "'$self_version'" created.
 echo "$self_version" > "$dp0/../body.md"
