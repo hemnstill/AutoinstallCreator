@@ -9,14 +9,6 @@ on:
         description: tool version
         required: true
         type: string
-      prepare_body:
-        description: scripts for prepare body.md
-        required: true
-        type: string
-      artifacts:
-        description: list of artifacts
-        required: true
-        type: string
     secrets:
       token:
         description: secrets.GITHUB_TOKEN
