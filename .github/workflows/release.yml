@@ -21,9 +21,11 @@ jobs:
         include:
           - os: ubuntu-latest
             artifact: 'ubuntu'
+            command: './_AutoinstallCreator/release.sh'
 
           - os: windows-latest
             artifact: 'windows'
+            command: './.tools/busybox.exe sh ./_AutoinstallCreator/release.sh'
 
     steps:
       - uses: actions/checkout@v3
@@ -31,12 +33,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/download-artifact@v3
 
-      - if: matrix.artifact == 'ubuntu'
-        run: ./_AutoinstallCreator/release.sh
-        id: create_artifact
-
-      - if: matrix.artifact == 'windows'
-        run: ./.tools/busybox.exe sh ./_AutoinstallCreator/release.sh
+      - run: ${{ matrix.command }}
         id: create_artifact
 
       - uses: actions/upload-artifact@v3
