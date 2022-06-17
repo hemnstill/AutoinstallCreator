@@ -34,7 +34,7 @@ export BB_OVERRIDE_APPLETS=tar
 export TMPDIR="$temp_dir_path"
 
 "$makeself_sh_path" \
---notemp --sha256 \
+--notemp --sha256 --nomd5 --nocrc \
 "$release_version_dirpath" \
 "$artifact_file_path" \
 "$self_name" \
