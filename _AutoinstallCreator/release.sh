@@ -38,7 +38,7 @@ echo "$self_version has extracted itself"
 rm -rf "$release_version_dirpath"
 
 echo version "'$self_version'" created.
-echo "$self_version" > "$dp0/body.md"
+echo "$self_version" > "$dp0/../body.md"
 
 echo "::set-output name=artifact_path::$dp0/$self_name.sh.bat"
 echo "::set-output name=artifact_version::$self_version"
