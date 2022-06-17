@@ -30,6 +30,7 @@ rm -rf "$release_version_dirpath"
 artifact_file_path="$dp0/$self_name.sh" && $is_windows_os && artifact_file_path="$dp0/$self_name.bat"
 
 export BB_OVERRIDE_APPLETS=tar
+export TMPDIR="$dp0/.tmp"
 "$makeself_sh_path" \
 --notemp \
 "$release_version_dirpath" \
