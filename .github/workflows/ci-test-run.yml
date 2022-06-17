@@ -3,116 +3,115 @@ name: ci build
 on: [pull_request, workflow_dispatch]
 
 jobs:
-  test:
-    runs-on: ${{ matrix.os }}
-    env:
-      IMAGE_NAME: mcr.microsoft.com/windows/nanoserver:ltsc2022-amd64
-
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            container: 'ubuntu:22.04'
-            artifact: 'ubuntu'
-
-          - os: ubuntu-latest
-            container: 'alpine:3.15.0'
-            artifact: 'alpine'
-
-          - os: windows-latest
-            artifact: 'windows'
-
-          - os: windows-latest
-            artifact: 'nanoserver'
-
-    container: ${{ matrix.container }}
-    steps:
-    - name: Install Ubuntu packages
-      if: matrix.artifact == 'ubuntu'
-      run: |
-        apt update
-        apt install -y busybox dos2unix
-
-    - name: Install Alpine packages
-      if: matrix.artifact == 'alpine'
-      run: |
-        apk add --no-cache bash
-
-    - uses: actions/checkout@v3
-
-    - name: ci test-run (non windows)
-      if: matrix.os != 'windows-latest'
-      run: .tests/ci-test-run.sh
-
-    - name: ci test-run (windows)
-      if: matrix.artifact == 'windows'
-      shell: cmd
-      run: call .tests\ci-test-run.bat
-
-    - name: pull (nanoserver) container ${{ env.IMAGE_NAME }}
-      if: matrix.artifact == 'nanoserver'
-      run: |
-        docker pull ${{ env.IMAGE_NAME }}
-        docker images ${{ env.IMAGE_NAME }}
-
-    - name: ci test-run (nanoserver)
-      if: matrix.artifact == 'nanoserver'
-      run: docker container run --rm -v ${{ github.workspace }}:C:\app -w C:\app ${{ env.IMAGE_NAME }} C:\app\.tests\ci-test-run.bat
-
-
-  test-create:
-    needs: test
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            artifact: 'ubuntu'
-
-          - os: windows-latest
-            artifact: 'windows'
-
-    container: ${{ matrix.container }}
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: External test-run (non windows)
-        if: matrix.os != 'windows-latest'
-        run: .tests/test-run.sh -- testExternalCreate
-
-      - name: External test-run (windows)
-        if: matrix.os == 'windows-latest'
-        shell: cmd
-        run: call .tests\test-run.bat -- testExternalCreate
-
-      - name: Create release artifacts
-        if: matrix.artifact == 'ubuntu'
-        run: |
-          { printf '/.tools/*.exe export-ignore
-            /.tools/*.dll export-ignore'
-          } >${{ github.workspace }}/.git/info/attributes
-          git archive HEAD --output release-linux.tar.gz
-
-          { printf '/.tools/7zzs export-ignore
-            /.tools/curl-amd64 export-ignore
-            /.tools/pcre2grep export-ignore'
-          } >${{ github.workspace }}/.git/info/attributes
-          git archive HEAD --output release-win.zip
-
-      - if: matrix.artifact == 'ubuntu'
-        uses: actions/upload-artifact@v3
-        with:
-          name: release-win
-          path: ./release-win.zip
-
-      - if: matrix.artifact == 'ubuntu'
-        uses: actions/upload-artifact@v3
-        with:
-          name: release-linux
-          path: ./release-linux.tar.gz
+#  test:
+#    runs-on: ${{ matrix.os }}
+#    env:
+#      IMAGE_NAME: mcr.microsoft.com/windows/nanoserver:ltsc2022-amd64
+#
+#    strategy:
+#      matrix:
+#        include:
+#          - os: ubuntu-latest
+#            container: 'ubuntu:22.04'
+#            artifact: 'ubuntu'
+#
+#          - os: ubuntu-latest
+#            container: 'alpine:3.15.0'
+#            artifact: 'alpine'
+#
+#          - os: windows-latest
+#            artifact: 'windows'
+#
+#          - os: windows-latest
+#            artifact: 'nanoserver'
+#
+#    container: ${{ matrix.container }}
+#    steps:
+#    - name: Install Ubuntu packages
+#      if: matrix.artifact == 'ubuntu'
+#      run: |
+#        apt update
+#        apt install -y busybox dos2unix
+#
+#    - name: Install Alpine packages
+#      if: matrix.artifact == 'alpine'
+#      run: |
+#        apk add --no-cache bash
+#
+#    - uses: actions/checkout@v3
+#
+#    - name: ci test-run (non windows)
+#      if: matrix.os != 'windows-latest'
+#      run: .tests/ci-test-run.sh
+#
+#    - name: ci test-run (windows)
+#      if: matrix.artifact == 'windows'
+#      shell: cmd
+#      run: call .tests\ci-test-run.bat
+#
+#    - name: pull (nanoserver) container ${{ env.IMAGE_NAME }}
+#      if: matrix.artifact == 'nanoserver'
+#      run: |
+#        docker pull ${{ env.IMAGE_NAME }}
+#        docker images ${{ env.IMAGE_NAME }}
+#
+#    - name: ci test-run (nanoserver)
+#      if: matrix.artifact == 'nanoserver'
+#      run: docker container run --rm -v ${{ github.workspace }}:C:\app -w C:\app ${{ env.IMAGE_NAME }} C:\app\.tests\ci-test-run.bat
+#
+#  test-create:
+#    needs: test
+#    runs-on: ${{ matrix.os }}
+#    strategy:
+#      matrix:
+#        include:
+#          - os: ubuntu-latest
+#            artifact: 'ubuntu'
+#
+#          - os: windows-latest
+#            artifact: 'windows'
+#
+#    container: ${{ matrix.container }}
+#    steps:
+#      - uses: actions/checkout@v3
+#
+#      - name: External test-run (non windows)
+#        if: matrix.os != 'windows-latest'
+#        run: .tests/test-run.sh -- testExternalCreate
+#
+#      - name: External test-run (windows)
+#        if: matrix.os == 'windows-latest'
+#        shell: cmd
+#        run: call .tests\test-run.bat -- testExternalCreate
+#
+#      - name: Create release artifacts
+#        if: matrix.artifact == 'ubuntu'
+#        run: |
+#          { printf '/.tools/*.exe export-ignore
+#            /.tools/*.dll export-ignore'
+#          } >${{ github.workspace }}/.git/info/attributes
+#          git archive HEAD --output release-linux.tar.gz
+#
+#          { printf '/.tools/7zzs export-ignore
+#            /.tools/curl-amd64 export-ignore
+#            /.tools/pcre2grep export-ignore'
+#          } >${{ github.workspace }}/.git/info/attributes
+#          git archive HEAD --output release-win.zip
+#
+#      - if: matrix.artifact == 'ubuntu'
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: release-win
+#          path: ./release-win.zip
+#
+#      - if: matrix.artifact == 'ubuntu'
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: release-linux
+#          path: ./release-linux.tar.gz
 
   self-release:
-    needs: [test, test-create]
+    # needs: [test, test-create]
     uses: ./.github/workflows/release.yml
     with:
       workflow: 'latest'

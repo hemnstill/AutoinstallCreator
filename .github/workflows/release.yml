@@ -29,7 +29,8 @@ jobs:
         with:
           fetch-depth: 0
       - uses: actions/download-artifact@v3
-      - run: ${{ inputs.prepare_body }}
+      - run: |
+          ./.tools/busybox64.exe bash ./_AutoinstallCreator/release.sh
       - uses: ncipollo/release-action@v1
         with:
           tag: ${{ inputs.workflow }}-${{ inputs.tool_version }}
