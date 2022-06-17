@@ -15,22 +15,31 @@ on:
         required: true
 jobs:
   release:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            artifact: 'ubuntu'
+
+          - os: windows-latest
+            artifact: 'windows'
+
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - uses: actions/download-artifact@v3
 
-      - run: ./_AutoinstallCreator/release.sh
+      - if: matrix.artifact == 'ubuntu'
+        run: ./_AutoinstallCreator/release.sh
         id: create_artifact
 
-      - uses: ncipollo/release-action@v1
-        with:
-          tag: ${{ inputs.workflow }}-${{ inputs.tool_version }}
-          bodyFile: './body.md'
-          artifacts: ${{ steps.create_artifact.outputs.artifact_path }}
-          allowUpdates: true
-          removeArtifacts: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - if: matrix.artifact == 'windows'
+        run: ./.tools/busybox.exe sh ./_AutoinstallCreator/release.sh
+        id: create_artifact
 
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.create_artifact.outputs.artifact_version }}-${{ matrix.artifact }}
+          path: ${{ steps.create_artifact.outputs.artifact_path }}

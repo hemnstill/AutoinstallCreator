@@ -26,12 +26,14 @@ tmp_version_path="$dp0/tmp_version.zip"
 rm -rf "$release_version_dirpath"
 "$p7z" x "$tmp_version_path" "-o$release_version_dirpath"
 
-export BB_OVERRIDE_APPLETS=tar
 
+artifact_file_path="$dp0/$self_name.sh" && $is_windows_os && artifact_file_path="$dp0/$self_name.bat"
+
+export BB_OVERRIDE_APPLETS=tar
 "$makeself_sh_path" \
 --notemp \
 "$release_version_dirpath" \
-"$dp0/$self_name.sh.bat" \
+"$artifact_file_path" \
 "$self_name" \
 echo "$self_version has extracted itself"
 
@@ -40,5 +42,5 @@ rm -rf "$release_version_dirpath"
 echo version "'$self_version'" created.
 echo "$self_version" > "$dp0/../body.md"
 
-echo "::set-output name=artifact_path::$dp0/$self_name.sh.bat"
-echo "::set-output name=artifact_version::$self_version"
+echo "::set-output name=artifact_path::$artifact_file_path"
+echo "::set-output name=artifact_version::$self_name"
