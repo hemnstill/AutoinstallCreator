@@ -20,6 +20,8 @@ $curl --location "$download_url" --remote-name
 errorlevel=$?
 if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 
+chmod +x "$(basename -- "$download_url")"
+
 { printf '#!/bin/bash
 cd "$(realpath "$(dirname "$0")")" || exit 1
 "./%s"
