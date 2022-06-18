@@ -24,8 +24,7 @@ makeself_sh_path="$makeself_target_path/makeself.sh"
 }
 
 temp_dir_path="$dp0/.tmp"
-rm -rf "$temp_dir_path"
-mkdir -p "$temp_dir_path"
+rm -rf "$temp_dir_path" && mkdir -p "$temp_dir_path"
 
 release_version_dirpath="$temp_dir_path/$self_version"
 tmp_version_path="$temp_dir_path/tmp_version.zip"
@@ -33,14 +32,14 @@ tmp_version_path="$temp_dir_path/tmp_version.zip"
 
 "$p7z" x "$tmp_version_path" "-o$release_version_dirpath"
 
+export BB_OVERRIDE_APPLETS=tar
+export TMPDIR="$temp_dir_path"
+
 artifact_file_path="$dp0/$self_name.sh" && $is_windows_os && artifact_file_path="$dp0/$self_name.bat"
 header_arg="" && $is_windows_os && {
   "$makeself_target_path/cmd-header.sh"
   header_arg="--header $makeself_target_path/makeself-cmd-header.sh"
 }
-
-export BB_OVERRIDE_APPLETS=tar
-export TMPDIR="$temp_dir_path"
 
 "$makeself_sh_path" $header_arg \
   --notemp --sha256 --nomd5 --nocrc \
