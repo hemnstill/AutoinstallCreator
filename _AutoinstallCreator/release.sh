@@ -35,7 +35,7 @@ tmp_version_path="$temp_dir_path/tmp_version.zip"
 export BB_OVERRIDE_APPLETS=tar
 export TMPDIR="$temp_dir_path"
 
-artifact_file_path="$dp0/$self_name.sh" && $is_windows_os && artifact_file_path="$dp0/$self_name.bat"
+artifact_file_path="$dp0/$self_name.sh" && $is_windows_os && artifact_file_path="$dp0/$self_name.sh.bat"
 header_arg="" && $is_windows_os && {
   "$makeself_target_path/cmd-header.sh"
   header_arg="--header $makeself_target_path/makeself-cmd-header.sh"
