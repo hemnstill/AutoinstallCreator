@@ -10,17 +10,22 @@ self_hash="$(cd "$dp0/.." && git show --abbrev=10 --no-patch --pretty=%h HEAD)"
 
 self_version=$self_name.$self_count.$self_hash
 
-makeself_version="2.4.5"
-makeself_version_rule="${makeself_version//./'\.'}"
-makeself_version_path="$dp0/../makeself/makeself-$makeself_version.run"
-makeself_target_path="$dp0/makeself"
+tool_version=cmd-header
+download_url="https://github.com/hemnstill/makeself/archive/refs/heads/$tool_version.tar.gz"
+
+makeself_version_path="$dp0/tool-$tool_version.tar.gz"
+makeself_target_path="$dp0/makeself-$tool_version"
 makeself_sh_path="$makeself_target_path/makeself.sh"
 
-[[ ! -f "$makeself_version_path" ]] && "$dp0/../makeself/create_install.sh" "$makeself_version_rule"
-[[ ! -f "$makeself_sh_path" ]] && "$makeself_version_path" --target "$makeself_target_path"
+[[ ! -f "$makeself_version_path" ]] && {
+  echo "::group::prepare sources $download_url"
+  wget "$download_url" -O "$makeself_version_path"
+  tar -xf "$makeself_version_path"
+}
 
 temp_dir_path="$dp0/.tmp"
-rm -rf "$temp_dir_path" && mkdir -p "$temp_dir_path"
+rm -rf "$temp_dir_path"
+mkdir -p "$temp_dir_path"
 
 release_version_dirpath="$temp_dir_path/$self_version"
 tmp_version_path="$temp_dir_path/tmp_version.zip"
@@ -29,16 +34,20 @@ tmp_version_path="$temp_dir_path/tmp_version.zip"
 "$p7z" x "$tmp_version_path" "-o$release_version_dirpath"
 
 artifact_file_path="$dp0/$self_name.sh" && $is_windows_os && artifact_file_path="$dp0/$self_name.bat"
+header_arg="" && $is_windows_os && {
+  "$makeself_target_path/cmd-header.sh"
+  header_arg="--header $makeself_target_path/makeself-cmd-header.sh"
+}
 
 export BB_OVERRIDE_APPLETS=tar
 export TMPDIR="$temp_dir_path"
 
-"$makeself_sh_path" \
---notemp --sha256 --nomd5 --nocrc \
-"$release_version_dirpath" \
-"$artifact_file_path" \
-"$self_name" \
-echo "$self_version has extracted itself"
+"$makeself_sh_path" $header_arg \
+  --notemp --sha256 --nomd5 --nocrc \
+  "$release_version_dirpath" \
+  "$artifact_file_path" \
+  "$self_name" \
+  echo "$self_version has extracted itself"
 
 echo version "'$self_version'" created.
 echo "$self_version" > "$dp0/../body.md"
