@@ -62,6 +62,7 @@ jobs:
   test-create:
     needs: test
     runs-on: ${{ matrix.os }}
+    name: Run test-create
     strategy:
       matrix:
         include:
