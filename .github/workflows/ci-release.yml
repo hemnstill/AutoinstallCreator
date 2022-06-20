@@ -19,6 +19,6 @@ jobs:
         uses: lewagon/wait-on-check-action@v1.0.0
         with:
           ref: ${{ github.ref }}
-          check-name: 'Run test-create'
+          check-name: 'Run test-create (windows-latest, windows)'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
