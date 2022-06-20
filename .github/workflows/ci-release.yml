@@ -1,0 +1,13 @@
+name: ci build
+
+on: [push]
+
+jobs:
+  self-release:
+    needs: [test, test-create]
+    uses: ./.github/workflows/release.yml
+    with:
+      workflow: 'latest'
+      tool_version: ${{ github.ref_name }}
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
