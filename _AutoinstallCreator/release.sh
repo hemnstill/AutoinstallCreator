@@ -10,8 +10,8 @@ self_hash="$(cd "$dp0/.." && git show --abbrev=10 --no-patch --pretty=%h HEAD)"
 
 self_version=$self_name.$self_count.$self_hash
 
-tool_version=cmd-header
-download_url="https://github.com/hemnstill/makeself/archive/refs/heads/$tool_version.tar.gz"
+tool_version=release-2.4.5-cmd
+download_url="https://github.com/hemnstill/makeself/archive/refs/tags/$tool_version.tar.gz"
 
 makeself_version_path="$dp0/tool-$tool_version.tar.gz"
 makeself_target_path="$dp0/makeself-$tool_version"
