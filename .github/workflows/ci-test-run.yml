@@ -84,15 +84,3 @@ jobs:
         if: matrix.os == 'windows-latest'
         shell: cmd
         run: call .tests\test-run.bat -- testExternalCreate
-
-      - if: matrix.artifact == 'ubuntu'
-        uses: actions/upload-artifact@v3
-        with:
-          name: release-win
-          path: ./release-win.zip
-
-      - if: matrix.artifact == 'ubuntu'
-        uses: actions/upload-artifact@v3
-        with:
-          name: release-linux
-          path: ./release-linux.tar.gz
