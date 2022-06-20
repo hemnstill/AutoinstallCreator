@@ -59,39 +59,39 @@ jobs:
       if: matrix.artifact == 'nanoserver'
       run: docker container run --rm -v ${{ github.workspace }}:C:\app -w C:\app ${{ env.IMAGE_NAME }} C:\app\.tests\ci-test-run.bat
 
-#  test-create:
-#    needs: test
-#    runs-on: ${{ matrix.os }}
-#    strategy:
-#      matrix:
-#        include:
-#          - os: ubuntu-latest
-#            artifact: 'ubuntu'
-#
-#          - os: windows-latest
-#            artifact: 'windows'
-#
-#    container: ${{ matrix.container }}
-#    steps:
-#      - uses: actions/checkout@v3
-#
-#      - name: External test-run (non windows)
-#        if: matrix.os != 'windows-latest'
-#        run: .tests/test-run.sh -- testExternalCreate
-#
-#      - name: External test-run (windows)
-#        if: matrix.os == 'windows-latest'
-#        shell: cmd
-#        run: call .tests\test-run.bat -- testExternalCreate
-#
-#      - if: matrix.artifact == 'ubuntu'
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: release-win
-#          path: ./release-win.zip
-#
-#      - if: matrix.artifact == 'ubuntu'
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: release-linux
-#          path: ./release-linux.tar.gz
+  test-create:
+    needs: test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            artifact: 'ubuntu'
+
+          - os: windows-latest
+            artifact: 'windows'
+
+    container: ${{ matrix.container }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: External test-run (non windows)
+        if: matrix.os != 'windows-latest'
+        run: .tests/test-run.sh -- testExternalCreate
+
+      - name: External test-run (windows)
+        if: matrix.os == 'windows-latest'
+        shell: cmd
+        run: call .tests\test-run.bat -- testExternalCreate
+
+      - if: matrix.artifact == 'ubuntu'
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-win
+          path: ./release-win.zip
+
+      - if: matrix.artifact == 'ubuntu'
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-linux
+          path: ./release-linux.tar.gz
