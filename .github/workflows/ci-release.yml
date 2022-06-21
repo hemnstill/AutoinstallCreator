@@ -4,6 +4,62 @@ on: [pull_request]
 
 jobs:
   self-release:
-    uses: ./.github/workflows/release.yml
-    secrets:
-      token: ${{ secrets.GITHUB_TOKEN }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            artifact: 'ubuntu'
+            command: './_AutoinstallCreator/release.sh'
+
+          - os: windows-latest
+            artifact: 'windows'
+            command: './.tools/busybox.exe sh ./_AutoinstallCreator/release.sh'
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - run: ${{ matrix.command }}
+        id: create_artifact
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: AutoinstallCreator-${{ matrix.artifact }}
+          path: ${{ steps.create_artifact.outputs.artifact_path }}
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: body
+          path: ./body.md
+
+  upload_release:
+    needs: self-release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for build to succeed
+        id: wait-for-build
+        uses: fountainhead/action-wait-for-check@v1.0.0
+        with:
+          checkName: 'Run test-create (windows-latest, windows)'
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          token: ${{ secrets.token }}
+          timeoutSeconds: 1800
+
+      - name: setFailed when not wait-for-build
+        uses: actions/github-script@v6
+        if: steps.wait-for-build.outputs.conclusion != 'success'
+        with:
+          script: |
+            core.setFailed('error: conclusion is ${{ steps.wait-for-build.outputs.conclusion }}')
+
+      - uses: actions/checkout@v3
+      - run: git push origin :refs/tags/latest-${{ github.base_ref }}
+
+      - uses: ncipollo/release-action@v1
+        with:
+          tag: latest-${{ github.base_ref }}
+          artifacts: ./AutoinstallCreator-*/*
+          bodyFile: ./body/body.md
+          allowUpdates: true
+          removeArtifacts: true
+          token: ${{ secrets.GITHUB_TOKEN }}
