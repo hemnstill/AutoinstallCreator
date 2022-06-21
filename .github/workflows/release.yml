@@ -24,7 +24,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - run: ${{ matrix.command }}
+      - run: ( ${{ matrix.command }} )
         id: create_artifact
 
       - uses: actions/upload-artifact@v3
@@ -57,12 +57,12 @@ jobs:
 #          script: |
 #            core.setFailed('conclusion is ${{ steps.wait-for-build.outputs.conclusion }}')
 
-      - uses: actions/download-artifact@v3
-      - run: ls -r ./body
-      - run: cp ./body/body.md ./body.md
-
       - uses: actions/checkout@v3
       - run: git push origin :refs/tags/latest-${{ github.base_ref }}
+
+      - uses: actions/download-artifact@v3
+      - run: cp ./body/body.md ./body.md
+      - run: ls -r ./body
 
       - uses: ncipollo/release-action@v1
         with:
