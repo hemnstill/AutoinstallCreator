@@ -42,7 +42,7 @@ jobs:
         with:
           checkName: 'Run test-create (windows-latest, windows)'
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
-          token: ${{ secrets.token }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           timeoutSeconds: 1800
 
       - name: setFailed when not wait-for-build
