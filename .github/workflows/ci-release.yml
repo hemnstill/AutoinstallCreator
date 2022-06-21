@@ -22,7 +22,9 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           path: ./artifacts
+
       - uses: ncipollo/release-action@v1
+        if: steps.wait-for-build.outputs.conclusion == 'success'
         with:
           tag: latest-${{ github.ref_name }}
           artifacts: ./AutoinstallCreator-*/*
