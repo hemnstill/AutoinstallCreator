@@ -59,10 +59,10 @@ jobs:
       if: matrix.artifact == 'nanoserver'
       run: docker container run --rm -v ${{ github.workspace }}:C:\app -w C:\app ${{ env.IMAGE_NAME }} C:\app\.tests\ci-test-run.bat
 
-
   test-create:
     needs: test
     runs-on: ${{ matrix.os }}
+    name: Run test-create
     strategy:
       matrix:
         include:
@@ -84,43 +84,3 @@ jobs:
         if: matrix.os == 'windows-latest'
         shell: cmd
         run: call .tests\test-run.bat -- testExternalCreate
-
-      - name: Create release artifacts
-        if: matrix.artifact == 'ubuntu'
-        run: |
-          { printf '/.tools/*.exe export-ignore
-            /.tools/*.dll export-ignore'
-          } >${{ github.workspace }}/.git/info/attributes
-          git archive HEAD --output release-linux.tar.gz
-
-          { printf '/.tools/7zzs export-ignore
-            /.tools/curl-amd64 export-ignore
-            /.tools/pcre2grep export-ignore'
-          } >${{ github.workspace }}/.git/info/attributes
-          git archive HEAD --output release-win.zip
-
-      - if: matrix.artifact == 'ubuntu'
-        uses: actions/upload-artifact@v3
-        with:
-          name: release-win
-          path: ./release-win.zip
-
-      - if: matrix.artifact == 'ubuntu'
-        uses: actions/upload-artifact@v3
-        with:
-          name: release-linux
-          path: ./release-linux.tar.gz
-
-  self-release:
-    needs: [test, test-create]
-    uses: ./.github/workflows/release.yml
-    with:
-      workflow: 'latest'
-      tool_version: 'master'
-      prepare_body: |
-        { echo version: "$(git rev-list --count HEAD)"."$(git show --abbrev=10 --no-patch --pretty=%h HEAD)"
-        } >body.md
-        git push origin :refs/tags/latest-master
-      artifacts: ./release-linux/release-linux.tar.gz,./release-win/release-win.zip
-    secrets:
-      token: ${{ secrets.GITHUB_TOKEN }}
