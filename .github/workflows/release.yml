@@ -38,6 +38,7 @@ jobs:
           path: ./body.md
 
   upload_release:
+    needs: release
     runs-on: ubuntu-latest
     steps:
       - name: Wait for build to succeed
