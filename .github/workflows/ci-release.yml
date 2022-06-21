@@ -19,6 +19,7 @@ jobs:
           checkName: 'Run test-create (windows-latest, windows)'
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           token: ${{ secrets.GITHUB_TOKEN }}
+          timeoutSeconds: 1800
 
       - uses: actions/github-script@v6
         if: steps.wait-for-build.outputs.conclusion != 'success'
