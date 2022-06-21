@@ -20,6 +20,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
 
+      - uses: actions/download-artifact@v3
       - uses: ncipollo/release-action@v1
         with:
           tag: ${{ latest }}-${{ github.ref_name }}
