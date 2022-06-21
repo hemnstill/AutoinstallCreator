@@ -59,6 +59,7 @@ jobs:
 
       - uses: actions/download-artifact@v3
       - run: ls -r ./body
+      - run: cp ./body/body.md ./body.md
 
       - uses: actions/checkout@v3
       - run: git push origin :refs/tags/latest-${{ github.base_ref }}
@@ -67,7 +68,7 @@ jobs:
         with:
           tag: latest-${{ github.base_ref }}
           artifacts: ./AutoinstallCreator-*/*
-          bodyFile: './body/body.md'
+          bodyFile: './body.md'
           allowUpdates: true
           removeArtifacts: true
           token: ${{ secrets.token }}
