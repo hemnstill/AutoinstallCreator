@@ -18,7 +18,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
+        with:
+          fetch-depth: 0 # need for self_count
       - run: ${{ matrix.command }}
         id: create_artifact
 
