@@ -21,11 +21,12 @@ jobs:
           wait-interval: 10
 
       - uses: actions/download-artifact@v3
+        with:
+          path: ./artifacts
       - uses: ncipollo/release-action@v1
         with:
           tag: ${{ latest }}-${{ github.ref_name }}
-          # TODO: download all artifacts
-          # artifacts: ${{ inputs.artifacts }}
+          artifacts: ./artifacts
           allowUpdates: true
           removeArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
