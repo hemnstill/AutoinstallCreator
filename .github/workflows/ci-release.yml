@@ -1,6 +1,6 @@
 name: ci release
 
-on: [pull_request]
+on: [push]
 
 jobs:
   self-release:
@@ -15,8 +15,8 @@ jobs:
       - name: Wait for tests to succeed
         uses: lewagon/wait-on-check-action@v1.0.0
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          check-name: 'Run test-create (windows-latest, windows)'
+          ref: ${{ github.ref }}
+          running-workflow-name: 'Run test-create'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
 
