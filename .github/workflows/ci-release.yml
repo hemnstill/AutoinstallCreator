@@ -15,14 +15,11 @@ jobs:
       - name: Wait for tests to succeed
         uses: fountainhead/action-wait-for-check@v1.0.0
         with:
-          checkName: 'test (windows-latest, windows)'
+          checkName: 'Run test-create (windows-latest, windows)'
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/download-artifact@v3
-        with:
-          path: ./artifacts
-
       - uses: ncipollo/release-action@v1
         if: steps.wait-for-build.outputs.conclusion == 'success'
         with:
