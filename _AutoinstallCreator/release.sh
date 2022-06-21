@@ -52,4 +52,3 @@ echo version "'$self_version'" created.
 echo "$self_version" > "$dp0/../body.md"
 
 echo "::set-output name=artifact_path::$artifact_file_path"
-echo "::set-output name=artifact_version::$self_name"

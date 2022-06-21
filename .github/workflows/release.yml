@@ -29,6 +29,11 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: ${{ steps.create_artifact.outputs.artifact_version }}-${{ matrix.artifact }}
+          name: AutoinstallCreator-${{ matrix.artifact }}
           path: ${{ steps.create_artifact.outputs.artifact_path }}
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: body
+          path: ./body.md
 
