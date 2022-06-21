@@ -25,7 +25,7 @@ jobs:
           path: ./artifacts
       - uses: ncipollo/release-action@v1
         with:
-          tag: ${{ latest }}-${{ github.ref_name }}
+          tag: latest-${{ github.ref_name }}
           artifacts: ./artifacts
           allowUpdates: true
           removeArtifacts: true
