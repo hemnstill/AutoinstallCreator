@@ -15,10 +15,9 @@ jobs:
       - name: Wait for tests to succeed
         uses: fountainhead/action-wait-for-check@v1.0.0
         with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           checkName: 'Run test-create'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/download-artifact@v3
         with:
