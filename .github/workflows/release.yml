@@ -67,7 +67,7 @@ jobs:
         with:
           tag: latest-${{ github.base_ref }}
           artifacts: ./AutoinstallCreator-*/*
-          bodyFile: ./body/body
+          bodyFile: ./body/body.md
           allowUpdates: true
           removeArtifacts: true
           token: ${{ secrets.token }}
