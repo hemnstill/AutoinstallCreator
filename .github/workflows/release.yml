@@ -58,6 +58,7 @@ jobs:
 #            core.setFailed('conclusion is ${{ steps.wait-for-build.outputs.conclusion }}')
 
       - uses: actions/download-artifact@v3
+      - run: ls -r ./body
 
       - uses: actions/checkout@v3
       - run: git push origin :refs/tags/latest-${{ github.base_ref }}
