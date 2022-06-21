@@ -12,16 +12,23 @@ jobs:
     needs: [self-release]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/download-artifact@v3
+
       - name: Wait for tests to succeed
+        id: wait-for-build
         uses: fountainhead/action-wait-for-check@v1.0.0
         with:
           checkName: 'Run test-create (windows-latest, windows)'
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/github-script@v6
+        if: steps.wait-for-build.outputs.conclusion != 'success'
+        with:
+          script: |
+            core.setFailed('conclusion is ${{ steps.wait-for-build.outputs.conclusion }}')
+
       - uses: ncipollo/release-action@v1
-        if: steps.wait-for-build.outputs.conclusion == 'success'
         with:
           tag: latest-${{ github.ref_name }}
           artifacts: ./AutoinstallCreator-*/*
