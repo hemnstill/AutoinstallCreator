@@ -30,6 +30,7 @@ jobs:
 
       - uses: actions/download-artifact@v3
 
+      - uses: actions/checkout@v3
       - run: git push origin :refs/tags/latest-${{ github.base_ref }}
 
       - uses: ncipollo/release-action@v1
