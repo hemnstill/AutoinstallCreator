@@ -6,7 +6,7 @@ cd "$dp0"
 
 latest_version=https://api.github.com/repos/FarGroup/FarManager/releases/latest
 echo Get latest version: "$latest_version" ...
-download_url=$($curl --silent --location "$latest_version" | "$grep" --only-matching '(?<="browser_download_url":\s")[^,]+Far\.x64[^,]*\.msi(?=")' | head -n1)
+download_url=$($curl --silent --location "$latest_version" | "$grep" --only-matching '(?<="browser_download_url":\s")[^,]+Far\.x64[^,]+\.msi(?=")' | head -n1)
 [[ -z "$download_url" ]] && {
   echo "Cannot get release version"
   exit 1
