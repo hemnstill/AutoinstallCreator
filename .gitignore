@@ -27,12 +27,13 @@ _AutoinstallCreator/*.txt
 *.tar.gz
 *.tar.zst
 *.old
+*.md
 .idea/
 .empty
 uTorrent/*.lng
 .tests/git_status.txt
 
 bsdtar/*.bat
-python/python/
+python/Scripts/
 
 tmp/
