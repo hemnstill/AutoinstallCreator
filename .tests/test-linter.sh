@@ -24,7 +24,6 @@ testBatWithShStartsWith() {
   for d in ../*/; do
     dir_name=${d:3}
 
-    [[ $dir_name == "Far/" ]] && startSkipping
     [[ $dir_name == "GoogleChrome/" ]] && startSkipping
     [[ $dir_name == "Telegram/" ]] && startSkipping
     [[ $dir_name == "jetbrains-toolbox/" ]] && startSkipping
