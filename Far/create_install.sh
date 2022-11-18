@@ -16,14 +16,17 @@ echo "Downloading: $download_url ..."
 $curl --location "$download_url" --remote-name
 
 echo Generating autoinstall ...
+# shellcheck disable=SC2016
 { printf '#!/bin/bash
 cd "$(realpath "$(dirname "$0")")" || exit 1
 set -v
-msiexec.exe /i "./%s" /passive' "$(basename -- "$download_url")"
+msiexec.exe /i "%s" /passive
+' "$(basename -- "$download_url")"
 } >autoinstall.sh
 chmod +x ./autoinstall.sh
 
 { printf '@echo off
 "%%~dp0..\\.tools\\busybox.exe" bash "%%~dp0autoinstall.sh"
-exit /b %%errorlevel%%'
+exit /b %%errorlevel%%
+'
 } >autoinstall.bat
