@@ -21,3 +21,6 @@ $curl --location "$download_url" --remote-name
 
 zip_file_name="$(basename -- "$download_url")"
 "$p7z" x "$zip_file_name" -so | "$p7z" x -si -ttar "-o." -aoa -r
+
+test_command=test_linux.sh && $is_windows_os && test_command=test_windows.sh
+"./$test_command"
