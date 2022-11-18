@@ -4,48 +4,29 @@ dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
 set -e
 cd "$dp0"
 
-codename="$1"
-[[ -z "$codename" ]] && [[ -n $(command -v lsb_release) ]] && {
-  echo "get ubuntu codename from lsb_release"
-  codename="$(lsb_release -cs)"
-}
-[[ -z "$codename" ]] && {
-  ubuntu_releases_url='https://wiki.ubuntu.com/Releases?action=raw'
-  echo "get latest ubuntu codename from: $ubuntu_releases_url"
-  ubuntu_lts_codename=$($curl --silent --location "$ubuntu_releases_url" | $grep -F " LTS" | "$grep" --only-matching '(?<=|)\w+(?=\s\w+]])' | head -1)
-  codename=${ubuntu_lts_codename,,}
-}
-[[ -z $codename ]] && {
-  echo 'Cannot get codename'
-  exit 1
-}
-
-launchpad_api_url='https://api.launchpad.net/1.0'
-published_sources_url="$launchpad_api_url/~far2l-team/+archive/ubuntu/ppa?ws.op=getPublishedSources&distro_series=$launchpad_api_url/ubuntu/$codename&pocket=Release"
-echo "Get last release: $published_sources_url" ...
-sourcepub_self_link=$($curl --silent --location "$published_sources_url" | "$grep" --only-matching "(?<=\"self_link\":\s\")[^,]*(?=\")" | head -1)
-[[ -z $sourcepub_self_link ]] && {
-  echo "Cannot get sourcepub_self_link"
-  exit 1
-}
-
-echo "get binaryFileUrls from sourcepub_self_link: $sourcepub_self_link ..."
-download_url=$($curl --silent --location "$sourcepub_self_link"'?ws.op=binaryFileUrls' | "$grep" --only-matching "(?<=\")[^,]+amd64.deb(?=\")" | head -1)
-[[ -z $download_url ]] && {
-  echo "Cannot get download_url"
+latest_version=https://api.github.com/repos/FarGroup/FarManager/releases/latest
+echo Get latest version: "$latest_version" ...
+download_url=$($curl --silent --location "$latest_version" | "$grep" --only-matching '(?<="browser_download_url":\s")[^,]+Far\.x64[^,]+\.msi(?=")' | head -n1)
+[[ -z "$download_url" ]] && {
+  echo "Cannot get release version"
   exit 1
 }
 
 echo "Downloading: $download_url ..."
 $curl --location "$download_url" --remote-name
-errorlevel=$?
-if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 
-{
-  printf '#!/bin/bash
-cd "$(realpath "$(dirname "$0")")" || exit
-apt install ./%s' "$(basename -- "$download_url")"
+echo Generating autoinstall ...
+# shellcheck disable=SC2016
+{ printf '#!/bin/bash
+cd "$(realpath "$(dirname "$0")")" || exit 1
+set -v
+msiexec.exe /i "%s" /passive
+' "$(basename -- "$download_url")"
 } >autoinstall.sh
 chmod +x ./autoinstall.sh
 
-echo Done.
+{ printf '@echo off
+"%%~dp0..\\.tools\\busybox.exe" bash "%%~dp0autoinstall.sh"
+exit /b %%errorlevel%%
+'
+} >autoinstall.bat
