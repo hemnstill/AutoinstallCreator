@@ -4,65 +4,17 @@ dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
 set -e
 cd "$dp0"
 
-zstd="zstd" && [[ "$is_windows_os" == true ]] && {
-  zstd="../_zstd/zstd.exe"
-  [[ ! -f "$zstd" ]] && {
-    "../_zstd/create_install.sh"
-    cd "$dp0" || exit 1
-  }
-}
 
-[[ $(command -v $zstd) == '' ]] && {
-  echo "zstd is not available. Try 'sudo apt install zstd'"
-  exit 1
-}
+api_url='https://api.github.com/repos/hemnstill/StandaloneTools/releases?per_page=100'
+echo Get latest version: "$api_url" ...
 
-python_version=$1
-if [[ -z "$python_version" ]]; then
-  latest_version_url='https://www.python.org/doc/versions/'
-  echo "python_version does not set. get latest from: $latest_version_url ..."
-  python_version=$($curl --silent --location "$latest_version_url" | "$grep" --only-matching '(?<=href="http://docs\.python\.org/release/)[\d\.]+(?=/")' | head -1)
-
-  echo 'set latest python to 3.10.0 (temp workaround)'
-  python_version=3.10.0
-fi
-[[ -z $python_version ]] && {
-  echo 'Cannot get python_version'
-  exit 1
-}
-
-echo "-> $python_version"
-
-api_url='https://api.github.com/repos/indygreg/python-build-standalone/releases'
-echo Get latest portable version: $api_url ...
-download_url=$($curl --silent --location "$api_url" | "$grep" --only-matching '(?<="browser_download_url":\s")[^,]+linux-musl-debug[^,]+tar\.zst(?=")' |
-  "$grep" -F -- "-$python_version" | head -1)
+runtime_toolset_rule="/build-musl" && $is_windows_os && runtime_toolset_rule="/build-msvc"
+matching_rule="$(printf '(?<="browser_download_url":\s")[^,]+python-[^,]+%s\.tar\.gz(?=")' "$runtime_toolset_rule")"
+download_url="$($curl --silent --location "$api_url" | "$grep" --only-matching "$matching_rule" | head -1)"
 [[ -z "$download_url" ]] && {
-  echo "Cannot get release version"
+  echo "Cannot get release version from $matching_rule"
   exit 1
 }
 
 echo "Downloading: $download_url ..."
 $curl --location "$download_url" --remote-name
-errorlevel=$?
-if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
-
-gz_file_name="cpython-$python_version-linux-musl.tar.gz"
-zst_file_name="$(basename -- "$download_url")"
-tar_file_name="${zst_file_name%.*}"
-
-"$zstd" -df "$zst_file_name"
-errorlevel=$?
-if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
-
-cat $tar_file_name | tar f - --wildcards \
-  --delete "python/build" \
-  --delete "python/install/include" \
-  --delete "*.whl" \
-  --delete "*.exe" \
-  --delete "*/config-*" \
-  --delete "*/test/*" \
-  --delete "*/tests/*" \
-  --delete "*/idle_test/*" \
-  --delete "*/site-packages/*" |
-  "$p7z" u "$gz_file_name" -uq0 -si
