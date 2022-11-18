@@ -27,7 +27,6 @@ testBatWithShStartsWith() {
     [[ $dir_name == "GoogleChrome/" ]] && startSkipping
     [[ $dir_name == "Telegram/" ]] && startSkipping
     [[ $dir_name == "jetbrains-toolbox/" ]] && startSkipping
-    [[ $dir_name == "python/" ]] && startSkipping
 
     if [[ -f "${d}create_install.bat" && -f "${d}create_install.sh" ]]; then
       echo ">> Test $dir_name"
