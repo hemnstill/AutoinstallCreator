@@ -23,15 +23,19 @@ for %%i in ("%download_url%") do (
   set latest_filename=%%~ni.zip
 )
 
+for %%i in ("%download_url%") do (
+  set latest_filename_msi=%%~ni.msi
+)
+
 %p7z% e %latest_filename% -aoa
 if %errorlevel% neq 0 (
   echo Cannot extract from %latest_filename%
   exit /b %errorlevel%
 )
 
-echo Generating %latest_filename% autoinstall.bat
+echo Generating %latest_filename_msi% autoinstall.bat
 > autoinstall.bat (
-    echo "%%~dp0%latest_filename%" /passive
+    echo "%%~dp0%latest_filename_msi%" /passive
     echo exit /b %%errorlevel%%
 )
 
