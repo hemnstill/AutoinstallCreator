@@ -18,3 +18,6 @@ download_url="$($curl --silent --location "$api_url" | "$grep" --only-matching "
 
 echo "Downloading: $download_url ..."
 $curl --location "$download_url" --remote-name
+
+zip_file_name="$(basename -- "$download_url")"
+"$p7z" x "$zip_file_name" -so | "$p7z" x -si -ttar "-o." -aoa -r
