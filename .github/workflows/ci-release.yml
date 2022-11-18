@@ -1,6 +1,6 @@
 name: ci release
 
-on: [pull_request]
+on: [pull_request, workflow_dispatch]
 
 jobs:
   self-release:
@@ -54,12 +54,12 @@ jobs:
             core.setFailed('error: conclusion is ${{ steps.wait-for-build.outputs.conclusion }}')
 
       - uses: actions/checkout@v3
-      - run: git push origin :refs/tags/latest-${{ github.base_ref }}
+      - run: git push origin :refs/tags/latest-${{ github.base_ref || github.ref_name }}
 
       - uses: actions/download-artifact@v3
       - uses: ncipollo/release-action@v1
         with:
-          tag: latest-${{ github.base_ref }}
+          tag: latest-${{ github.base_ref || github.ref_name }}
           artifacts: ./AutoinstallCreator-*/*
           bodyFile: ./body/body.md
           allowUpdates: true
