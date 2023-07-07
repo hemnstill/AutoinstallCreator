@@ -9,7 +9,7 @@ echo Get latest version: "$api_url" ...
 download_url=$($curl --location "$api_url" | "$grep" --only-matching "(?<=\"link\":\")[^,]+\.ReSharper\.CommandLineTools\.[^,]+\.zip(?=\")" | head -n1)
 echo Downloading: "$download_url" ...
 $curl --location "$download_url" --remote-name
-errorlevel=$?sync
+errorlevel=$?
 if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 
 echo Done.

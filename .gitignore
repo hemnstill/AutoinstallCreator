@@ -35,5 +35,6 @@ uTorrent/*.lng
 
 bsdtar/*.bat
 python/Scripts/
+.tools/Scripts/
 
 tmp/
