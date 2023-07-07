@@ -4,7 +4,7 @@ dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
 set -e
 cd "$dp0"
 
-html_url='https://electrum.org/panel-download.html'
+html_url='https://electrum.org/#download'
 echo Get latest version: $html_url ...
 download_url=$($curl --silent --location "$html_url" | "$grep" --only-matching '(?<=href=")[^,]+-setup\.exe(?=")' | head -1)
 [[ -z "$download_url" ]] && {
