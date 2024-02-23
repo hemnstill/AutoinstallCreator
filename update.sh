@@ -42,3 +42,14 @@ version_hash=$(echo "$version_body" | "$grep" --only-matching "(?<=$self_name\.$
   exit 1
 }
 
+if [[ $self_version_count -gt $version_count ]]; then
+  echo "nothing to do. self_version_count: $self_version_count, version_count: $version_count"
+  exit 2
+fi
+
+if [[ $self_version_count -eq $version_count ]] && [[ $self_version_hash == $version_hash ]]; then
+  echo "version is up to date"
+  exit 0
+fi
+
+echo "found new version:  $self_version_count.$self_version_hash -> $version_count.$version_hash"
