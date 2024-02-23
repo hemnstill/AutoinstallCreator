@@ -5,17 +5,23 @@ set -e
 cd "$dp0"
 
 self_name=AutoinstallCreator
-# relative_version_filepath="_$self_name/version.txt"
 relative_own_files_filepath="_$self_name/own_files.txt"
 
 # Finishing update process. Stage 2
-update_path=$1
-if [[ ! -z "$update_path" ]]; then
-  update_path=$(realpath "$1")
+self_package_filepath=$1
+update_path=$2
+if [[ ! -z "$self_package_filepath" ]] || [[ ! -z "$update_path" ]]; then
+  self_package_filepath=$(realpath "$self_package_filepath")
+  update_path=$(realpath "$update_path")
   echo "update_path: $update_path"
 
   if [[ $update_path == $dp0 ]]; then
     echo "update failed. Cannot update to current directory"
+    exit 1
+  fi
+
+  if [[ ! -f "$self_package_filepath" ]]; then
+    echo "update failed. Self package not found: '$update_path/$self_package_filepath'"
     exit 1
   fi
 
@@ -24,12 +30,7 @@ if [[ ! -z "$update_path" ]]; then
     exit 1
   fi
 
-  if [[ ! -f "$update_path/update.sh" ]]; then
-    echo "update failed. file not found: '$update_path/update.sh'"
-    exit 1
-  fi
-
-  echo Finishing update process
+  echo "Finishing update process"
 
   exit 0
 fi
@@ -89,4 +90,9 @@ download_url=$($curl --silent --location "$latest_version" | "$grep" --only-matc
 }
 
 echo "Downloading: $download_url ..."
-(cd "$dp0/_$self_name" && $curl --location "$download_url" --remote-name)
+$curl --location "$download_url" --output "$dp0/_$self_name/$self_name.sh"
+
+echo "extracting to: $dp0/_$self_name/$version_body"
+(cd "$dp0/_$self_name" && bash "./$self_name.sh")
+
+bash "$dp0/_$self_name/$version_body/update.sh" "$dp0/_$self_name/$self_name.sh" "$dp0"
