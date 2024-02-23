@@ -5,33 +5,41 @@ set -e
 cd "$dp0"
 
 self_name=AutoinstallCreator
-relative_own_files_filepath="_$self_name/own_files.txt"
+relative_version_filepath="_$self_name/version.txt"
+package_ext=".sh" && $is_windows_os && package_ext=".sh.bat"
+package_grep_ext="\.sh" && $is_windows_os && package_grep_ext="\.sh\.bat"
 
 # Finishing update process. Stage 2
-self_package_filepath=$1
-update_path=$2
-if [[ ! -z "$self_package_filepath" ]] || [[ ! -z "$update_path" ]]; then
-  self_package_filepath=$(realpath "$self_package_filepath")
-  update_path=$(realpath "$update_path")
-  echo "update_path: $update_path"
+#self_package_filepath=$1
+target_path=$1
+if [[ ! -z "$target_path" ]]; then
+  target_path=$(realpath "$target_path")
 
-  if [[ $update_path == $dp0 ]]; then
-    echo "update failed. Cannot update to current directory"
+  echo "Finishing update from: $dp0"
+  echo "Target path: $target_path"
+
+  if [[ $target_path == $dp0 ]]; then
+    echo "Update failed. Cannot update to current directory"
     exit 1
   fi
 
-  if [[ ! -f "$self_package_filepath" ]]; then
-    echo "update failed. Self package not found: '$update_path/$self_package_filepath'"
+  if [[ ! -f "$target_path/$relative_version_filepath" ]]; then
+    echo "Update failed. Version not found: '$target_path/$relative_version_filepath'"
     exit 1
   fi
 
-  if [[ ! -f "$update_path/$relative_own_files_filepath" ]]; then
-    echo "update failed. File not found: '$update_path/$relative_own_files_filepath'"
-    exit 1
-  fi
+  echo "Copying new files"
+  find "$dp0" -mindepth 1 -maxdepth 1 ! -name "tmp_*" \
+    -exec cp -rf "{}" "$target_path/" +
 
-  echo "Finishing update process"
+  echo "Removing orphaned files"
+  orphaned_files=$(cat $dp0/_$self_name/orphaned_files.txt)
+  for orphaned_file in $orphaned_files
+  do
+    rm -f "$dp0/$orphaned_file"
+  done
 
+  echo "Update complete: $(cat $target_path/_$self_name/version.txt)"
   exit 0
 fi
 
@@ -55,8 +63,11 @@ self_version_hash=$(echo "$self_version_body" | "$grep" --only-matching "(?<=$se
 
 latest_version=https://api.github.com/repos/hemnstill/$self_name/releases/tags/latest-master
 echo Get latest version: "$latest_version" ...
-version_body=$($curl --silent --location "$latest_version" | "$grep" --only-matching '(?<="body":\s")[^,]+.(?=\\n")' | head -n 1)
-echo "version_body: $version_body"
+version_body="$MOCK_AUTOINSTALLCREATOR_VERSION_BODY"
+if [[ -z $version_body ]]; then
+  version_body=$($curl --location "$latest_version" | "$grep" --only-matching '(?<="body":\s")[^,]+.(?=\\n")' | head -n 1)
+fi
+echo "Version_body: $version_body"
 [[ -z "$version_body" ]] && {
   echo "Cannot get 'version_body'"
   exit 1
@@ -73,26 +84,34 @@ version_hash=$(echo "$version_body" | "$grep" --only-matching "(?<=$self_name\.$
 }
 
 if [[ $self_version_count -gt $version_count ]]; then
-  echo "nothing to do. self_version_count: $self_version_count, version_count: $version_count"
+  echo "Nothing to do. self_version_count: $self_version_count, version_count: $version_count"
   exit 2
 fi
 
 if [[ $self_version_count -eq $version_count ]] && [[ $self_version_hash == $version_hash ]]; then
-  echo "version is up to date"
+  echo "Version is up to date"
   exit 0
 fi
 
-echo "found new version: $self_version_count.$self_version_hash -> $version_count.$version_hash"
-download_url=$($curl --silent --location "$latest_version" | "$grep" --only-matching '(?<="browser_download_url":\s")[^,]+.\.sh(?=")' | head -1)
+echo "Found new version: $self_version_body -> $version_body"
+grep_pattern="(?<=\"browser_download_url\":\s\")[^,]+.$package_grep_ext(?=\")"
+download_url=$($curl --silent --location "$latest_version" | "$grep" --only-matching $grep_pattern | head -n 1)
 [[ -z "$download_url" ]] && {
   echo "Cannot get release version"
   exit 1
 }
 
 echo "Downloading: $download_url ..."
-$curl --location "$download_url" --output "$dp0/_$self_name/$self_name.sh"
+package_filepath="$MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH"
+if [[ -z $MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH ]]; then
+  package_filepath="$dp0/_$self_name/$self_name$package_ext"
+  $curl --location "$download_url" --output "$package_filepath"
+fi
 
-echo "extracting to: $dp0/_$self_name/$version_body"
-(cd "$dp0/_$self_name" && bash "./$self_name.sh")
+echo "Extracting to: $dp0/_$self_name/$version_body"
+(bash "$package_filepath" --target "$dp0/_$self_name/tmp_$version_body")
 
-bash "$dp0/_$self_name/$version_body/update.sh" "$dp0/_$self_name/$self_name.sh" "$dp0"
+echo "Running extracted 'update.sh'"
+bash "$dp0/_$self_name/tmp_$version_body/update.sh" "$dp0" >& $dp0/_update.log
+
+
