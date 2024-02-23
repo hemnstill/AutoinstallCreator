@@ -5,6 +5,24 @@ set -e
 cd "$dp0"
 
 self_name=AutoinstallCreator
+
+self_version_body=$(head -n 1 "$dp0/_$self_name/version.txt")
+echo "self_version_body: $self_version_body"
+[[ -z "$self_version_body" ]] && {
+  echo "Cannot get 'self_version_body'"
+  exit 1
+}
+self_version_count=$(echo "$self_version_body" | "$grep" --only-matching "(?<=$self_name\.)[^\s]+.(?=\.)" | head -n 1)
+[[ -z "$self_version_count" ]] && {
+  echo "Cannot get 'self_version_count' from $self_version_body"
+  exit 1
+}
+self_version_hash=$(echo "$self_version_body" | "$grep" --only-matching "(?<=$self_name\.$self_version_count\.)[^\s]+." | head -n 1)
+[[ -z "$self_version_hash" ]] && {
+  echo "Cannot get 'self_version_hash' from $self_version_body"
+  exit 1
+}
+
 latest_version=https://api.github.com/repos/hemnstill/$self_name/releases/tags/latest-master
 echo Get latest version: "$latest_version" ...
 version_body=$($curl --silent --location "$latest_version" | "$grep" --only-matching '(?<="body":\s")[^,]+.(?=\\n")' | head -n 1)
@@ -13,13 +31,11 @@ echo "version_body: $version_body"
   echo "Cannot get 'version_body'"
   exit 1
 }
-
 version_count=$(echo "$version_body" | "$grep" --only-matching "(?<=$self_name\.)[^\s]+.(?=\.)" | head -n 1)
 [[ -z "$version_count" ]] && {
   echo "Cannot get 'version_count' from $version_body"
   exit 1
 }
-
 version_hash=$(echo "$version_body" | "$grep" --only-matching "(?<=$self_name\.$version_count\.)[^\s]+." | head -n 1)
 [[ -z "$version_hash" ]] && {
   echo "Cannot get 'version_hash' from $version_body"
