@@ -4,8 +4,24 @@ dp0_tools="$dp0/.tools" && source "$dp0_tools/env_tools.sh"
 set -e
 cd "$dp0"
 
-
-latest_version=https://api.github.com/repos/hemnstill/AutoinstallCreator/releases/tags/latest-master
+self_name=AutoinstallCreator
+latest_version=https://api.github.com/repos/hemnstill/$self_name/releases/tags/latest-master
 echo Get latest version: "$latest_version" ...
-download_url=$($curl --silent --location "$latest_version" | "$grep" --only-matching '(?<="body":\s")[^,]+.(?=\\n")' | head -n1)
-echo "$download_url"
+version_body=$($curl --silent --location "$latest_version" | "$grep" --only-matching '(?<="body":\s")[^,]+.(?=\\n")' | head -n 1)
+echo "version_body: $version_body"
+[[ -z "$version_body" ]] && {
+  echo "Cannot get 'version_body'"
+  exit 1
+}
+
+version_number=$(echo "$version_body" | "$grep" --only-matching "(?<=$self_name\.)[^\s]+.(?=\.)" | head -n 1)
+[[ -z "$version_number" ]] && {
+  echo "Cannot get 'version_number' from $version_body"
+  exit 1
+}
+
+version_hash=$(echo "$version_body" | "$grep" --only-matching "(?<=$self_name\.$version_number\.)[^\s]+." | head -n 1)
+[[ -z "$version_hash" ]] && {
+  echo "Cannot get 'version_hash' from $version_body"
+  exit 1
+}
