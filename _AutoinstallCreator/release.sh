@@ -9,10 +9,14 @@ self_count="$(cd "$dp0/.." && git rev-list --count HEAD)"
 self_hash="$(cd "$dp0/.." && git show --abbrev=10 --no-patch --pretty=%h HEAD)"
 
 self_version=$self_name.$self_count.$self_hash
-self_version_filepath=$dp0/version.txt
+version_filepath=$dp0/version.txt
+own_files_filepath=$dp0/own_files.txt
 
 { printf "$self_version"
-} > "$self_version_filepath"
+} > "$version_filepath"
+
+{ git log --pretty=format: --name-only --diff-filter=A
+} > "$own_files_filepath"
 
 tool_version=release-2.4.5-cmd
 download_url="https://github.com/hemnstill/makeself/archive/refs/tags/$tool_version.tar.gz"
@@ -32,7 +36,7 @@ rm -rf "$temp_dir_path" && mkdir -p "$temp_dir_path"
 
 release_version_dirpath="$temp_dir_path/$self_version"
 tmp_version_path="$temp_dir_path/tmp_version.zip"
-(cd "$dp0/.." && git archive --prefix "_$self_name/" --add-file="$self_version_filepath" --prefix "" --format zip -1 --output "$tmp_version_path" HEAD)
+(cd "$dp0/.." && git archive --prefix "_$self_name/" --add-file="$version_filepath" --add-file="$own_files_filepath" --prefix "" --format zip -1 --output "$tmp_version_path" HEAD)
 
 "$p7z" x "$tmp_version_path" "-o$release_version_dirpath"
 

@@ -5,7 +5,36 @@ set -e
 cd "$dp0"
 
 self_name=AutoinstallCreator
+# relative_version_filepath="_$self_name/version.txt"
+relative_own_files_filepath="_$self_name/own_files.txt"
 
+# Finishing update process. Stage 2
+update_path=$1
+if [[ ! -z "$update_path" ]]; then
+  update_path=$(realpath "$1")
+  echo "update_path: $update_path"
+
+  if [[ $update_path == $dp0 ]]; then
+    echo "update failed. Cannot update to current directory"
+    exit 1
+  fi
+
+  if [[ ! -f "$update_path/$relative_own_files_filepath" ]]; then
+    echo "update failed. File not found: '$update_path/$relative_own_files_filepath'"
+    exit 1
+  fi
+
+  if [[ ! -f "$update_path/update.sh" ]]; then
+    echo "update failed. file not found: '$update_path/update.sh'"
+    exit 1
+  fi
+
+  echo Finishing update process
+
+  exit 0
+fi
+
+# Starting update process. Stage 1
 self_version_body=$(head -n 1 "$dp0/_$self_name/version.txt")
 echo "self_version_body: $self_version_body"
 [[ -z "$self_version_body" ]] && {
@@ -52,4 +81,12 @@ if [[ $self_version_count -eq $version_count ]] && [[ $self_version_hash == $ver
   exit 0
 fi
 
-echo "found new version:  $self_version_count.$self_version_hash -> $version_count.$version_hash"
+echo "found new version: $self_version_count.$self_version_hash -> $version_count.$version_hash"
+download_url=$($curl --silent --location "$latest_version" | "$grep" --only-matching '(?<="browser_download_url":\s")[^,]+.\.sh(?=")' | head -1)
+[[ -z "$download_url" ]] && {
+  echo "Cannot get release version"
+  exit 1
+}
+
+echo "Downloading: $download_url ..."
+(cd "$dp0/_$self_name" && $curl --location "$download_url" --remote-name)
