@@ -14,14 +14,15 @@ echo "version_body: $version_body"
   exit 1
 }
 
-version_number=$(echo "$version_body" | "$grep" --only-matching "(?<=$self_name\.)[^\s]+.(?=\.)" | head -n 1)
-[[ -z "$version_number" ]] && {
-  echo "Cannot get 'version_number' from $version_body"
+version_count=$(echo "$version_body" | "$grep" --only-matching "(?<=$self_name\.)[^\s]+.(?=\.)" | head -n 1)
+[[ -z "$version_count" ]] && {
+  echo "Cannot get 'version_count' from $version_body"
   exit 1
 }
 
-version_hash=$(echo "$version_body" | "$grep" --only-matching "(?<=$self_name\.$version_number\.)[^\s]+." | head -n 1)
+version_hash=$(echo "$version_body" | "$grep" --only-matching "(?<=$self_name\.$version_count\.)[^\s]+." | head -n 1)
 [[ -z "$version_hash" ]] && {
   echo "Cannot get 'version_hash' from $version_body"
   exit 1
 }
+
