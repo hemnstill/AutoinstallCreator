@@ -5,13 +5,15 @@ import subprocess
 import sys
 import unittest
 
-
 _self_path: str = os.path.dirname(os.path.realpath(__file__))
 
 _self_tmp_path: str = os.path.join(_self_path, '.tmp')
 _root_path: str = os.path.dirname(_self_path)
 _tools_path: str = os.path.join(_root_path, '.tools')
-busybox_exe_path: str = os.path.join(_tools_path, 'busybox.exe')
+
+busybox_exe_path = 'busybox'
+if sys.platform.startswith('win'):
+    busybox_exe_path: str = os.path.join(_tools_path, 'busybox.exe')
 
 if _root_path not in sys.path:
     sys.path.append(_root_path)
@@ -81,7 +83,7 @@ class TestUpdate(unittest.TestCase):
 
         update_log_filepath = os.path.join(_self_tmp_path, self.test_old_version, '_update.log')
         self.assertTrue(io_tools.wait_for(lambda: update_completed(update_log_filepath, self.version_str),
-             err_message='Update failed',
-             timeout=10,
-             retry_timeout=0.5,
-             exception=OSError))
+                                          err_message='Update failed',
+                                          timeout=10,
+                                          retry_timeout=0.5,
+                                          exception=OSError))
