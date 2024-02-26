@@ -31,7 +31,7 @@ jobs:
       if: matrix.artifact == 'ubuntu'
       run: |
         apt update
-        apt install -y busybox dos2unix
+        apt install -y busybox dos2unix python3
 
     - name: Install Alpine packages
       if: matrix.artifact == 'alpine'
