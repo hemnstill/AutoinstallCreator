@@ -56,8 +56,6 @@ header_arg="" && $is_windows_os && {
   "$self_name" \
   echo "$self_version has extracted itself"
 
-chmod +x "$artifact_file_path"
-
 echo version created: "$self_version"
 echo "$self_version" > "$dp0/../body.md"
 
