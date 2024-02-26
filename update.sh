@@ -10,7 +10,6 @@ package_ext=".sh" && $is_windows_os && package_ext=".sh.bat"
 package_grep_ext="\.sh" && $is_windows_os && package_grep_ext="\.sh\.bat"
 
 # Finishing update process. Stage 2
-#self_package_filepath=$1
 target_path=$1
 if [[ ! -z "$target_path" ]]; then
   target_path=$(realpath "$target_path")
@@ -117,9 +116,9 @@ if [[ -z $MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH ]]; then
 fi
 
 echo "Extracting to: $dp0/_$self_name/$version_body"
-(bash "$package_filepath" --target "$dp0/_$self_name/tmp_$version_body")
+"$package_filepath" --target "$dp0/_$self_name/tmp_$version_body"
 
 echo "Running extracted 'update.sh'"
-bash "$dp0/_$self_name/tmp_$version_body/update.sh" "$dp0" >& $dp0/_update.log
+"$dp0/_$self_name/tmp_$version_body/update.sh" "$dp0" >& $dp0/_update.log
 
 
