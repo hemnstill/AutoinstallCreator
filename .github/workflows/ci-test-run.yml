@@ -36,7 +36,7 @@ jobs:
     - name: Install Alpine packages
       if: matrix.artifact == 'alpine'
       run: |
-        apk add --no-cache bash
+        apk add --no-cache bash python3
 
     - uses: actions/checkout@v3
 
