@@ -46,6 +46,10 @@ class TestUpdate(unittest.TestCase):
         pathlib.Path(os.path.join(_self_path, 'AutoinstallCreator.sh.bat')).unlink(missing_ok=True)
 
         result = subprocess.run(busybox_exe_path_arg + ['bash', os.path.join(_self_path, 'release.sh')],
+                                env={
+                                    **os.environ,
+                                    'BB_OVERRIDE_APPLETS': 'tar'
+                                },
                                 check=True, stdout=subprocess.PIPE)
         cls.version_str = get_version_from_stdout(result.stdout)
 
