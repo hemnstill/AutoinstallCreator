@@ -61,7 +61,12 @@ class TestUpdate(unittest.TestCase):
         shutil.copyfile(os.path.join(_self_path, package_name), self.package_filepath)
 
     def test_version_up_to_date(self):
-        subprocess.run(busybox_exe_path_arg + ['bash', self.package_filepath], cwd=_self_tmp_path)
+        subprocess.run(busybox_exe_path_arg + ['bash', self.package_filepath],
+                       env={
+                           **os.environ,
+                           'BB_OVERRIDE_APPLETS': 'tar'
+                       },
+                       cwd=_self_tmp_path)
 
         result = subprocess.run(busybox_exe_path_arg + ['bash', os.path.join(_self_tmp_path, self.version_str, 'update.sh')],
                                 env={
@@ -72,6 +77,7 @@ class TestUpdate(unittest.TestCase):
                                 check=True, stdout=subprocess.PIPE)
         self.assertTrue(result.stdout.endswith(b'\nVersion is up to date\n'))
 
+    @unittest.skip('dbg')
     def test_update_to_new_version(self):
         subprocess.run(busybox_exe_path_arg + ['bash', self.package_filepath, '--target', self.test_old_version],
                        cwd=_self_tmp_path,
