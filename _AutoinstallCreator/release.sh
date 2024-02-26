@@ -15,8 +15,7 @@ orphaned_files_filepath=$dp0/orphaned_files.txt
 { printf "$self_version"
 } > "$version_filepath"
 
-{ comm -23 <(git log --pretty=format: --name-only --diff-filter=A | sort) \
-           <(cd "$dp0/.." && git ls-tree -r HEAD --name-only | sort) | uniq -u
+{ comm -23 <(git log --pretty=format: --name-only --diff-filter=A | sort) <(cd "$dp0/.." && git ls-tree -r HEAD --name-only | sort) | uniq -u
 } > "$orphaned_files_filepath"
 
 tool_version=release-2.4.5-cmd
