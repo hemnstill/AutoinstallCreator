@@ -88,17 +88,20 @@ version_hash=$(echo "$version_body" | "$grep" --only-matching "(?<=$self_name\.$
   exit 1
 }
 
-if [[ $self_version_count -gt $version_count ]]; then
-  echo "Nothing to do. self_version_count: $self_version_count, version_count: $version_count"
-  exit 2
-fi
-
 if [[ $self_version_count -eq $version_count ]] && [[ $self_version_hash == $version_hash ]]; then
   echo "Version is up to date"
   exit 0
 fi
 
-echo "Found new version: $self_version_body -> $version_body"
+
+found_msg_prefix="Found new version"
+if [[ $self_version_count -gt $version_count ]]; then
+  found_msg_prefix="Downgrade version"
+  echo "Warning. Downgrade to old version!"
+  sleep 10
+fi
+
+echo "$found_msg_prefix: $self_version_body -> $version_body"
 grep_pattern="(?<=\"browser_download_url\":\s\")[^,]+.$package_grep_ext(?=\")"
 download_url=$($curl --silent --location "$latest_version" | "$grep" --only-matching $grep_pattern | head -n 1)
 [[ -z "$download_url" ]] && {
