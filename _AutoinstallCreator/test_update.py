@@ -2,15 +2,21 @@ import os
 import pathlib
 import shutil
 import subprocess
+import sys
 import unittest
 
-from _AutoinstallCreator import io_tools
 
 _self_path: str = os.path.dirname(os.path.realpath(__file__))
+
 _self_tmp_path: str = os.path.join(_self_path, '.tmp')
 _root_path: str = os.path.dirname(_self_path)
 _tools_path: str = os.path.join(_root_path, '.tools')
 busybox_exe_path: str = os.path.join(_tools_path, 'busybox.exe')
+
+if _root_path not in sys.path:
+    sys.path.append(_root_path)
+
+from _AutoinstallCreator import io_tools
 
 
 def get_version_from_stdout(b_stdout: bytes) -> str:
