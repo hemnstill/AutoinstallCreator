@@ -70,7 +70,12 @@ class TestUpdate(unittest.TestCase):
 
     def test_update_to_new_version(self):
         subprocess.run(busybox_exe_path_arg + ['bash', self.package_filepath, '--target', self.test_old_version],
-                       cwd=_self_tmp_path)
+                       cwd=_self_tmp_path,
+                       env={
+                           **os.environ,
+                           'BB_OVERRIDE_APPLETS': 'tar'
+                       },
+                       )
 
         io_tools.write_text(os.path.join(_self_tmp_path, self.test_old_version, '_AutoinstallCreator', 'version.txt'),
                             self.test_old_version)
