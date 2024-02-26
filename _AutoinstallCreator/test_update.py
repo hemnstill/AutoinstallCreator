@@ -61,7 +61,7 @@ class TestUpdate(unittest.TestCase):
         shutil.copyfile(os.path.join(_self_path, package_name), self.package_filepath)
 
     def test_version_up_to_date(self):
-        subprocess.run(busybox_exe_path_arg + ['bash', self.package_filepath],
+        subprocess.run(busybox_exe_path_arg + ['sh', self.package_filepath],
                        env={
                            **os.environ,
                            'BB_OVERRIDE_APPLETS': 'tar'
@@ -79,7 +79,7 @@ class TestUpdate(unittest.TestCase):
 
     @unittest.skip('dbg')
     def test_update_to_new_version(self):
-        subprocess.run(busybox_exe_path_arg + ['bash', self.package_filepath, '--target', self.test_old_version],
+        subprocess.run(busybox_exe_path_arg + ['sh', self.package_filepath, '--target', self.test_old_version],
                        cwd=_self_tmp_path,
                        env={
                            **os.environ,

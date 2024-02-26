@@ -116,7 +116,7 @@ if [[ -z $MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH ]]; then
 fi
 
 echo "Extracting to: $dp0/_$self_name/$version_body"
-bash "$package_filepath" --target "$dp0/_$self_name/tmp_$version_body"
+sh "$package_filepath" --target "$dp0/_$self_name/tmp_$version_body"
 
 echo "Running extracted 'update.sh'"
 bash "$dp0/_$self_name/tmp_$version_body/update.sh" "$dp0" >& $dp0/_update.log
