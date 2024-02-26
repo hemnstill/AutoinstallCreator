@@ -32,11 +32,13 @@ jobs:
       run: |
         apt update
         apt install -y busybox dos2unix python3 git
+        git config --global --add safe.directory '*'
 
     - name: Install Alpine packages
       if: matrix.artifact == 'alpine'
       run: |
         apk add --no-cache bash python3 git
+        git config --global --add safe.directory '*'
 
     - uses: actions/checkout@v3
 
