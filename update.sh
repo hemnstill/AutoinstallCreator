@@ -61,11 +61,11 @@ self_version_hash=$(echo "$self_version_body" | "$grep" --only-matching "(?<=$se
   exit 1
 }
 
-latest_version=https://api.github.com/repos/hemnstill/$self_name/releases/tags/latest-master
+latest_version=https://api.github.com/repos/hemnstill/$self_name/releases/tags/self_update_v1
 echo Get latest version: "$latest_version" ...
 version_body="$MOCK_AUTOINSTALLCREATOR_VERSION_BODY"
 if [[ -z $version_body ]]; then
-  version_body=$($curl --location "$latest_version" | "$grep" --only-matching '(?<="body":\s")[^,]+.(?=\\n")' | head -n 1)
+  version_body=$($curl --location "$latest_version" | "$grep" --only-matching '(?<="body":\s")[^,]+.' | cut -d '\r\n' -f 1 | head -n 1)
 fi
 echo "Version_body: $version_body"
 [[ -z "$version_body" ]] && {
