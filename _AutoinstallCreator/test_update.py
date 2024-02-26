@@ -13,9 +13,11 @@ _tools_path: str = os.path.join(_root_path, '.tools')
 
 busybox_exe_path: str = 'busybox'
 update_script_name: str = 'update.sh'
+package_name = 'AutoinstallCreator.sh'
 if sys.platform.startswith('win'):
     busybox_exe_path = os.path.join(_tools_path, 'busybox.exe')
     update_script_name = 'update.bat'
+    package_name = 'AutoinstallCreator.sh.bat'
 
 if _root_path not in sys.path:
     sys.path.append(_root_path)
@@ -51,8 +53,8 @@ class TestUpdate(unittest.TestCase):
         self.test_old_version = 'AutoinstallCreator.11.test_old_version'
         self.assertTrue(self.version_str.startswith('AutoinstallCreator.'))
         self.assertTrue(io_tools.try_create_or_clean_dir(_self_tmp_path))
-        self.package_filepath = os.path.join(_self_tmp_path, 'AutoinstallCreator.sh.bat')
-        shutil.copyfile(os.path.join(_self_path, 'AutoinstallCreator.sh.bat'), self.package_filepath)
+        self.package_filepath = os.path.join(_self_tmp_path, package_name)
+        shutil.copyfile(os.path.join(_self_path, package_name), self.package_filepath)
 
     def test_version_up_to_date(self):
         subprocess.run([busybox_exe_path, 'ash', self.package_filepath], cwd=_self_tmp_path)
