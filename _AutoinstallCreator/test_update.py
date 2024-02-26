@@ -11,9 +11,11 @@ _self_tmp_path: str = os.path.join(_self_path, '.tmp')
 _root_path: str = os.path.dirname(_self_path)
 _tools_path: str = os.path.join(_root_path, '.tools')
 
-busybox_exe_path = 'busybox'
+busybox_exe_path: str = 'busybox'
+update_script_name: str = 'update.sh'
 if sys.platform.startswith('win'):
-    busybox_exe_path: str = os.path.join(_tools_path, 'busybox.exe')
+    busybox_exe_path = os.path.join(_tools_path, 'busybox.exe')
+    update_script_name = 'update.bat'
 
 if _root_path not in sys.path:
     sys.path.append(_root_path)
@@ -41,7 +43,7 @@ class TestUpdate(unittest.TestCase):
         pathlib.Path(os.path.join(_self_path, 'AutoinstallCreator.sh')).unlink(missing_ok=True)
         pathlib.Path(os.path.join(_self_path, 'AutoinstallCreator.sh.bat')).unlink(missing_ok=True)
 
-        result = subprocess.run([busybox_exe_path, 'bash', os.path.join(_self_path, 'release.sh')],
+        result = subprocess.run([busybox_exe_path, 'ash', os.path.join(_self_path, 'release.sh')],
                                 check=True, stdout=subprocess.PIPE)
         cls.version_str = get_version_from_stdout(result.stdout)
 
@@ -53,9 +55,9 @@ class TestUpdate(unittest.TestCase):
         shutil.copyfile(os.path.join(_self_path, 'AutoinstallCreator.sh.bat'), self.package_filepath)
 
     def test_version_up_to_date(self):
-        subprocess.run([busybox_exe_path, 'bash', self.package_filepath], cwd=_self_tmp_path)
+        subprocess.run([busybox_exe_path, 'ash', self.package_filepath], cwd=_self_tmp_path)
 
-        result = subprocess.run([busybox_exe_path, 'bash', os.path.join(_self_tmp_path, self.version_str, 'update.sh')],
+        result = subprocess.run([busybox_exe_path, 'ash', os.path.join(_self_tmp_path, self.version_str, 'update.sh')],
                                 env={
                                     **os.environ,
                                     'MOCK_AUTOINSTALLCREATOR_VERSION_BODY': self.version_str,
@@ -65,13 +67,13 @@ class TestUpdate(unittest.TestCase):
         self.assertTrue(result.stdout.endswith(b'\nVersion is up to date\n'))
 
     def test_update_to_new_version(self):
-        subprocess.run([busybox_exe_path, 'bash', self.package_filepath, '--target', self.test_old_version],
+        subprocess.run([busybox_exe_path, 'ash', self.package_filepath, '--target', self.test_old_version],
                        cwd=_self_tmp_path)
 
         io_tools.write_text(os.path.join(_self_tmp_path, self.test_old_version, '_AutoinstallCreator', 'version.txt'),
                             self.test_old_version)
 
-        result = subprocess.run([os.path.join(_self_tmp_path, self.test_old_version, 'update.bat')],
+        result = subprocess.run([os.path.join(_self_tmp_path, self.test_old_version, update_script_name)],
                                 env={
                                     **os.environ,
                                     'MOCK_AUTOINSTALLCREATOR_VERSION_BODY': self.version_str,
