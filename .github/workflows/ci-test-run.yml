@@ -31,12 +31,12 @@ jobs:
       if: matrix.artifact == 'ubuntu'
       run: |
         apt update
-        apt install -y busybox dos2unix python3
+        apt install -y busybox dos2unix python3 git
 
     - name: Install Alpine packages
       if: matrix.artifact == 'alpine'
       run: |
-        apk add --no-cache bash python3
+        apk add --no-cache bash python3 git
 
     - uses: actions/checkout@v3
 
