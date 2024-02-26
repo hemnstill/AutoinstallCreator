@@ -70,7 +70,7 @@ latest_version="https://api.github.com/repos/hemnstill/$self_name/releases/tags/
 echo Get latest version: "$latest_version" ...
 version_body="$MOCK_AUTOINSTALLCREATOR_VERSION_BODY"
 if [[ -z $version_body ]]; then
-  version_body=$($curl --location "$latest_version" | "$grep" --only-matching '(?<="body":\s")[^,]+.' | cut -d '\r\n' -f 1 | head -n 1)
+  version_body=$($curl --silent --location "$latest_version" | "$grep" --only-matching '(?<="body":\s")[^,]+.' | cut -d '\r\n' -f 1 | head -n 1)
 fi
 echo "Version_body: $version_body"
 [[ -z "$version_body" ]] && {
