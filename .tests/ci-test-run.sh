@@ -8,7 +8,9 @@ set -e
 
 "$dp0/test-tools.sh" || exit 1
 
-if [[ "$is_windows_os" == true ]]; then
+is_nanoserver_os=false && $is_windows_os && [[ ! -f "C:\Windows\notepad.exe" ]] && is_nanoserver_os=true
+
+if [[ "$is_windows_os" == true ]] && [[ "$is_nanoserver_os" == false ]]; then
   cd "$dp0/../_AutoinstallCreator" && python3 -m unittest || exit 1
 fi
 
