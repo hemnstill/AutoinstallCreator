@@ -29,6 +29,8 @@ _AutoinstallCreator/AutoinstallCreator*
 *.tar.zst
 *.old
 *.md
+*.log
+
 .idea/
 .empty
 uTorrent/*.lng
