@@ -31,7 +31,7 @@ jobs:
       if: matrix.artifact == 'ubuntu'
       run: |
         apt update
-        apt install -y busybox dos2unix libarchive-tools python3 git
+        apt install -y busybox dos2unix libarchive-tools python3 git xterm
         git config --global --add safe.directory '*'
 
     - name: Install Alpine packages

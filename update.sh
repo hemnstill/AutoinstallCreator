@@ -88,7 +88,7 @@ version_hash=$(echo "$version_body" | "$grep" --only-matching "(?<=$self_name\.$
 }
 
 if [[ $self_version_count -eq $version_count ]] && [[ $self_version_hash == $version_hash ]]; then
-  echo "Version is up to date"
+  echo "Version is up to date: $version_body" > $dp0/_update.log 2>&1
   exit 0
 fi
 
@@ -116,9 +116,9 @@ if [[ -z $MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH ]]; then
 fi
 
 echo "Extracting to: $dp0/_$self_name/$version_body"
-"$package_filepath" --target "$dp0/_$self_name/tmp_$version_body"
+"$package_filepath" --target "$dp0/_$self_name/tmp_$version_body" > $dp0/_update.log 2>&1
 
 echo "Running extracted 'update.sh'"
-"$dp0/_$self_name/tmp_$version_body/update.sh" "$dp0" >& $dp0/_update.log
+"$dp0/_$self_name/tmp_$version_body/update.sh" "$dp0" >> $dp0/_update.log 2>&1
 
 
