@@ -11,11 +11,11 @@ _self_tmp_path: str = os.path.join(_self_path, '.tmp')
 _root_path: str = os.path.dirname(_self_path)
 _tools_path: str = os.path.join(_root_path, '.tools')
 
-busybox_exe_path_arg = []
+busybox_exe_path_arg: list[str] = ['x-terminal-emulator', '-e']
 update_script_name: str = 'update.sh'
 package_name = 'AutoinstallCreator.sh'
 if sys.platform.startswith('win'):
-    busybox_exe_path_arg = [os.path.join(_tools_path, 'busybox.exe')]
+    busybox_exe_path_arg = [os.path.join(_tools_path, 'busybox.exe'), 'bash']
     update_script_name = 'update.bat'
     package_name = 'AutoinstallCreator.sh.bat'
 
@@ -42,14 +42,10 @@ class TestUpdate(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        #pathlib.Path(os.path.join(_self_path, 'AutoinstallCreator.sh')).unlink(missing_ok=True)
-        #pathlib.Path(os.path.join(_self_path, 'AutoinstallCreator.sh.bat')).unlink(missing_ok=True)
+        pathlib.Path(os.path.join(_self_path, 'AutoinstallCreator.sh')).unlink(missing_ok=True)
+        pathlib.Path(os.path.join(_self_path, 'AutoinstallCreator.sh.bat')).unlink(missing_ok=True)
 
-        result = subprocess.run(busybox_exe_path_arg + ['bash', os.path.join(_self_path, 'release.sh')],
-                                env={
-                                    **os.environ,
-                                    'BB_OVERRIDE_APPLETS': 'tar'
-                                },
+        result = subprocess.run(busybox_exe_path_arg + [os.path.join(_self_path, 'release.sh')],
                                 check=True, stdout=subprocess.PIPE)
         cls.version_str = get_version_from_stdout(result.stdout)
 
@@ -58,34 +54,24 @@ class TestUpdate(unittest.TestCase):
         self.assertTrue(self.version_str.startswith('AutoinstallCreator.'))
         self.assertTrue(io_tools.try_create_or_clean_dir(_self_tmp_path))
         self.package_filepath = os.path.join(_self_tmp_path, package_name)
-        shutil.copyfile(os.path.join(_self_path, package_name), self.package_filepath)
+        shutil.copy2(os.path.join(_self_path, package_name), self.package_filepath)
 
     def test_version_up_to_date(self):
-        subprocess.run(busybox_exe_path_arg + ['sh', self.package_filepath],
-                       env={
-                           **os.environ,
-                           'BB_OVERRIDE_APPLETS': 'tar'
-                       },
-                       cwd=_self_tmp_path)
+        subprocess.run(busybox_exe_path_arg + [self.package_filepath],
+                       cwd=_self_tmp_path,
+                       check=True)
 
-        result = subprocess.run(busybox_exe_path_arg + ['bash', os.path.join(_self_tmp_path, self.version_str, 'update.sh')],
+        result = subprocess.run(busybox_exe_path_arg + [os.path.join(_self_tmp_path, self.version_str, 'update.sh')],
                                 env={
-                                    **os.environ,
                                     'MOCK_AUTOINSTALLCREATOR_VERSION_BODY': self.version_str,
                                     'MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH': self.package_filepath
                                 },
                                 check=True, stdout=subprocess.PIPE)
         self.assertTrue(result.stdout.endswith(b'\nVersion is up to date\n'))
 
-    @unittest.skip('dbg')
     def test_update_to_new_version(self):
-        subprocess.run(busybox_exe_path_arg + ['sh', self.package_filepath, '--target', self.test_old_version],
-                       cwd=_self_tmp_path,
-                       env={
-                           **os.environ,
-                           'BB_OVERRIDE_APPLETS': 'tar'
-                       },
-                       )
+        subprocess.run(busybox_exe_path_arg + [self.package_filepath, '--target', self.test_old_version],
+                       cwd=_self_tmp_path)
 
         io_tools.write_text(os.path.join(_self_tmp_path, self.test_old_version, '_AutoinstallCreator', 'version.txt'),
                             self.test_old_version)
