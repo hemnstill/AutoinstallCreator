@@ -16,6 +16,7 @@ _tools_path: str = os.path.join(_root_path, '.tools')
 busybox_exe_path_arg: list[str] = []
 update_script_name: str = 'update.sh'
 package_name = 'AutoinstallCreator.sh'
+mock_xterm = ''
 if sys.platform.startswith('win'):
     busybox_exe_path_arg = [os.path.join(_tools_path, 'busybox.exe'), 'bash']
     update_script_name = 'update.bat'
@@ -41,7 +42,7 @@ class TestUpdate(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        global busybox_exe_path_arg
+        global busybox_exe_path_arg, mock_xterm
 
         pathlib.Path(os.path.join(_self_path, 'AutoinstallCreator.sh')).unlink(missing_ok=True)
         pathlib.Path(os.path.join(_self_path, 'AutoinstallCreator.sh.bat')).unlink(missing_ok=True)
@@ -50,6 +51,7 @@ class TestUpdate(unittest.TestCase):
         if not sys.platform.startswith('win'):
             if shutil.which('gnome-terminal'):
                 busybox_exe_path_arg = ['gnome-terminal', '--wait', '--']
+                mock_xterm = 'gnome-terminal --wait -- '
 
         subprocess.run(busybox_exe_path_arg + [os.path.join(_self_path, 'release.sh')],
                        check=True)
@@ -78,7 +80,8 @@ class TestUpdate(unittest.TestCase):
                        env={
                            **os.environ,
                            'MOCK_AUTOINSTALLCREATOR_VERSION_BODY': self.version_str,
-                           'MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH': self.package_filepath
+                           'MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH': self.package_filepath,
+                           'MOCK_AUTOINSTALLCREATOR_XTERM': mock_xterm
                        },
                        check=True)
         self.assertTrue(version_is_up_to_date(self.update_log_filepath, self.version_str))
@@ -95,7 +98,8 @@ class TestUpdate(unittest.TestCase):
                        env={
                            **os.environ,
                            'MOCK_AUTOINSTALLCREATOR_VERSION_BODY': self.version_str,
-                           'MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH': self.package_filepath
+                           'MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH': self.package_filepath,
+                           'MOCK_AUTOINSTALLCREATOR_XTERM': mock_xterm
                        },
                        check=True)
 
