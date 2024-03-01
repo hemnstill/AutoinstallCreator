@@ -6,3 +6,5 @@ echo f | xcopy /Y /Q /R "python.exe" "python3.exe"
 mkdir -p C:\git && cd C:\git
 curl --location https://github.com/git-for-windows/git/releases/download/v2.44.0.windows.1/MinGit-2.44.0-busybox-64-bit.zip --output "git.zip"
 tar -xf "git.zip"
+
+C:\git\mingw64\bin\git config --global --add safe.directory '*'
