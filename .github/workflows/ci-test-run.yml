@@ -21,9 +21,9 @@ jobs:
 
           - os: windows-latest
             artifact: 'windows'
-
-          - os: windows-latest
-            artifact: 'nanoserver'
+#
+#          - os: windows-latest
+#            artifact: 'nanoserver'
 
     container: ${{ matrix.container }}
     steps:
