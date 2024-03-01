@@ -13,7 +13,7 @@ _self_tmp_path: str = os.path.join(_self_path, '.tmp')
 _root_path: str = os.path.dirname(_self_path)
 _tools_path: str = os.path.join(_root_path, '.tools')
 
-busybox_exe_path_arg: list[str] = ['xterm', '-e']
+busybox_exe_path_arg: list[str] = []
 update_script_name: str = 'update.sh'
 package_name = 'AutoinstallCreator.sh'
 if sys.platform.startswith('win'):
@@ -41,9 +41,15 @@ class TestUpdate(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
+        global busybox_exe_path_arg
+
         pathlib.Path(os.path.join(_self_path, 'AutoinstallCreator.sh')).unlink(missing_ok=True)
         pathlib.Path(os.path.join(_self_path, 'AutoinstallCreator.sh.bat')).unlink(missing_ok=True)
         pathlib.Path(_self_body_path).unlink(missing_ok=True)
+
+        if not sys.platform.startswith('win'):
+            if shutil.which('xterm'):
+                busybox_exe_path_arg = ['xterm', '-e']
 
         subprocess.run(busybox_exe_path_arg + [os.path.join(_self_path, 'release.sh')],
                        check=True)
