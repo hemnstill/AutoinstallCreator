@@ -108,3 +108,12 @@ class TestUpdate(unittest.TestCase):
                                           timeout=10,
                                           retry_timeout=0.5,
                                           exception=OSError))
+
+    def tearDown(self):
+        if os.path.isfile(self.old_update_log_filepath):
+            print(f'''old_update_log_filepath:
+{io_tools.read_text(self.old_update_log_filepath)}''')
+
+        if os.path.isfile(self.update_log_filepath):
+            print(f'''old_update_log_filepath:
+{io_tools.read_text(self.update_log_filepath)}''')
