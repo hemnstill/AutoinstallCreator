@@ -69,8 +69,9 @@ class TestUpdate(unittest.TestCase):
                        cwd=_self_tmp_path,
                        check=True)
 
-        subprocess.run(busybox_exe_path_arg + [os.path.join(_self_tmp_path, self.version_str, 'update.sh')],
+        subprocess.run([os.path.join(_self_tmp_path, self.version_str, update_script_name)],
                        env={
+                           **os.environ,
                            'MOCK_AUTOINSTALLCREATOR_VERSION_BODY': self.version_str,
                            'MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH': self.package_filepath
                        },

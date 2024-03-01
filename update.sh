@@ -29,7 +29,7 @@ if [[ ! -z "$target_path" ]]; then
 
   echo "Copying new files"
   find "$dp0" -mindepth 1 -maxdepth 1 ! -name "tmp_*" \
-    -exec cp -rf "{}" "$target_path/" +
+    -exec cp -rf "{}" "$target_path/" \;
 
   echo "Removing orphaned files"
   orphaned_files=$(cat $dp0/_$self_name/orphaned_files.txt)
