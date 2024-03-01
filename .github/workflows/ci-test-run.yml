@@ -51,7 +51,9 @@ jobs:
     - name: ci test-run (windows)
       if: matrix.artifact == 'windows'
       shell: cmd
-      run: call .tests\ci-test-run.bat
+      run: |
+        git config --global core.autocrlf false
+        call .tests\ci-test-run.bat
 
     - name: pull (nanoserver) container ${{ env.IMAGE_NAME }}
       if: matrix.artifact == 'nanoserver'
