@@ -65,7 +65,7 @@ jobs:
       if: matrix.artifact == 'nanoserver'
       run: |
         echo f | xcopy /Y /Q /R "${{ github.workspace }}\.tests\ci-init-nanoserver.bat.example" "${{ github.workspace }}\.tests\ci-init.bat"
-        docker container run --rm -v ${{ github.workspace }}:C:\app -w C:\app ${{ env.IMAGE_NAME }} C:\app\.tests\ci-test-run.bat
+        docker container run --rm -e PATH='"C:\Python;C:\git\bin;C:\git\usr\bin;C:\git\mingw64\bin;%PATH%"' -v ${{ github.workspace }}:C:\app -w C:\app ${{ env.IMAGE_NAME }} C:\app\.tests\ci-test-run.bat
 
   test-create:
     needs: test
