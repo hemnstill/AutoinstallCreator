@@ -52,7 +52,7 @@ jobs:
       if: matrix.artifact == 'windows'
       shell: cmd
       run: |
-        git config --global core.autocrlf false
+        rm -f "C:\Strawberry\perl\bin\shasum.BAT"
         call .tests\ci-test-run.bat
 
     - name: pull (nanoserver) container ${{ env.IMAGE_NAME }}
