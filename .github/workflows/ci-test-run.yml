@@ -11,17 +11,17 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-latest
-            container: 'ubuntu:22.04'
-            artifact: 'ubuntu'
-
-          - os: ubuntu-latest
-            container: 'alpine:3.15.0'
-            artifact: 'alpine'
-
-#          - os: windows-latest
-#            artifact: 'windows'
+#          - os: ubuntu-latest
+#            container: 'ubuntu:22.04'
+#            artifact: 'ubuntu'
 #
+#          - os: ubuntu-latest
+#            container: 'alpine:3.15.0'
+#            artifact: 'alpine'
+
+          - os: windows-latest
+            artifact: 'windows'
+
 #          - os: windows-latest
 #            artifact: 'nanoserver'
 
