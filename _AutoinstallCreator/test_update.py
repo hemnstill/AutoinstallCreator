@@ -48,8 +48,8 @@ class TestUpdate(unittest.TestCase):
         pathlib.Path(_self_body_path).unlink(missing_ok=True)
 
         if not sys.platform.startswith('win'):
-            if shutil.which('xterm'):
-                busybox_exe_path_arg = ['xterm', '-e']
+            if shutil.which('gnome-terminal'):
+                busybox_exe_path_arg = ['gnome-terminal', '--wait', '--']
 
         subprocess.run(busybox_exe_path_arg + [os.path.join(_self_path, 'release.sh')],
                        check=True)
@@ -69,7 +69,6 @@ class TestUpdate(unittest.TestCase):
         pathlib.Path(self.old_update_log_filepath).unlink(missing_ok=True)
         pathlib.Path(self.update_log_filepath).unlink(missing_ok=True)
 
-
     def test_version_up_to_date(self):
         subprocess.run(busybox_exe_path_arg + [self.package_filepath],
                        cwd=_self_tmp_path,
@@ -86,7 +85,8 @@ class TestUpdate(unittest.TestCase):
 
     def test_update_to_new_version(self):
         subprocess.run(busybox_exe_path_arg + [self.package_filepath, '--target', self.test_old_version],
-                       cwd=_self_tmp_path)
+                       cwd=_self_tmp_path,
+                       check=True)
 
         io_tools.write_text(os.path.join(_self_tmp_path, self.test_old_version, '_AutoinstallCreator', 'version.txt'),
                             self.test_old_version)
