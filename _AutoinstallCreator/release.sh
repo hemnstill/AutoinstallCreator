@@ -27,7 +27,7 @@ makeself_target_path="$dp0/makeself-$tool_version"
 makeself_sh_path="$makeself_target_path/makeself.sh"
 
 [[ ! -f "$makeself_version_path" ]] && {
-  echo "::group::prepare sources $download_url"
+  echo "prepare sources $download_url"
   $curl --silent --location "$download_url" --output "$makeself_version_path"
   tar -xf "$makeself_version_path"
 }
