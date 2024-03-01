@@ -22,8 +22,8 @@ jobs:
           - os: windows-latest
             artifact: 'windows'
 
-#          - os: windows-latest
-#            artifact: 'nanoserver'
+          - os: windows-latest
+            artifact: 'nanoserver'
 
     container: ${{ matrix.container }}
     steps:
@@ -63,7 +63,11 @@ jobs:
 
     - name: ci test-run (nanoserver)
       if: matrix.artifact == 'nanoserver'
-      run: docker container run --rm -v ${{ github.workspace }}:C:\app -w C:\app ${{ env.IMAGE_NAME }} C:\app\.tests\ci-test-run.bat
+      run: |
+        curl --location "https://github.com/hemnstill/StandaloneTools/releases/download/python-3.12.1/build-msvc.tar.gz" --output "python.tar.gz"
+        tar -xf "python.tar.gz" --directory "C:\app\.tests"
+        echo f | xcopy /Y /Q /R "C:\app\.tests\python.exe" "C:\app\.tests\python3.exe"
+        docker container run --rm -v ${{ github.workspace }}:C:\app -w C:\app ${{ env.IMAGE_NAME }} C:\app\.tests\ci-test-run.bat
 
   test-create:
     needs: test
