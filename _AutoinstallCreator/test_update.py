@@ -86,6 +86,7 @@ class TestUpdate(unittest.TestCase):
                        check=True)
         self.assertTrue(version_is_up_to_date(self.update_log_filepath, self.version_str))
 
+    @unittest.skipIf(sys.platform.startswith('win') and not os.path.exists(r'C:\Windows\notepad.exe'), 'disable in nanoserver')
     def test_update_to_new_version(self):
         subprocess.run(busybox_exe_path_arg + [self.package_filepath, '--target', self.test_old_version],
                        cwd=_self_tmp_path,
@@ -115,5 +116,5 @@ class TestUpdate(unittest.TestCase):
 {io_tools.read_text(self.old_update_log_filepath)}''')
 
         if os.path.isfile(self.update_log_filepath):
-            print(f'''old_update_log_filepath:
+            print(f'''update_log_filepath:
 {io_tools.read_text(self.update_log_filepath)}''')
