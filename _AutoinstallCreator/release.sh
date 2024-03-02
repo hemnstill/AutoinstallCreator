@@ -19,7 +19,7 @@ orphaned_files_filepath=$dp0/orphaned_files.txt
            <(cd "$dp0/.." && git ls-tree -r HEAD --name-only | sort) | uniq -u
 } > "$orphaned_files_filepath"
 
-tool_version=release-2.4.5-cmd
+tool_version=release-2.5.0-cmd
 download_url="https://github.com/hemnstill/makeself/archive/refs/tags/$tool_version.tar.gz"
 
 makeself_version_path="$dp0/tool-$tool_version.tar.gz"
@@ -46,6 +46,8 @@ export TMPDIR="$temp_dir_path"
 
 artifact_file_path="$dp0/$self_name.sh" && $is_windows_os && artifact_file_path="$dp0/$self_name.sh.bat"
 header_arg="" && $is_windows_os && {
+  export MOCK_BUSYBOX_EXENAME='busybox_1.36.0.exe'
+  cp -rfv "$busybox" "$makeself_target_path/$MOCK_BUSYBOX_EXENAME"
   "$makeself_target_path/cmd-header.sh"
   header_arg="--header $makeself_target_path/makeself-cmd-header.sh"
 }
