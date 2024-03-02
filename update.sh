@@ -35,11 +35,11 @@ if [[ ! -z "$target_path" ]]; then
   orphaned_files=$(cat $dp0/_$self_name/orphaned_files.txt)
   for orphaned_file in $orphaned_files
   do
-    rm -f "$dp0/$orphaned_file"
+    rm -f "$target_path/$orphaned_file"
   done
 
   echo "Removing empty directories"
-  find "$dp0" -type d -mindepth 1 -maxdepth 1 -exec rmdir -p --ignore-fail-on-non-empty "{}" \;
+  find "$target_path" -type d -mindepth 1 -maxdepth 1 -exec rmdir -p --ignore-fail-on-non-empty "{}" \;
 
   echo "Update complete: $(cat $target_path/_$self_name/version.txt)"
   exit 0
