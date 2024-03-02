@@ -38,6 +38,9 @@ if [[ ! -z "$target_path" ]]; then
     rm -f "$dp0/$orphaned_file"
   done
 
+  echo "Removing empty directories"
+  find "$dp0" -type d -mindepth 1 -maxdepth 1 -exec rmdir -p --ignore-fail-on-non-empty "{}" \;
+
   echo "Update complete: $(cat $target_path/_$self_name/version.txt)"
   exit 0
 fi
