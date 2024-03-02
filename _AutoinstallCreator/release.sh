@@ -19,7 +19,7 @@ orphaned_files_filepath=$dp0/orphaned_files.txt
            <(cd "$dp0/.." && git ls-tree -r HEAD --name-only | sort) | uniq -u
 } > "$orphaned_files_filepath"
 
-tool_version=release-2.4.5-cmd
+tool_version=release-2.5.0-cmd
 download_url="https://github.com/hemnstill/makeself/archive/refs/tags/$tool_version.tar.gz"
 
 makeself_version_path="$dp0/tool-$tool_version.tar.gz"
