@@ -1,6 +1,10 @@
 name: ci release
 
-on: [workflow_dispatch]
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
 
 jobs:
   self-release:
