@@ -46,6 +46,8 @@ export TMPDIR="$temp_dir_path"
 
 artifact_file_path="$dp0/$self_name.sh" && $is_windows_os && artifact_file_path="$dp0/$self_name.sh.bat"
 header_arg="" && $is_windows_os && {
+  export MOCK_BUSYBOX_EXENAME='busybox_1.36.0.exe'
+  cp -rfv "$busybox" "$makeself_target_path/$MOCK_BUSYBOX_EXENAME"
   "$makeself_target_path/cmd-header.sh"
   header_arg="--header $makeself_target_path/makeself-cmd-header.sh"
 }
