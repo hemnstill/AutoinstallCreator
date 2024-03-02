@@ -10,6 +10,7 @@ __pycache__
 
 .tools/python/
 _AutoinstallCreator/*.txt
+_AutoinstallCreator/AutoinstallCreator*
 
 *.exe
 *.dll
@@ -28,6 +29,8 @@ _AutoinstallCreator/*.txt
 *.tar.zst
 *.old
 *.md
+*.log
+
 .idea/
 .empty
 uTorrent/*.lng

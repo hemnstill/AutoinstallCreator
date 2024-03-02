@@ -1,3 +1,4 @@
 release_version/
 makeself-*/
 *.bat
+tmp_*
