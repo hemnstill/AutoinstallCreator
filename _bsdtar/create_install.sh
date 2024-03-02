@@ -16,7 +16,7 @@ echo "Downloading: $download_url ..."
 $curl --location "$download_url" --remote-name
 
 zip_file_name="$(basename -- "$download_url")"
-"$p7z" e "$zip_file_name" -so | "$p7z" e -si -ttar "-o." bsdtar.exe -aoa -r
+"$p7z" e "$zip_file_name" -so | "$p7z" e -si -ttar "-o.tmp" bsdtar.exe -aoa -r
 
 if [[ "$is_windows_os" == true ]]; then
   ./test_windows.sh;
