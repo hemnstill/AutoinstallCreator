@@ -9,8 +9,6 @@ mkdir -p C:\git && cd C:\git
 curl --location https://github.com/git-for-windows/git/releases/download/v2.44.0.windows.1/MinGit-2.44.0-busybox-64-bit.zip --output "git.zip"
 tar -xf "git.zip"
 
-set PATH="%PATH%;C:\Python;C:\git\mingw64\bin"
-
 C:\git\mingw64\bin\git config --global --add safe.directory "*"
 
 "%~dp0..\.tools\busybox.exe" bash "%~dp0ci-test-run.sh" %*

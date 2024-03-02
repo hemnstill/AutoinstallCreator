@@ -64,7 +64,7 @@ jobs:
     - name: ci test-run (nanoserver)
       if: matrix.artifact == 'nanoserver'
       run: |
-        docker container run --rm -v ${{ github.workspace }}:C:\app -w C:\app ${{ env.IMAGE_NAME }} C:\app\.tests\ci-test-run-nanoserver.bat
+        docker container run --rm -e PATH="C:\Windows;C:\Windows\System32;C:\Python;C:\git\mingw64\bin" -v ${{ github.workspace }}:C:\app -w C:\app ${{ env.IMAGE_NAME }} C:\app\.tests\ci-test-run-nanoserver.bat
 
   test-create:
     needs: test
