@@ -36,22 +36,20 @@ def wait_for(
     exception: Type[Exception],
 ) -> bool:
     start = time.monotonic()
-    last_exception_message: str = ""
+    last_exception_message: str = ''
     while True:
         try:
             result = action()
             if result:
                 return result
         except exception as e:
-            last_exception_message = f"{e}"
+            last_exception_message = f'{e}'
         finally:
             elapsed_time = time.monotonic() - start
             if elapsed_time > timeout:
                 if callable(err_message):
                     err_message = err_message()
-                print(
-                    f"{err_message}, timeout: {elapsed_time:.2f}s\n{last_exception_message}"
-                )
+                print(f"{err_message}, timeout: {elapsed_time:.2f}s\n{last_exception_message}")
                 return False  # pylint: disable=W0150 # NOSONAR
 
         time.sleep(retry_timeout)
@@ -65,16 +63,12 @@ def _get_clean_dir_error_message(dir_path: str) -> str:
     return f"Cannot clean directory: '{dir_path}'"
 
 
-def try_create_or_clean_dir(
-    dir_path: str, timeout_in_seconds: float = 5, retry_timeout_in_seconds: float = 0.25
-) -> bool:
-    wait_for(
-        lambda: _create_or_clean_dir(dir_path),
-        err_message=lambda: _get_clean_dir_error_message(dir_path),
-        timeout=timeout_in_seconds,
-        retry_timeout=retry_timeout_in_seconds,
-        exception=OSError,
-    )
+def try_create_or_clean_dir(dir_path: str, timeout_in_seconds: float = 5, retry_timeout_in_seconds: float = 0.25) -> bool:
+    wait_for(lambda: _create_or_clean_dir(dir_path),
+             err_message=lambda: _get_clean_dir_error_message(dir_path),
+             timeout=timeout_in_seconds,
+             retry_timeout=retry_timeout_in_seconds,
+             exception=OSError)
     dir_path_is_empty = not any(pathlib.Path(dir_path).iterdir())
     return dir_path_is_empty
 
@@ -95,17 +89,15 @@ def try_remove_dir(dir_path: str, retry_count: int = 1) -> bool:
 
 
 def extract_archive(archive_file_name: str, target_path: str) -> None:
-    with zipfile.ZipFile(archive_file_name, "r") as zip_file:
+    with zipfile.ZipFile(archive_file_name, 'r') as zip_file:
         zip_file.extractall(target_path)
 
 
-def read_text(file_path: Union[str, pathlib.Path], encoding: str = "utf-8") -> str:
+def read_text(file_path: Union[str, pathlib.Path], encoding: str = 'utf-8') -> str:
     return pathlib.Path(file_path).read_text(encoding=encoding)
 
 
-def write_text(
-    file_path: Union[str, pathlib.Path], data: str, encoding: str = "utf-8"
-) -> int:
+def write_text(file_path: Union[str, pathlib.Path], data: str, encoding: str = 'utf-8') -> int:
     return pathlib.Path(file_path).write_text(data=data, encoding=encoding)
 
 

@@ -13,12 +13,12 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            artifact: "ubuntu"
-            command: "./_AutoinstallCreator/release.sh"
+            artifact: 'ubuntu'
+            command: './_AutoinstallCreator/release.sh'
 
           - os: windows-latest
-            artifact: "windows"
-            command: "./.tools/busybox.exe sh ./_AutoinstallCreator/release.sh"
+            artifact: 'windows'
+            command: './.tools/busybox.exe sh ./_AutoinstallCreator/release.sh'
 
     steps:
       - uses: actions/checkout@v3
@@ -45,7 +45,7 @@ jobs:
         id: wait-for-build
         uses: fountainhead/action-wait-for-check@v1.0.0
         with:
-          checkName: "Run test-create (windows-latest, windows)"
+          checkName: 'Run test-create (windows-latest, windows)'
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           token: ${{ secrets.GITHUB_TOKEN }}
           timeoutSeconds: 1800
