@@ -21,4 +21,3 @@ $curl --location "$download_url_win" --output win64-mingw.zip
 
 "$p7z" e "win64-mingw.zip" "-o.tmp" *.exe *.crt -aoa -r
 cp -rfv "$dp0/curl-amd64" ".tmp/"
-

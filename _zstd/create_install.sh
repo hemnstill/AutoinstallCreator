@@ -27,4 +27,3 @@ zip_file_name="$(basename -- "$download_url")"
 
 zip_file_name_musl="$(basename -- "$download_url_musl")"
 "$p7z" e "$zip_file_name_musl" -so | "$p7z" e -si -ttar "-o.tmp" zstd -aoa -r
-

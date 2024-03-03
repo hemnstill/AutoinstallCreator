@@ -19,6 +19,5 @@ zip_file_name="$(basename -- "$download_url")"
 "$p7z" e "$zip_file_name" -so | "$p7z" e -si -ttar "-o.tmp" busybox.exe -aoa -r
 
 if [[ "$is_windows_os" == true ]]; then
-  ./test_windows.sh;
+  ./test_windows.sh
 fi
-

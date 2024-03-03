@@ -12,13 +12,13 @@ _batch_header_with_tools = r"""@pushd "%~dp0"
 
 
 def _get_latest_version_download_url(name: str):
-    return rf'''set latest_version=https://sourceforge.net/projects/{name}/best_release.json
+    return rf"""set latest_version=https://sourceforge.net/projects/{name}/best_release.json
 echo Get latest version: %latest_version% ...
 >raw_download_str.tmp (
     %curl% %latest_version% | %grep% -P --only-matching "(?<=""url""\:\s"")[^\s]*(?=/download"",)" | find "" /V
 )
 {_check_errorlevel("Cannot get latest version")}
-'''
+"""
 
 
 def _download_latest_version():
@@ -39,7 +39,7 @@ def _check_errorlevel(message: str):
 
 
 def save_to(file_path: str, content: str):
-    with open(file_path, 'w') as f:
+    with open(file_path, "w") as f:
         f.write(content)
     print(f"Saved to: {file_path}")
 
@@ -53,13 +53,15 @@ def generate_batch(name: str):
 
 def main(name: str):
     batch_content = generate_batch(name)
-    create_install_path = os.path.join(os.path.dirname(_current_script_path), name, 'create_install.bat')
+    create_install_path = os.path.join(
+        os.path.dirname(_current_script_path), name, "create_install.bat"
+    )
     pathlib.Path(create_install_path).parent.mkdir(parents=True, exist_ok=True)
     save_to(create_install_path, batch_content)
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Generate batch script.')
-    parser.add_argument('name')
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Generate batch script.")
+    parser.add_argument("name")
     args = parser.parse_args()
     main(args.name)

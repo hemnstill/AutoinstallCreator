@@ -17,59 +17,59 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            container: 'ubuntu:22.04'
-            artifact: 'ubuntu'
+            container: "ubuntu:22.04"
+            artifact: "ubuntu"
 
           - os: ubuntu-latest
-            container: 'alpine:3.15.0'
-            artifact: 'alpine'
+            container: "alpine:3.15.0"
+            artifact: "alpine"
 
           - os: windows-latest
-            artifact: 'windows'
+            artifact: "windows"
 
           - os: windows-latest
-            artifact: 'nanoserver'
+            artifact: "nanoserver"
 
     container: ${{ matrix.container }}
     steps:
-    - name: Install Ubuntu packages
-      if: matrix.artifact == 'ubuntu'
-      run: |
-        apt update
-        apt install -y busybox dos2unix libarchive-tools python3 git
-        git config --global --add safe.directory '*'
+      - name: Install Ubuntu packages
+        if: matrix.artifact == 'ubuntu'
+        run: |
+          apt update
+          apt install -y busybox dos2unix libarchive-tools python3 git
+          git config --global --add safe.directory '*'
 
-    - name: Install Alpine packages
-      if: matrix.artifact == 'alpine'
-      run: |
-        apk add --no-cache bash libarchive-tools python3 git
-        git config --global --add safe.directory '*'
+      - name: Install Alpine packages
+        if: matrix.artifact == 'alpine'
+        run: |
+          apk add --no-cache bash libarchive-tools python3 git
+          git config --global --add safe.directory '*'
 
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0 # need for self_count
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # need for self_count
 
-    - name: ci test-run (non windows)
-      if: matrix.os != 'windows-latest'
-      run: .tests/ci-test-run.sh
+      - name: ci test-run (non windows)
+        if: matrix.os != 'windows-latest'
+        run: .tests/ci-test-run.sh
 
-    - name: ci test-run (windows)
-      if: matrix.artifact == 'windows'
-      shell: cmd
-      run: |
-        rm -f "C:\Strawberry\perl\bin\shasum.BAT"
-        call .tests\ci-test-run.bat
+      - name: ci test-run (windows)
+        if: matrix.artifact == 'windows'
+        shell: cmd
+        run: |
+          rm -f "C:\Strawberry\perl\bin\shasum.BAT"
+          call .tests\ci-test-run.bat
 
-    - name: pull (nanoserver) container ${{ env.IMAGE_NAME }}
-      if: matrix.artifact == 'nanoserver'
-      run: |
-        docker pull ${{ env.IMAGE_NAME }}
-        docker images ${{ env.IMAGE_NAME }}
+      - name: pull (nanoserver) container ${{ env.IMAGE_NAME }}
+        if: matrix.artifact == 'nanoserver'
+        run: |
+          docker pull ${{ env.IMAGE_NAME }}
+          docker images ${{ env.IMAGE_NAME }}
 
-    - name: ci test-run (nanoserver)
-      if: matrix.artifact == 'nanoserver'
-      run: |
-        docker container run --rm -e PATH="C:\Windows;C:\Windows\System32;C:\Python;C:\git\mingw64\bin" -v ${{ github.workspace }}:C:\app -w C:\app ${{ env.IMAGE_NAME }} C:\app\.tests\ci-test-run-nanoserver.bat
+      - name: ci test-run (nanoserver)
+        if: matrix.artifact == 'nanoserver'
+        run: |
+          docker container run --rm -e PATH="C:\Windows;C:\Windows\System32;C:\Python;C:\git\mingw64\bin" -v ${{ github.workspace }}:C:\app -w C:\app ${{ env.IMAGE_NAME }} C:\app\.tests\ci-test-run-nanoserver.bat
 
   test-create:
     needs: test
@@ -79,10 +79,10 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            artifact: 'ubuntu'
+            artifact: "ubuntu"
 
           - os: windows-latest
-            artifact: 'windows'
+            artifact: "windows"
 
     container: ${{ matrix.container }}
     steps:

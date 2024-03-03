@@ -49,7 +49,7 @@ def _check_errorlevel(message: str):
 
 
 def save_to(file_path: str, content: str):
-    with open(file_path, 'w') as f:
+    with open(file_path, "w") as f:
         f.write(content)
     print(f"Saved to: {file_path}")
 
@@ -64,14 +64,16 @@ def generate_batch(author: str, name: str):
 
 def main(author: str, name: str):
     batch_content = generate_batch(author, name)
-    create_install_path = os.path.join(os.path.dirname(_current_script_path), name, 'create_install.bat')
+    create_install_path = os.path.join(
+        os.path.dirname(_current_script_path), name, "create_install.bat"
+    )
     pathlib.Path(create_install_path).parent.mkdir(parents=True, exist_ok=True)
     save_to(create_install_path, batch_content)
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Generate batch script.')
-    parser.add_argument('author')
-    parser.add_argument('name')
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Generate batch script.")
+    parser.add_argument("author")
+    parser.add_argument("name")
     args = parser.parse_args()
     main(args.author, args.name)

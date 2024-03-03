@@ -24,13 +24,13 @@ for d in ../*/; do
         errorlevel=$?
 
         if [[ $need_skip == true ]]; then
-          skip_count=$((skip_count+1))
+          skip_count=$((skip_count + 1))
           echo "<< Skipped."
           continue
         fi
 
         if [[ $errorlevel -ne 0 ]]; then
-          errors_count=$((errors_count+1))
+          errors_count=$((errors_count + 1))
           echo "<< Failed."
           continue
         fi
