@@ -18,7 +18,7 @@ orphaned_files_filepath=$dp0/orphaned_files.txt
 
 {
   comm -23 <(git log --pretty=format: --name-only --diff-filter=A | sort) \
-  <(cd "$dp0/.." && git ls-tree -r HEAD --name-only | sort) | uniq -u
+    <(cd "$dp0/.." && git ls-tree -r HEAD --name-only | sort) | uniq -u
 } >"$orphaned_files_filepath"
 
 tool_version=release-2.5.0-cmd
@@ -55,11 +55,11 @@ header_arg="" && $is_windows_os && {
 }
 
 "$makeself_sh_path" $header_arg \
---notemp --sha256 --nomd5 --nocrc \
-"$release_version_dirpath" \
-"$artifact_file_path" \
-"$self_name" \
-echo "$self_version has extracted itself"
+  --notemp --sha256 --nomd5 --nocrc \
+  "$release_version_dirpath" \
+  "$artifact_file_path" \
+  "$self_name" \
+  echo "$self_version has extracted itself"
 
 echo version created: "$self_version"
 echo "$self_version" >"$dp0/../body.md"

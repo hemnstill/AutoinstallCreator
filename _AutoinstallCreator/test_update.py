@@ -25,7 +25,7 @@ if sys.platform.startswith("win"):
 if _root_path not in sys.path:
     sys.path.append(_root_path)
 
-from _AutoinstallCreator import io_tools
+from _AutoinstallCreator import io_tools  # noqa: E402
 
 
 def update_completed(update_log_path: str, version_str: str) -> bool:

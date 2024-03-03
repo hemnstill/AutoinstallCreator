@@ -29,7 +29,7 @@ if [[ ! -z "$target_path" ]]; then
 
   echo "Copying new files"
   find "$dp0" -mindepth 1 -maxdepth 1 ! -name "tmp_*" \
-  -exec cp -rf "{}" "$target_path/" \;
+    -exec cp -rf "{}" "$target_path/" \;
 
   echo "Removing orphaned files"
   orphaned_files=$(cat $dp0/_$self_name/orphaned_files.txt)
@@ -121,4 +121,3 @@ $MOCK_AUTOINSTALLCREATOR_XTERM "$package_filepath" --target "$dp0/_$self_name/tm
 
 echo "Running extracted 'update.sh'"
 "$dp0/_$self_name/tmp_$version_body/update.sh" "$dp0" >>$dp0/_update.log 2>&1
-
