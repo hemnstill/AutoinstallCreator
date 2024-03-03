@@ -121,3 +121,4 @@ $MOCK_AUTOINSTALLCREATOR_XTERM "$package_filepath" --target "$dp0/_$self_name/tm
 
 echo "Running extracted 'update.sh'"
 "$dp0/_$self_name/tmp_$version_body/update.sh" "$dp0" >>$dp0/_update.log 2>&1
+
