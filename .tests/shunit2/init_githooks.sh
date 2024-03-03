@@ -39,8 +39,7 @@ for hook in \
   sendemail-validate \
   fsmonitor-watchman \
   p4-pre-submit \
-  post-index-change
-do
+  post-index-change; do
   echo "  ${hook}"
   dest="${hooksPath}/${hook}"
   ln -sf "${src}" "${dest}"

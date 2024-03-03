@@ -12,12 +12,14 @@ self_version=$self_name.$self_count.$self_hash
 version_filepath=$dp0/version.txt
 orphaned_files_filepath=$dp0/orphaned_files.txt
 
-{ printf "$self_version"
-} > "$version_filepath"
+{
+  printf "$self_version"
+} >"$version_filepath"
 
-{ comm -23 <(git log --pretty=format: --name-only --diff-filter=A | sort) \
-           <(cd "$dp0/.." && git ls-tree -r HEAD --name-only | sort) | uniq -u
-} > "$orphaned_files_filepath"
+{
+  comm -23 <(git log --pretty=format: --name-only --diff-filter=A | sort) \
+    <(cd "$dp0/.." && git ls-tree -r HEAD --name-only | sort) | uniq -u
+} >"$orphaned_files_filepath"
 
 tool_version=release-2.5.0-cmd
 download_url="https://github.com/hemnstill/makeself/archive/refs/tags/$tool_version.tar.gz"
@@ -60,6 +62,6 @@ header_arg="" && $is_windows_os && {
   echo "$self_version has extracted itself"
 
 echo version created: "$self_version"
-echo "$self_version" > "$dp0/../body.md"
+echo "$self_version" >"$dp0/../body.md"
 
 echo "::set-output name=artifact_path::$artifact_file_path"

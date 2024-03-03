@@ -4,7 +4,6 @@ dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
 set -e
 cd "$dp0"
 
-
 api_url='https://api.github.com/repos/hemnstill/StandaloneTools/releases?per_page=100'
 echo Get latest version: "$api_url" ...
 

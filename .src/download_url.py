@@ -20,7 +20,7 @@ echo Downloading: %download_url% ...
 
 
 def _autoinstall():
-    return rf"""echo Generating %latest_filename% autoinstall.bat
+    return r"""echo Generating %latest_filename% autoinstall.bat
 > autoinstall.bat (
     echo "%%~dp0%latest_filename%" /passive
     echo exit /b %%errorlevel%%

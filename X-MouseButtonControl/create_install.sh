@@ -12,6 +12,7 @@ $curl --location "$download_url" --output "$latest_filename"
 errorlevel=$?
 if [[ $errorlevel -ne 0 ]]; then exit $errorlevel; fi
 
-{ printf '"%s" /S
+{
+  printf '"%s" /S
 ' "%~dp0$latest_filename"
 } >autoinstall.bat

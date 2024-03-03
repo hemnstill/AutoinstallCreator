@@ -33,8 +33,7 @@ if [[ ! -z "$target_path" ]]; then
 
   echo "Removing orphaned files"
   orphaned_files=$(cat $dp0/_$self_name/orphaned_files.txt)
-  for orphaned_file in $orphaned_files
-  do
+  for orphaned_file in $orphaned_files; do
     rm -f "$target_path/$orphaned_file"
   done
 
@@ -91,10 +90,9 @@ version_hash=$(echo "$version_body" | "$grep" --only-matching "(?<=$self_name\.$
 }
 
 if [[ $self_version_count -eq $version_count ]] && [[ $self_version_hash == $version_hash ]]; then
-  echo "Version is up to date: $version_body" > $dp0/_update.log 2>&1
+  echo "Version is up to date: $version_body" >$dp0/_update.log 2>&1
   exit 0
 fi
-
 
 found_msg_prefix="Found new version"
 if [[ $self_version_count -gt $version_count ]]; then
@@ -119,9 +117,7 @@ if [[ -z $MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH ]]; then
 fi
 
 echo "Extracting to: $dp0/_$self_name/$version_body"
-$MOCK_AUTOINSTALLCREATOR_XTERM "$package_filepath" --target "$dp0/_$self_name/tmp_$version_body" > $dp0/_update.log 2>&1
+$MOCK_AUTOINSTALLCREATOR_XTERM "$package_filepath" --target "$dp0/_$self_name/tmp_$version_body" >$dp0/_update.log 2>&1
 
 echo "Running extracted 'update.sh'"
-"$dp0/_$self_name/tmp_$version_body/update.sh" "$dp0" >> $dp0/_update.log 2>&1
-
-
+"$dp0/_$self_name/tmp_$version_body/update.sh" "$dp0" >>$dp0/_update.log 2>&1

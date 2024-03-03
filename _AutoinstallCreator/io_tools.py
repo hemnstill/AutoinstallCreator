@@ -1,13 +1,9 @@
-import os
 import pathlib
 import shutil
 import time
 import zipfile
-import importlib
-from types import ModuleType
-
-from typing import Type, Callable, Union
 from os import path as os_path
+from typing import Callable, Type, Union
 
 
 def _create_or_clean_dir(dir_path: str) -> bool:
@@ -32,7 +28,13 @@ def _clean_dir(dir_path: str) -> bool:
     return not any(_dir_path.iterdir())
 
 
-def wait_for(action: Callable[[], bool], err_message: Union[str, Callable[..., str]], timeout: float, retry_timeout: float, exception: Type[Exception]) -> bool:
+def wait_for(
+    action: Callable[[], bool],
+    err_message: Union[str, Callable[..., str]],
+    timeout: float,
+    retry_timeout: float,
+    exception: Type[Exception],
+) -> bool:
     start = time.monotonic()
     last_exception_message: str = ''
     while True:

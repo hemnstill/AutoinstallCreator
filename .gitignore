@@ -41,3 +41,5 @@ python/Scripts/
 .tools/Scripts/
 
 tmp/
+
+megalinter-reports/
