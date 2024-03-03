@@ -10,10 +10,6 @@ indent_size = 2
 [*.{bat,reg}]
 end_of_line = crlf
 
-[/update.bat]
-insert_final_newline = unset
-end_of_line = unset
-
 [*.py]
 indent_size = 4
 end_of_line = lf
