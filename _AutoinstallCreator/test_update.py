@@ -39,6 +39,8 @@ def version_is_up_to_date(update_log_path: str, version_str: str) -> bool:
 
 
 class TestUpdate(unittest.TestCase):
+    version_str: str
+
     @classmethod
     def setUpClass(cls) -> None:
         global busybox_exe_path_arg, mock_xterm
