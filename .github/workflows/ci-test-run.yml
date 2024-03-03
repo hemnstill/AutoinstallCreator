@@ -79,10 +79,10 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            artifact: "ubuntu"
+            artifact: 'ubuntu'
 
           - os: windows-latest
-            artifact: "windows"
+            artifact: 'windows'
 
     container: ${{ matrix.container }}
     steps:
