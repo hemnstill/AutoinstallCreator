@@ -16,9 +16,13 @@ orphaned_files_filepath=$dp0/orphaned_files.txt
   printf "$self_version"
 } >"$version_filepath"
 
+temp_dir_path="$dp0/.tmp"
+rm -rf "$temp_dir_path" && mkdir -p "$temp_dir_path"
+
+(cd "$dp0/.." && git archive --format tar --output "$temp_dir_path/git_archive_files.tar" HEAD)
 {
   comm -23 <(git log --pretty=format: --name-only --diff-filter=A | sort) \
-    <(cd "$dp0/.." && git ls-tree -r HEAD --name-only | sort) | uniq -u
+    <(tar --list --file "$temp_dir_path/git_archive_files.tar" | grep -v /$ | sort) | uniq -u
 } >"$orphaned_files_filepath"
 
 tool_version=release-2.5.0-cmd
@@ -33,9 +37,6 @@ makeself_sh_path="$makeself_target_path/makeself.sh"
   $curl --silent --location "$download_url" --output "$makeself_version_path"
   tar -xf "$makeself_version_path"
 }
-
-temp_dir_path="$dp0/.tmp"
-rm -rf "$temp_dir_path" && mkdir -p "$temp_dir_path"
 
 release_version_dirpath="$temp_dir_path/$self_version"
 tmp_version_path="$temp_dir_path/tmp_version.zip"
