@@ -116,6 +116,9 @@ if [[ -z $MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH ]]; then
   $curl --location "$download_url" --output "$package_filepath"
 fi
 
+echo "Removing old '$dp0/_$self_name/tmp_*' versions"
+find "$dp0/_$self_name" -type d -name "tmp_*" -exec rm -rf "{}" \;
+
 echo "Extracting to: $dp0/_$self_name/$version_body"
 $MOCK_AUTOINSTALLCREATOR_XTERM "$package_filepath" --target "$dp0/_$self_name/tmp_$version_body" >$dp0/_update.log 2>&1
 
