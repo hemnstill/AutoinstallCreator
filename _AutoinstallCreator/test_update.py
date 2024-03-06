@@ -4,6 +4,7 @@ import shutil
 import subprocess
 import sys
 import unittest
+import uuid
 
 _self_path: str = os.path.dirname(os.path.realpath(__file__))
 
@@ -80,6 +81,7 @@ class TestUpdate(unittest.TestCase):
         subprocess.run([os.path.join(_self_tmp_path, self.version_str, update_script_name)],
                        env={
                            **os.environ,
+                           'MOCK_AUTOINSTALLCREATOR_DISABLE_SLEEP': '1',
                            'MOCK_AUTOINSTALLCREATOR_VERSION_BODY': self.version_str,
                            'MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH': self.package_filepath,
                            'MOCK_AUTOINSTALLCREATOR_XTERM': mock_xterm
@@ -96,9 +98,13 @@ class TestUpdate(unittest.TestCase):
         io_tools.write_text(os.path.join(_self_tmp_path, self.test_old_version, '_AutoinstallCreator', 'version.txt'),
                             self.test_old_version)
 
+        tmp_dirpath = os.path.join(_self_tmp_path, self.test_old_version, '_AutoinstallCreator', f'tmp_{uuid.uuid4().hex}')
+        pathlib.Path(tmp_dirpath).mkdir()
+
         subprocess.run([os.path.join(_self_tmp_path, self.test_old_version, update_script_name)],
                        env={
                            **os.environ,
+                           'MOCK_AUTOINSTALLCREATOR_DISABLE_SLEEP': '1',
                            'MOCK_AUTOINSTALLCREATOR_VERSION_BODY': self.version_str,
                            'MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH': self.package_filepath,
                            'MOCK_AUTOINSTALLCREATOR_XTERM': mock_xterm
@@ -110,6 +116,8 @@ class TestUpdate(unittest.TestCase):
                                           timeout=10,
                                           retry_timeout=0.5,
                                           exception=OSError))
+
+        self.assertFalse(os.path.exists(tmp_dirpath))
 
     def tearDown(self):
         if os.path.isfile(self.old_update_log_filepath):
