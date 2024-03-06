@@ -123,9 +123,9 @@ echo "Removing old '$dp0/_$self_name/tmp_*' versions"
 find "$dp0/_$self_name" -maxdepth 1 -type d -name "tmp_*" -exec rm -rf "{}" \;
 
 echo "Downloading: $download_url ..."
-package_filepath="$dp0/_$self_name/$self_name$package_ext"
-if [[ ! -z "$MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH" ]]; then
-  package_filepath="$MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH"
+package_filepath="$MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH"
+if [[ -z "$package_filepath" ]]; then
+  package_filepath="$dp0/_$self_name/$self_name$package_ext"
   $curl --location "$download_url" --output "$package_filepath"
 fi
 
