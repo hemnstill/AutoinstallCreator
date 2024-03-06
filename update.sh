@@ -91,6 +91,8 @@ version_hash=$(echo "$version_body" | "$grep" --only-matching "(?<=$self_name\.$
 
 if [[ $self_version_count -eq $version_count ]] && [[ $self_version_hash == $version_hash ]]; then
   echo "Version is up to date: $version_body" >$dp0/_update.log 2>&1
+  echo "Version is up to date: $version_body"
+  sleep 10
   exit 0
 fi
 
@@ -109,15 +111,15 @@ download_url=$($curl --silent --location "$latest_version" | "$grep" --only-matc
   exit 1
 }
 
+echo "Removing old '$dp0/_$self_name/tmp_*' versions"
+find "$dp0/_$self_name" -maxdepth 1 -type d -name "tmp_*" -exec rm -rf "{}" \;
+
 echo "Downloading: $download_url ..."
 package_filepath="$MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH"
 if [[ -z $MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH ]]; then
   package_filepath="$dp0/_$self_name/$self_name$package_ext"
   $curl --location "$download_url" --output "$package_filepath"
 fi
-
-echo "Removing old '$dp0/_$self_name/tmp_*' versions"
-find "$dp0/_$self_name" -type d -name "tmp_*" -exec rm -rf "{}" \;
 
 echo "Extracting to: $dp0/_$self_name/$version_body"
 $MOCK_AUTOINSTALLCREATOR_XTERM "$package_filepath" --target "$dp0/_$self_name/tmp_$version_body" >$dp0/_update.log 2>&1
