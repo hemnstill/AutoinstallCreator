@@ -104,6 +104,7 @@ class TestUpdate(unittest.TestCase):
         subprocess.run([os.path.join(_self_tmp_path, self.test_old_version, update_script_name)],
                        env={
                            **os.environ,
+                           'MOCK_AUTOINSTALLCREATOR_DISABLE_SLEEP': '1',
                            'MOCK_AUTOINSTALLCREATOR_VERSION_BODY': self.version_str,
                            'MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH': self.package_filepath,
                            'MOCK_AUTOINSTALLCREATOR_XTERM': mock_xterm
