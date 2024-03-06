@@ -66,12 +66,7 @@ if [[ -z "$self_version_hash" ]]; then
   exit 1
 fi
 
-github_tag=latest-master
-if [[ ! -z "$MOCK_AUTOINSTALLCREATOR_GITHUB_TAG" ]]; then
-  github_tag="$MOCK_AUTOINSTALLCREATOR_GITHUB_TAG"
-fi
-
-latest_version="https://api.github.com/repos/hemnstill/$self_name/releases/tags/$github_tag"
+latest_version="https://api.github.com/repos/hemnstill/$self_name/releases/tags/latest-master"
 echo "Get latest version: '$latest_version' ..."
 version_body="$MOCK_AUTOINSTALLCREATOR_VERSION_BODY"
 if [[ -z "$version_body" ]]; then
