@@ -9,6 +9,8 @@ relative_version_filepath="_$self_name/version.txt"
 package_ext=".sh" && $is_windows_os && package_ext=".sh.bat"
 package_grep_ext="\.sh" && $is_windows_os && package_grep_ext="\.sh\.bat"
 
+disable_sleep="$MOCK_AUTOINSTALLCREATOR_DISABLE_SLEEP"
+
 # Finishing update process. Stage 2
 target_path=$1
 if [[ ! -z "$target_path" ]]; then
@@ -63,14 +65,14 @@ self_version_hash=$(echo "$self_version_body" | "$grep" --only-matching "(?<=$se
 }
 
 github_tag=$MOCK_AUTOINSTALLCREATOR_GITHUB_TAG
-if [[ -z $MOCK_AUTOINSTALLCREATOR_GITHUB_TAG ]]; then
+if [[ -z "$MOCK_AUTOINSTALLCREATOR_GITHUB_TAG" ]]; then
   github_tag=latest-master
 fi
 
 latest_version="https://api.github.com/repos/hemnstill/$self_name/releases/tags/$github_tag"
 echo Get latest version: "$latest_version" ...
 version_body="$MOCK_AUTOINSTALLCREATOR_VERSION_BODY"
-if [[ -z $version_body ]]; then
+if [[ -z "$version_body" ]]; then
   version_body=$($curl --silent --location "$latest_version" | "$grep" --only-matching '(?<="body":\s")[^,]+.' | cut -d '\r\n' -f 1 | head -n 1)
 fi
 echo "Version_body: $version_body"
@@ -92,7 +94,9 @@ version_hash=$(echo "$version_body" | "$grep" --only-matching "(?<=$self_name\.$
 if [[ $self_version_count -eq $version_count ]] && [[ $self_version_hash == $version_hash ]]; then
   echo "Version is up to date: $version_body" >$dp0/_update.log 2>&1
   echo "Version is up to date: $version_body"
-  sleep 10
+  if [[ -z "$disable_sleep" ]]; then
+    sleep 10
+  fi
   exit 0
 fi
 
@@ -100,7 +104,10 @@ found_msg_prefix="Found new version"
 if [[ $self_version_count -gt $version_count ]]; then
   found_msg_prefix="Downgrade version"
   echo "Warning. Downgrade to old version!"
-  sleep 10
+  if [[ -z "$disable_sleep" ]]; then
+    sleep 10
+  fi
+
 fi
 
 echo "$found_msg_prefix: $self_version_body -> $version_body"
