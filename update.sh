@@ -64,9 +64,9 @@ self_version_hash=$(echo "$self_version_body" | "$grep" --only-matching "(?<=$se
   exit 1
 }
 
-github_tag=$MOCK_AUTOINSTALLCREATOR_GITHUB_TAG
-if [[ -z "$MOCK_AUTOINSTALLCREATOR_GITHUB_TAG" ]]; then
-  github_tag=latest-master
+github_tag=latest-master
+if [[ !-z "$MOCK_AUTOINSTALLCREATOR_GITHUB_TAG" ]]; then
+  github_tag="$MOCK_AUTOINSTALLCREATOR_GITHUB_TAG"
 fi
 
 latest_version="https://api.github.com/repos/hemnstill/$self_name/releases/tags/$github_tag"
@@ -122,9 +122,9 @@ echo "Removing old '$dp0/_$self_name/tmp_*' versions"
 find "$dp0/_$self_name" -maxdepth 1 -type d -name "tmp_*" -exec rm -rf "{}" \;
 
 echo "Downloading: $download_url ..."
-package_filepath="$MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH"
-if [[ -z $MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH ]]; then
-  package_filepath="$dp0/_$self_name/$self_name$package_ext"
+package_filepath="$dp0/_$self_name/$self_name$package_ext"
+if [[ ! -z $MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH ]]; then
+  package_filepath="$MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH"
   $curl --location "$download_url" --output "$package_filepath"
 fi
 
