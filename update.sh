@@ -49,7 +49,7 @@ fi
 # Starting update process. Stage 1
 self_version_body=$(head -n 1 "$dp0/_$self_name/version.txt")
 echo "self_version_body: $self_version_body"
-[[ -z "$self_version_body" ]] && {
+if [[ -z "$self_version_body" ]]; then {
   echo "Cannot get 'self_version_body'"
   exit 1
 }
@@ -107,7 +107,6 @@ if [[ $self_version_count -gt $version_count ]]; then
   if [[ -z "$disable_sleep" ]]; then
     sleep 10
   fi
-
 fi
 
 echo "$found_msg_prefix: $self_version_body -> $version_body"
@@ -123,7 +122,7 @@ find "$dp0/_$self_name" -maxdepth 1 -type d -name "tmp_*" -exec rm -rf "{}" \;
 
 echo "Downloading: $download_url ..."
 package_filepath="$dp0/_$self_name/$self_name$package_ext"
-if [[ ! -z $MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH ]]; then
+if [[ ! -z "$MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH" ]]; then
   package_filepath="$MOCK_AUTOINSTALLCREATOR_PACKAGE_FILEPATH"
   $curl --location "$download_url" --output "$package_filepath"
 fi
