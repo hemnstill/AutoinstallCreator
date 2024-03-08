@@ -30,6 +30,7 @@ _AutoinstallCreator/AutoinstallCreator*
 *.old
 *.md
 *.log
+*.ini
 
 .idea/
 .empty
