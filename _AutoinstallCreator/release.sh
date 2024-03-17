@@ -21,8 +21,8 @@ rm -rf "$temp_dir_path" && mkdir -p "$temp_dir_path"
 
 (cd "$dp0/.." && git archive --format tar --output "$temp_dir_path/git_archive_files.tar" HEAD)
 {
-  comm -23 <(git log --pretty=format: --name-only --diff-filter=A | sort) \
-    <(tar --list --file "$temp_dir_path/git_archive_files.tar" | grep -v /$ | sort) | uniq -u
+  comm -23 <(git log --pretty=format: --name-only --diff-filter=A | grep . | sort | uniq) \
+    <(tar --list --file "$temp_dir_path/git_archive_files.tar" | grep -v /$ | sort | uniq)
 } >"$orphaned_files_filepath"
 
 tool_version=release-2.5.0-cmd
