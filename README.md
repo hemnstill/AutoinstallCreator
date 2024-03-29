@@ -15,6 +15,6 @@ run `<Application>/autoinstall.bat`
 
 ## Tools used
 * 7z 21.07 <https://www.7-zip.org/>
-* curl 7.81.0 <https://curl.se/windows/>
+* curl 8.7.1 <https://curl.se/windows/>
 * pcre2grep 10.40 <https://github.com/PCRE2Project/pcre2>
 * busybox 1.36.0 <https://frippery.org/busybox/>
