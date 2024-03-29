@@ -3,9 +3,10 @@ dp0="$(realpath "$(dirname "$0")")"
 dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
 
 testCurlVersion() {
-  local etalon_log="$(echo -e "curl 7.81.0 (x86_64-pc-win32) libcurl/7.81.0 OpenSSL/3.0.1 (Schannel) zlib/1.2.11 brotli/1.0.9 libidn2/2.3.2 libssh2/1.10.0 nghttp2/1.46.0 libgsasl/1.10.0
-Release-Date: 2022-01-05
-Protocols: dict file ftp ftps gopher gophers http https imap imaps ldap ldaps mqtt pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp \nFeatures: alt-svc AsynchDNS brotli gsasl HSTS HTTP2 HTTPS-proxy IDN IPv6 Kerberos Largefile libz MultiSSL NTLM SPNEGO SSL SSPI TLS-SRP UnixSockets")"
+  local etalon_log="$(echo -e "curl 8.7.1 (x86_64-w64-mingw32) libcurl/8.7.1 LibreSSL/3.8.3 zlib/1.3.1 brotli/1.1.0 zstd/1.5.5 WinIDN libpsl/0.21.5 libssh2/1.11.0 nghttp2/1.60.0 ngtcp2/1.4.0 nghttp3/1.2.0
+Release-Date: 2024-03-27
+Protocols: dict file ftp ftps gopher gophers http https imap imaps ipfs ipns ldap ldaps mqtt pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp ws wss
+Features: alt-svc AsynchDNS brotli HSTS HTTP2 HTTP3 HTTPS-proxy IDN IPv6 Kerberos Largefile libz NTLM PSL SPNEGO SSL SSPI threadsafe UnixSockets zstd")"
   assertEquals "$etalon_log" "$($curl --version | dos2unix)"
 }
 

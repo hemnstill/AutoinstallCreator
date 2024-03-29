@@ -3,9 +3,10 @@ dp0="$(realpath "$(dirname "$0")")"
 dp0_tools="$dp0/../.tools" && source "$dp0_tools/env_tools.sh"
 
 testCurlVersion() {
-  local etalon_log="$(echo -e "curl 7.81.0 (x86_64-pc-linux-musl) libcurl/7.81.0 OpenSSL/1.1.1l zlib/1.2.11 libssh2/1.9.0 nghttp2/1.43.0
-Release-Date: 2022-01-05
-Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp \nFeatures: alt-svc AsynchDNS HSTS HTTP2 HTTPS-proxy IPv6 Largefile libz NTLM NTLM_WB SSL TLS-SRP UnixSockets")"
+  local etalon_log="$(echo -e "curl 8.7.1 (x86_64-pc-linux-musl) libcurl/8.7.1 OpenSSL/3.1.4 zlib/1.3.1 libssh2/1.11.0 nghttp2/1.58.0
+Release-Date: 2024-03-27
+Protocols: dict file ftp ftps gopher gophers http https imap imaps ipfs ipns mqtt pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp
+Features: alt-svc AsynchDNS HSTS HTTP2 HTTPS-proxy IPv6 Largefile libz NTLM SSL threadsafe TLS-SRP UnixSockets")"
   assertEquals "$etalon_log" "$($curl --version)"
 }
 
