@@ -6,5 +6,5 @@ if [[ -n "$CI" ]]; then
   curl="$curl --silent --show-error"
 fi
 grep="$dp0_tools/pcre2grep" && $is_windows_os && grep="$dp0_tools/pcre2grep.exe"
-p7z="$dp0_tools/7zzs" && $is_windows_os && p7z="$dp0_tools/7z.exe"
+p7z="$dp0_tools/7zz" && $is_windows_os && p7z="$dp0_tools/7zz.exe"
 busybox="busybox" && $is_windows_os && busybox="$dp0_tools/busybox.exe"
