@@ -16,7 +16,7 @@ testGrepVersion() {
 
 test7zVersion() {
   assertEquals "
-7-Zip 21.07 (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-12-26" "$("$p7z" | dos2unix | head -2)"
+7-Zip (z) 24.06 (x64) : Copyright (c) 1999-2024 Igor Pavlov : 2024-05-26" "$("$p7z" | dos2unix | head -2)"
 }
 
 testBusyboxVersion() {

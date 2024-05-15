@@ -15,16 +15,8 @@ testGrepVersion() {
 }
 
 test7zVersion() {
-  actual_version="$("$p7z" | head -3)"
-  if [[ "$is_alpine_os" == true ]]; then
-    assertEquals "
-7-Zip (z) 21.07 (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-12-26
- 64-bit locale=C UTF8=- Threads:4, ASM" "$actual_version" # editorconfig-checker-disable-line
-  else
-    assertEquals "
-7-Zip (z) 21.07 (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-12-26
- 64-bit locale=C.UTF-8 Threads:4, ASM" "$actual_version" # editorconfig-checker-disable-line
-  fi
+  assertEquals "
+7-Zip (z) 24.06 (x64) : Copyright (c) 1999-2024 Igor Pavlov : 2024-05-26" "$("$p7z" | head -2)"
 }
 
 testBusyboxVersion() {
