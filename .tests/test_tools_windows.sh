@@ -11,7 +11,7 @@ Features: alt-svc AsynchDNS brotli HSTS HTTP2 HTTP3 HTTPS-proxy IDN IPv6 Kerbero
 }
 
 testGrepVersion() {
-  assertEquals "pcre2grep version 10.40 2022-04-14" "$("$grep" --version)"
+  assertEquals "pcre2grep version 10.44 2024-06-07" "$("$grep" --version)"
 }
 
 test7zVersion() {
