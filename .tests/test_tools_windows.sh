@@ -20,7 +20,7 @@ test7zVersion() {
 }
 
 testBusyboxVersion() {
-  assertEquals "tar (busybox) 1.36.0.git" "$("$busybox" tar --version)"
+  assertEquals "tar (busybox) 1.37.0.git-5398-g89ae34445" "$("$busybox" tar --version)"
 }
 
 # Load and run shUnit2.
