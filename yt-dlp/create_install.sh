@@ -31,4 +31,4 @@ echo "Downloading: $ffmpeg_download_url ..."
 $curl --location "$ffmpeg_download_url" --remote-name
 
 echo Extracting ...
-"$p7z" e "$filename" "-o." *.exe -aoa -r
+"$p7z" e "$ffmpeg_filename" "-o." "*.exe" -aoa -r
