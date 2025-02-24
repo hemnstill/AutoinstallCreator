@@ -32,6 +32,9 @@ _AutoinstallCreator/AutoinstallCreator*
 *.log
 *.ini
 
+*.part
+*.ytdl
+
 .idea/
 .empty
 uTorrent/*.lng
