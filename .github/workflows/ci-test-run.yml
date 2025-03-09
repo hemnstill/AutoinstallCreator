@@ -50,12 +50,14 @@ jobs:
         run: |
           if exist "C:\Strawberry\perl\bin\shasum.BAT" del "C:\Strawberry\perl\bin\shasum.BAT"
           call .tests\ci-test-run.bat
-      - name: Pull Nanoserver container
+
+      - name: pull (nanoserver) container ${{ env.IMAGE_NAME }}
         if: matrix.artifact == 'nanoserver'
         run: |
           docker pull ${{ env.IMAGE_NAME }}
           docker images ${{ env.IMAGE_NAME }}
-      - name: CI test-run (Nanoserver)
+
+      - name: ci test-run (nanoserver)
         if: matrix.artifact == 'nanoserver'
         run: |
           docker container run --rm -e PATH="C:\Windows;C:\Windows\System32;C:\Python;C:\git\mingw64\bin" -v ${{ github.workspace }}:C:\app -w C:\app ${{ env.IMAGE_NAME }} C:\app\.tests\ci-test-run-nanoserver.bat
