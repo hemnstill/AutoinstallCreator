@@ -15,26 +15,23 @@ jobs:
           - os: ubuntu-latest
             artifact: 'ubuntu'
             command: './_AutoinstallCreator/release.sh'
-
           - os: windows-latest
             artifact: 'windows'
             command: './.tools/busybox.exe sh ./_AutoinstallCreator/release.sh'
-
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # need for self_count
-      - run: ${{ matrix.command }}
+      - name: Run release script
         id: create_artifact
-
-      - uses: actions/upload-artifact@v3
+        run: ${{ matrix.command }}
+      - uses: actions/upload-artifact@v4
         with:
           name: AutoinstallCreator-${{ matrix.artifact }}
           path: ${{ steps.create_artifact.outputs.artifact_path }}
-
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
-          name: body
+          name: body-${{ matrix.artifact }}
           path: ./body.md
 
   upload_release:
@@ -49,23 +46,24 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           token: ${{ secrets.GITHUB_TOKEN }}
           timeoutSeconds: 1800
-
-      - name: setFailed when not wait-for-build
-        uses: actions/github-script@v6
+      - name: Fail if build unsuccessful
+        uses: actions/github-script@v7
         if: steps.wait-for-build.outputs.conclusion != 'success'
         with:
           script: |
-            core.setFailed('error: conclusion is ${{ steps.wait-for-build.outputs.conclusion }}')
-
-      - uses: actions/checkout@v3
-      - run: git push origin :refs/tags/latest-${{ github.base_ref || github.ref_name }}
-
-      - uses: actions/download-artifact@v3
+            core.setFailed('Error: Build conclusion is ${{ steps.wait-for-build.outputs.conclusion }}')
+      - uses: actions/checkout@v4
+      - name: Delete existing tag
+        run: git push origin :refs/tags/latest-${{ github.base_ref || github.ref_name }}
+        continue-on-error: true
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
       - uses: ncipollo/release-action@v1
         with:
           tag: latest-${{ github.base_ref || github.ref_name }}
-          artifacts: ./AutoinstallCreator-*/*
-          bodyFile: ./body/body.md
+          artifacts: ./artifacts/AutoinstallCreator-*/*
+          bodyFile: ./artifacts/body-ubuntu/body.md # Pick one, e.g., Ubuntu’s body
           allowUpdates: true
           removeArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
