@@ -21,7 +21,7 @@ test7zVersion() {
 
 testBusyboxVersion() {
   if [[ "$is_alpine_os" == true ]]; then
-    assertEquals "tar (busybox) 1.34.1" "$("$busybox" tar --version)"
+    assertEquals "tar (busybox) 1.36.1" "$("$busybox" tar --version)"
   else
     assertEquals "tar (busybox) 1.30.1" "$("$busybox" tar --version)"
   fi
