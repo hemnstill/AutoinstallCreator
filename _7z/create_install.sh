@@ -16,7 +16,6 @@ download_url=$($curl --silent --location "$latest_version" | "$grep" --only-matc
   exit 1
 }
 
-download_url="https://www.7-zip.org/$download_url"
 echo "Downloading: $download_url ..."
 $curl --location "$download_url" --remote-name
 
@@ -29,7 +28,6 @@ download_url=$($curl --silent --location "$latest_version" | "$grep" --only-matc
   exit 1
 }
 
-download_url="https://www.7-zip.org/$download_url"
 echo "Downloading: $download_url ..."
 $curl --location "$download_url" --remote-name
 
