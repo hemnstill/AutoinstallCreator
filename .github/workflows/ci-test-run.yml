@@ -12,6 +12,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       IMAGE_NAME: mcr.microsoft.com/windows/nanoserver:ltsc2022-amd64
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # api.github.com rate limit
     strategy:
       matrix:
         include:
@@ -19,7 +20,7 @@ jobs:
             container: 'ubuntu:22.04'
             artifact: 'ubuntu'
           - os: ubuntu-latest
-            container: 'alpine:3.15.0'
+            container: 'alpine:3.20'
             artifact: 'alpine'
           - os: windows-latest
             artifact: 'windows'
@@ -54,6 +55,7 @@ jobs:
       - name: pull (nanoserver) container ${{ env.IMAGE_NAME }}
         if: matrix.artifact == 'nanoserver'
         run: |
+          if ((Get-Service docker).Status -ne 'Running') { Start-Service docker }
           docker pull ${{ env.IMAGE_NAME }}
           docker images ${{ env.IMAGE_NAME }}
 
@@ -66,6 +68,8 @@ jobs:
     needs: test
     runs-on: ${{ matrix.os }}
     name: Run test-create (${{ matrix.os }}, ${{ matrix.artifact }})
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # api.github.com rate limit
     strategy:
       matrix:
         include:

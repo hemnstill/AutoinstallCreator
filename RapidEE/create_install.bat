@@ -1,7 +1,7 @@
 @pushd "%~dp0"
 @call "%~dp0..\.tools\env_tools.bat"
 
-set download_url="https://www.rapidee.com/download/RapidEE_setup.exe"
+set download_url="https://gitlab.com/olegd/rapidee/-/releases/permalink/latest/downloads/RapidEE_setup.exe"
 echo Downloading: %download_url% ...
 %curl% --location %download_url% --remote-name
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
