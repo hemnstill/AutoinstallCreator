@@ -1,14 +1,4 @@
-@pushd "%~dp0"
-@call "%~dp0..\.tools\env_tools.bat"
-
-set latest_filename=SlackSetup.msi
-set download_url="https://slack.com/ssb/download-win64-msi-legacy"
-echo Downloading: %latest_filename% %download_url% ...
-%curl% --location %download_url% --output %latest_filename%
-if %errorlevel% neq 0 ( exit /b %errorlevel% )
-echo Done.
-
-echo Generating %latest_filename% autoinstall.bat
-echo "%%~dp0%latest_filename%" /S > autoinstall.bat
+@echo off
+"%~dp0..\.tools\busybox.exe" bash "%~dp0create_install.sh"
 
 exit /b %errorlevel%
